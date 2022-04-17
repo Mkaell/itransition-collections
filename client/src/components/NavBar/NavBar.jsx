@@ -67,6 +67,11 @@ const NavBar = () => {
                             Admin
                         </Link>
                     </Button>
+                    <Button variant="contained" color="secondary" style={{ padding: '0' }}>
+                        <Link to='/profile' style={{ color: 'white', padding: '8px 15px' }}>
+                            Profile
+                        </Link>
+                    </Button>
                     <Search>
                         <SearchIconWrapper>
                             <SearchIcon />

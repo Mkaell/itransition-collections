@@ -1,0 +1,15 @@
+.profile{
+    margin-top: 50px;
+    width: 100%;
+}
+.profile-button{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.profile-collections_wrapper{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+    

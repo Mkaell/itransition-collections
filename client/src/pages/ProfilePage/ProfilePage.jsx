@@ -1,8 +1,8 @@
-import { Button, Card, CardActions, CardContent, Divider, Typography } from '@mui/material'
 import React from 'react'
+import { Button, Card, CardActions, CardContent, Typography } from '@mui/material'
+import AddIcon from '@mui/icons-material/Add';
+import './ProfilePage.css'
 
-
-import './HomePage.css'
 function BasicCard() {
     return (
         <Card sx={{ minWidth: 200, mt: 2 }}>
@@ -26,33 +26,21 @@ function BasicCard() {
     );
 }
 
-const HomePage = () => {
+const ProfilePage = () => {
     return (
-        <div>
-            <div className='home-clouds-tags'>
+        <div className='profile'>
+            <div className='profile-button'>
+                <Button variant="contained" startIcon={<AddIcon />}>New Collection</Button>
+            </div>
+            <div className='profile-collections_wrapper'>
+                <BasicCard />
+                <BasicCard />
+                <BasicCard />
                 <BasicCard />
             </div>
-            <Divider sx={{ mt: 5 }} />
-            <div className='home-wrapper'>
-                <div className='home-collections'>
-                    <BasicCard />
-                    <BasicCard />
-                    <BasicCard />
-                    <BasicCard />
-                </div>
-                <Divider orientation="vertical" flexItem />
 
-                <div className='home-items'>
-                    <BasicCard />
-                    <BasicCard />
-                    <BasicCard />
-                    <BasicCard />
-
-                </div>
-            </div>
         </div>
-
     )
 }
 
-export default HomePage
+export default ProfilePage
