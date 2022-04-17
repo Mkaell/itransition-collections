@@ -1,0 +1,17 @@
+.home-wrapper{
+    display: flex;
+    margin-top: 50px;
+}
+
+.home-collections{
+    display: flex;
+    width: 50%;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.home-items{
+    display: flex;
+    width: 50%;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}

@@ -1,3 +1,4 @@
+import { Container } from '@mui/material';
 import { BrowserRouter } from 'react-router-dom';
 import './App.css';
 import NavBar from './components/NavBar/NavBar';
@@ -8,7 +9,9 @@ function App() {
 		<BrowserRouter>
 			<div className="App">
 				<NavBar/>
-				<Navigation/>
+				<Container maxWidth="lg">
+					<Navigation/>
+				</Container>
 			</div>
 		</BrowserRouter>	
 	);

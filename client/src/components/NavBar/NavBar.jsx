@@ -57,18 +57,14 @@ const NavBar = () => {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
                 <Toolbar style={{ justifyContent: 'space-between' }}>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                        sx={{ mr: 2 }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Button variant="contained" color="secondary">
-                        <Link to='/' style={{ color: 'white' }}>
+                    <Button variant="contained" color="secondary" style={{ padding: '0' }}>
+                        <Link to='/' style={{ color: 'white', padding: '8px 15px' }}>
                             Home
+                        </Link>
+                    </Button>
+                    <Button variant="contained" color="secondary" style={{ padding: '0' }}>
+                        <Link to='/admin' style={{ color: 'white', padding: '8px 15px' }}>
+                            Admin
                         </Link>
                     </Button>
                     <Search>
@@ -81,13 +77,13 @@ const NavBar = () => {
                         />
                     </Search>
                     <Box sx={{ alignItems: 'end' }}>
-                        <Button variant="contained" color="secondary">
-                            <Link to='/login' style={{ color: 'white' }}>
+                        <Button variant="contained" color="secondary" style={{ padding: '0' }}>
+                            <Link to='/login' style={{ color: 'white', padding: '8px 15px' }} >
                                 Log in
                             </Link>
                         </Button>
-                        <Button variant="contained" color="secondary">
-                            <Link to='/sign-up' style={{ color: 'white' }}>
+                        <Button variant="contained" color="secondary" style={{ padding: '0' }}>
+                            <Link to='/sign-up' style={{ color: 'white', padding: '8px 15px' }}>
                                 Sign Up
                             </Link>
                         </Button>
