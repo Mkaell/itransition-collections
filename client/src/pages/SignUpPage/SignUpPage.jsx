@@ -2,8 +2,10 @@ import React from 'react'
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Button, TextField } from '@mui/material';
+import axios from 'axios'
 
 import './SignUpPage.css'
+import { useNavigate } from 'react-router-dom';
 
 const validationSchema = yup.object({
     email: yup
@@ -17,15 +19,21 @@ const validationSchema = yup.object({
 });
 
 const SignUpPage = () => {
+
+    const navigate = useNavigate()
+
     const formik = useFormik({
         initialValues: {
-            email: 'foobar@example.com',
-            password: 'foobar',
+            email: '',
+            password: '',
         },
 
         validationSchema: validationSchema,
-        onSubmit: (values) => {
-            alert(JSON.stringify(values, null, 2));
+        onSubmit: async (data) => {
+            await axios.post("http://localhost:5047/auth/signup", data)
+                .then((res) => {
+                    navigate("/login");
+                }).catch(error => alert(error.response.data.message))
         },
     });
     return (

@@ -8,7 +8,7 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -53,6 +53,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const NavBar = () => {
+    const navigate = useNavigate()
+    const handleLogOut = () => {
+        localStorage.removeItem("userData")
+        navigate("/login")
+    }
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -82,6 +87,11 @@ const NavBar = () => {
                         />
                     </Search>
                     <Box sx={{ alignItems: 'end' }}>
+                        <Button variant="contained" color="secondary" style={{ padding: '0' }} onClick={handleLogOut}>
+
+                            log Out
+
+                        </Button>
                         <Button variant="contained" color="secondary" style={{ padding: '0' }}>
                             <Link to='/login' style={{ color: 'white', padding: '8px 15px' }} >
                                 Log in

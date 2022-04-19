@@ -3,29 +3,42 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import './LoginPage.css'
 import { Button, TextField } from '@mui/material';
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 const validationSchema = yup.object({
-  email: yup
-    .string('Enter your email')
-    .email('Enter a valid email')
+  email: yup.string()
     .required('Email is required'),
-  password: yup
-    .string('Enter your password')
-    .min(8, 'Password should be of minimum 8 characters length')
+  password: yup.string()
     .required('Password is required'),
 });
 
 const LoginPage = () => {
 
+  const navigate = useNavigate()
+
   const formik = useFormik({
     initialValues: {
-      email: 'foobar@example.com',
-      password: 'foobar',
+      email: '',
+      password: '',
     },
 
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (value) => {
+      try {
+
+        const { data } = await axios.post("http://localhost:5047/auth/login", value)
+
+        localStorage.setItem(
+          "userData",
+          JSON.stringify({ token: data.token, userId: data.result._id, isRole: data.result.role, isActive: data.result.active })
+
+        )
+        navigate("/");
+      } catch (error) {
+        alert(error.response.data.message)
+      }
+
     },
   });
 

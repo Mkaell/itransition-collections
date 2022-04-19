@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, CardContent, Divider, Typography } from '@mui/material'
+import { Button, Card, CardActions, CardContent, CardMedia, Divider, Typography } from '@mui/material'
 import React from 'react'
 
 
@@ -7,6 +7,7 @@ function BasicCard() {
     return (
         <Card sx={{ minWidth: 200, mt: 2 }}>
             <CardContent>
+
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                     Word of the Day
                 </Typography>
