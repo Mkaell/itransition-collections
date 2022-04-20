@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -8,7 +8,10 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { Button } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { actionLogOut } from '../../actionCreators/auth';
+import decode from 'jwt-decode';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -53,30 +56,67 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const NavBar = () => {
+
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+
     const navigate = useNavigate()
+    const dispatch = useDispatch();
+    const location = useLocation();
     const handleLogOut = () => {
-        localStorage.removeItem("userData")
-        navigate("/login")
+        dispatch(actionLogOut());
+        setUser(null)
+        navigate('/login');
     }
+    useEffect(() => {
+        const token = user?.token;
+
+        if (token) {
+            const decodedToken = decode(token);
+
+            if (decodedToken.exp * 1000 < new Date().getTime()) handleLogOut();
+        }
+
+        setUser(JSON.parse(localStorage.getItem('profile')));
+    }, [location]);
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
                 <Toolbar style={{ justifyContent: 'space-between' }}>
-                    <Button variant="contained" color="secondary" style={{ padding: '0' }}>
-                        <Link to='/' style={{ color: 'white', padding: '8px 15px' }}>
-                            Home
-                        </Link>
-                    </Button>
-                    <Button variant="contained" color="secondary" style={{ padding: '0' }}>
-                        <Link to='/admin' style={{ color: 'white', padding: '8px 15px' }}>
-                            Admin
-                        </Link>
-                    </Button>
-                    <Button variant="contained" color="secondary" style={{ padding: '0' }}>
-                        <Link to='/profile' style={{ color: 'white', padding: '8px 15px' }}>
-                            Profile
-                        </Link>
-                    </Button>
+                    <Box sx={{ alignItems: 'start' }}>
+                        {
+                            user?.result?.role ?
+                                <>
+                                    <Button variant="contained" color="secondary" style={{ padding: '0' }}>
+                                        <Link to='/' style={{ color: 'white', padding: '8px 15px' }}>
+                                            Home
+                                        </Link>
+                                    </Button>
+                                    <Button variant="contained" color="secondary" style={{ padding: '0' }}>
+                                        <Link to='/admin' style={{ color: 'white', padding: '8px 15px' }}>
+                                            Admin
+                                        </Link>
+                                    </Button>
+                                    <Button variant="contained" color="secondary" style={{ padding: '0' }}>
+                                        <Link to='/profile' style={{ color: 'white', padding: '8px 15px' }}>
+                                            Profile
+                                        </Link>
+                                    </Button>
+                                </> :
+                                <>
+                                    <Button variant="contained" color="secondary" style={{ padding: '0' }}>
+                                        <Link to='/' style={{ color: 'white', padding: '8px 15px' }}>
+                                            Home
+                                        </Link>
+                                    </Button>
+                                    <Button variant="contained" color="secondary" style={{ padding: '0' }}>
+                                        <Link to='/profile' style={{ color: 'white', padding: '8px 15px' }}>
+                                            Profile
+                                        </Link>
+                                    </Button>
+                                </>
+                        }
+                    </Box>
+
                     <Search>
                         <SearchIconWrapper>
                             <SearchIcon />
@@ -87,21 +127,24 @@ const NavBar = () => {
                         />
                     </Search>
                     <Box sx={{ alignItems: 'end' }}>
-                        <Button variant="contained" color="secondary" style={{ padding: '0' }} onClick={handleLogOut}>
-
-                            log Out
-
-                        </Button>
-                        <Button variant="contained" color="secondary" style={{ padding: '0' }}>
-                            <Link to='/login' style={{ color: 'white', padding: '8px 15px' }} >
-                                Log in
-                            </Link>
-                        </Button>
-                        <Button variant="contained" color="secondary" style={{ padding: '0' }}>
-                            <Link to='/sign-up' style={{ color: 'white', padding: '8px 15px' }}>
-                                Sign Up
-                            </Link>
-                        </Button>
+                        {
+                            user ?
+                                <Button variant="contained" color="secondary" style={{ padding: '0' }} onClick={handleLogOut}>
+                                    log Out
+                                </Button> :
+                                <>
+                                    <Button variant="contained" color="secondary" style={{ padding: '0' }}>
+                                        <Link to='/login' style={{ color: 'white', padding: '8px 15px' }} >
+                                            Log in
+                                        </Link>
+                                    </Button>
+                                    <Button variant="contained" color="secondary" style={{ padding: '0' }}>
+                                        <Link to='/sign-up' style={{ color: 'white', padding: '8px 15px' }}>
+                                            Sign Up
+                                        </Link>
+                                    </Button>
+                                </>
+                        }
                     </Box>
                 </Toolbar>
             </AppBar>

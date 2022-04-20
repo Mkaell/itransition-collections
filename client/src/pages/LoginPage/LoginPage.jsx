@@ -5,7 +5,9 @@ import './LoginPage.css'
 import { Button, TextField } from '@mui/material';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
-
+import { logIn } from '../../api';
+import { useDispatch } from 'react-redux';
+import { actionLogIn } from '../../actionCreators/auth';
 const validationSchema = yup.object({
   email: yup.string()
     .required('Email is required'),
@@ -14,7 +16,7 @@ const validationSchema = yup.object({
 });
 
 const LoginPage = () => {
-
+  const dispatch = useDispatch();
   const navigate = useNavigate()
 
   const formik = useFormik({
@@ -24,20 +26,20 @@ const LoginPage = () => {
     },
 
     validationSchema: validationSchema,
-    onSubmit: async (value) => {
-      try {
+    onSubmit: async (values) => {
+      dispatch(actionLogIn(values, navigate));
+      // try {
+      //   const { data } = await logIn(value)
 
-        const { data } = await axios.post("http://localhost:5047/auth/login", value)
+      //   localStorage.setItem(
+      //     "userData",
+      //     JSON.stringify({ token: data.token, userId: data.result._id, isRole: data.result.role, isActive: data.result.active })
 
-        localStorage.setItem(
-          "userData",
-          JSON.stringify({ token: data.token, userId: data.result._id, isRole: data.result.role, isActive: data.result.active })
-
-        )
-        navigate("/");
-      } catch (error) {
-        alert(error.response.data.message)
-      }
+      //   )
+      //   navigate("/");
+      // } catch (error) {
+      //   alert(error.response.data.message)
+      // }
 
     },
   });

@@ -3,9 +3,11 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Button, TextField } from '@mui/material';
 import axios from 'axios'
-
+import { signUp } from '../../api';
 import './SignUpPage.css'
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { actionSignUp } from '../../actionCreators/auth';
 
 const validationSchema = yup.object({
     email: yup
@@ -20,6 +22,7 @@ const validationSchema = yup.object({
 
 const SignUpPage = () => {
 
+    const dispatch = useDispatch();
     const navigate = useNavigate()
 
     const formik = useFormik({
@@ -29,11 +32,14 @@ const SignUpPage = () => {
         },
 
         validationSchema: validationSchema,
-        onSubmit: async (data) => {
-            await axios.post("http://localhost:5047/auth/signup", data)
-                .then((res) => {
-                    navigate("/login");
-                }).catch(error => alert(error.response.data.message))
+        onSubmit: async (values) => {
+            dispatch(actionSignUp(values, navigate));
+            // try {
+            //     await signUp(values)
+            //     navigate("/login");
+            // } catch (error) {
+            //     alert(error.response.data.message)
+            // }
         },
     });
     return (

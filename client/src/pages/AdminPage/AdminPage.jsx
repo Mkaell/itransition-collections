@@ -17,6 +17,7 @@ import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SecurityIcon from '@mui/icons-material/Security';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
+import axios from 'axios';
 
 
 const initialRows = [
@@ -74,12 +75,25 @@ const AdminPage = () => {
     //         }
     //     }
     // ];
-    const [rows, setRows] = React.useState(initialRows);
+    const [rows, setRows] = React.useState([]);
+
+    React.useEffect(() => {
+        const getuser = async () => {
+            try {
+                const res = await axios.get('http://localhost:5047/users/getUsers')
+                console.log(res.data);
+                setRows(res.data)
+            } catch (error) {
+                alert(error)
+            }
+        }
+        getuser()
+    }, [])
 
     const deleteUser = React.useCallback(
         (id) => () => {
             setTimeout(() => {
-                setRows((prevRows) => prevRows.filter((row) => row.id !== id));
+                setRows((prevRows) => prevRows.filter((row) => row._id !== id));
             });
         },
         [],
@@ -89,7 +103,17 @@ const AdminPage = () => {
         (id) => () => {
             setRows((prevRows) =>
                 prevRows.map((row) =>
-                    row.id === id ? { ...row, isAdmin: !row.isAdmin } : row,
+                    row._id === id ? { ...row, role: !row.role } : row,
+                ),
+            );
+        },
+        [],
+    );
+    const toggleActive = React.useCallback(
+        (id) => () => {
+            setRows((prevRows) =>
+                prevRows.map((row) =>
+                    row._id === id ? { ...row, active: !row.active } : row,
                 ),
             );
         },
@@ -108,43 +132,12 @@ const AdminPage = () => {
 
     const columns = React.useMemo(
         () => [
-            { field: 'name', type: 'string' },
-            { field: 'age', type: 'number' },
-            { field: 'dateCreated', type: 'date', width: 130 },
-            { field: 'lastLogin', type: 'dateTime', width: 180 },
-            { field: 'isAdmin', type: 'boolean', width: 120 },
-            {
-                field: 'country',
-                type: 'singleSelect',
-                width: 120,
-                valueOptions: [
-                    'Bulgaria',
-                    'Netherlands',
-                    'France',
-                    'United Kingdom',
-                    'Spain',
-                    'Brazil',
-                ],
-            },
-            {
-                field: 'discount',
-                type: 'singleSelect',
-                width: 120,
-                editable: true,
-                valueOptions: ({ row }) => {
-                    if (row === undefined) {
-                        return ['EU-resident', 'junior'];
-                    }
-                    const options = [];
-                    if (!['United Kingdom', 'Brazil'].includes(row.country)) {
-                        options.push('EU-resident');
-                    }
-                    if (row.age < 27) {
-                        options.push('junior');
-                    }
-                    return options;
-                },
-            },
+            { field: '_id', headerName: 'ID', type: 'string', width: 220 },
+            { field: 'email', type: 'string', width: 220 },
+            // { field: 'dateCreated', type: 'date', width: 130 },
+            // { field: 'lastLogin', type: 'dateTime', width: 180 },
+            { field: 'role', headerName: 'isAdmin', type: 'boolean', width: 120 },
+            { field: 'active', headerName: 'isActive', type: 'boolean', width: 120 },
             {
                 field: 'actions',
                 type: 'actions',
@@ -163,14 +156,14 @@ const AdminPage = () => {
                     />,
                     <GridActionsCellItem
                         icon={<FileCopyIcon />}
-                        label="Duplicate User"
-                        onClick={duplicateUser(params.id)}
+                        label="Ban User"
+                        onClick={toggleActive(params.id)}
                         showInMenu
                     />,
                 ],
             },
         ],
-        [deleteUser, toggleAdmin, duplicateUser],
+        [deleteUser, toggleAdmin, toggleActive],
     );
 
     return (
@@ -188,8 +181,8 @@ const AdminPage = () => {
         //         }}
         //     />
         // </div>
-        <div style={{ height: 300, width: '100%', marginTop: '100px' }}>
-            <DataGrid columns={columns} rows={rows} checkboxSelection={true} />
+        <div style={{ height: 300, width: '100%', marginTop: '100px', }}>
+            <DataGrid style={{ textAlign: 'center' }} columns={columns} rows={rows} checkboxSelection={true} getRowId={(row) => row._id} />
         </div>
     );
 
