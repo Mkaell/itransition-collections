@@ -12,7 +12,11 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionLogOut } from '../../actionCreators/auth';
 import decode from 'jwt-decode';
+import { useTheme } from '@mui/material/styles';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
+import { ColorModeContext } from '../../App'
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -58,7 +62,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const NavBar = () => {
 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
-
+    const theme = useTheme();
+    const colorMode = React.useContext(ColorModeContext);
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const location = useLocation();
@@ -85,6 +90,22 @@ const NavBar = () => {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
                 <Toolbar style={{ justifyContent: 'space-between' }}>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            bgcolor: 'background.default',
+                            color: 'text.primary',
+                            borderRadius: 1,
+                            p: 3,
+                        }}
+                    >
+                        {theme.palette.mode} mode
+                        <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
+                            {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+                        </IconButton>
+                    </Box>
                     <Box sx={{ alignItems: 'start' }}>
                         {
                             user?.result?.role ?
