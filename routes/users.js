@@ -1,19 +1,23 @@
 const express = require("express");
 const router = express.Router();
-const UserModal = require('../models/Users.js') ;
-router.get('/getUsers',async (req,res)=> {
+const {
+    getUsers,
+    deleteUser,
+    updateAdminStatus,
+    updateBanStatus,
+    deleteUsers,
+    toggleAdminsStatus,
+    toggleActiveStatus,
+        } = require('../controllers/AdminControler')
 
-    res.setHeader('Content-Type', 'application/json');
-    let collectionOfUsers
-    try {
-         collectionOfUsers = await UserModal.find();
-        
-    } catch (error) {
-        console.log(error)
-    }
-    
-    return res.json(collectionOfUsers)
-});
+
+router.get('/getUsers', getUsers);
+router.post('/deleteUsers', deleteUsers);
+router.post('/toggleAdmins', toggleAdminsStatus);
+router.post('/toggleActive', toggleActiveStatus);
+router.patch('/admin/:id',  updateAdminStatus);
+router.patch('/ban/:id',  updateBanStatus);
+router.delete('/:id',  deleteUser);
 
 
 module.exports = router;

@@ -1,188 +1,224 @@
-// import * as React from "react";
-// import IconButton from "@mui/material/IconButton";
-// import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-// import DeleteIcon from "@mui/icons-material/Delete";
-
-// const _rows = [
-//     { id: 1, col1: "Hello", col2: "World" },
-//     { id: 2, col1: "XGrid", col2: "is Awesome" },
-//     { id: 3, col1: "Material-UI", col2: "is Amazing" },
-//     { id: 4, col1: "Hello", col2: "World" },
-//     { id: 5, col1: "XGrid", col2: "is Awesome" },
-//     { id: 6, col1: "Material-UI", col2: "is Amazing" }
-// ];
-
-import * as React from 'react';
-import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { DataGrid, GridActionsCellItem, GridToolbar, GridToolbarFilterButton } from '@mui/x-data-grid';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SecurityIcon from '@mui/icons-material/Security';
-import FileCopyIcon from '@mui/icons-material/FileCopy';
-import axios from 'axios';
+import BlockIcon from '@mui/icons-material/Block';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteUser, getUsers, updateAdminStatus, updateBanStatus } from '../../actionCreators/usersCreator';
+import { deleteUsers, changeAdminStatusOfSelected, changeActiveStatusOfSelected } from '../../api';
+import { actionLogOut } from '../../actionCreators/auth';
+import { useNavigate } from 'react-router-dom';
+import { Tooltip } from '@mui/material';
+import { style } from './styled';
+import { EnhancedTableToolbar } from './ToolBar';
+import { format } from 'date-fns'
 
 
-const initialRows = [
-    {
-        id: 1,
-        name: 'Damien',
-        age: 25,
-        isAdmin: true,
-        country: 'Spain',
-        discount: '',
-    },
-    {
-        id: 2,
-        name: 'Nicolas',
-        age: 36,
-        isAdmin: false,
-        country: 'France',
-        discount: '',
-    },
-    {
-        id: 3,
-        name: 'Kate',
-        age: 19,
-        isAdmin: false,
-        country: 'Brazil',
-        discount: 'junior',
-    },
-];
+const StyledDataGrid = style
+
+
 const AdminPage = () => {
 
-    // const [rows, setRows] = React.useState(_rows);
-    // const [selectionModel, setSelectionModel] = React.useState([]);
-    // const columns = [
-    //     { field: "col1", headerName: "Column 1", width: 150 },
-    //     { field: "col2", headerName: "Column 2", width: 150 },
-    //     {
-    //         field: "delete",
-    //         width: 75,
-    //         sortable: false,
-    //         disableColumnMenu: true,
-    //         renderHeader: () => {
-    //             return (
-    //                 <IconButton
-    //                     onClick={() => {
-    //                         const selectedIDs = new Set(selectionModel);
-    //                         // you can call an API to delete the selected IDs
-    //                         // and get the latest results after the deletion
-    //                         // then call setRows() to update the data locally here
-    //                         setRows((r) => r.filter((x) => !selectedIDs.has(x.id)));
-    //                     }}
-    //                 >
-    //                     <DeleteIcon />
-    //                 </IconButton>
-    //             );
-    //         }
-    //     }
-    // ];
-    const [rows, setRows] = React.useState([]);
+    const { isLoading, users } = useSelector(state => state.users)
+    const { _id } = useSelector(state => state.auth.authData.result)
+    const navigate = useNavigate()
+    const dispatch = useDispatch();
+    const [selected, setSelected] = useState([]);
+    const [rows, setRows] = useState(users);
+    console.log(isLoading);
 
-    React.useEffect(() => {
-        const getuser = async () => {
-            try {
-                const res = await axios.get('http://localhost:5047/users/getUsers')
-                console.log(res.data);
-                setRows(res.data)
-            } catch (error) {
-                alert(error)
-            }
-        }
-        getuser()
+    useEffect(() => {
+        dispatch(getUsers())
+            .then(res => setRows(res))
+
     }, [])
 
-    const deleteUser = React.useCallback(
+    function redirectLogin(id, _id) {
+        if (id === _id) {
+            dispatch(actionLogOut());
+            navigate('/login')
+        }
+    }
+
+    function redirectSelected(_id, selectedUsers) {
+        if (selectedUsers.includes(_id)) {
+            dispatch(actionLogOut());
+            navigate('/login')
+        }
+    }
+
+    const deleteAccount = useCallback(
         (id) => () => {
             setTimeout(() => {
+                dispatch(deleteUser(id))
+                redirectLogin(id, _id)
                 setRows((prevRows) => prevRows.filter((row) => row._id !== id));
             });
         },
-        [],
+        [_id, dispatch],
     );
 
-    const toggleAdmin = React.useCallback(
-        (id) => () => {
+    const deleteAccounts = useCallback(
+        (selectedUsers) => async () => {
+            try {
+                await deleteUsers({ ids: selectedUsers })
+                redirectSelected(_id, selectedUsers)
+                const selectedIDs = new Set(selectedUsers);
+                setRows((prevRows) => prevRows.filter((row) => !selectedIDs.has(row._id)));
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        [_id]
+    );
+
+    const toggleAdminStatus = useCallback(
+        (id, role) => () => {
+            dispatch(updateAdminStatus(id, { role: !role }))
+            redirectLogin(id, _id)
             setRows((prevRows) =>
                 prevRows.map((row) =>
                     row._id === id ? { ...row, role: !row.role } : row,
                 ),
             );
         },
-        [],
+        [_id, dispatch],
     );
-    const toggleActive = React.useCallback(
-        (id) => () => {
+
+    const toggleAdminStatusOfSelected = useCallback(
+        (selectedUsers) => async () => {
+            try {
+                await changeAdminStatusOfSelected({ ids: selectedUsers })
+                redirectSelected(_id, selectedUsers)
+                setRows((prevRows) =>
+                    prevRows.map((row) =>
+                        selectedUsers.includes(row._id) ? { ...row, role: !row.role } : row,
+                    ),
+                );
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        [_id],
+    );
+
+    const toggleActiveStatus = useCallback(
+        (id, active) => () => {
+            dispatch(updateBanStatus(id, { active: !active }))
+            redirectLogin(id, _id)
             setRows((prevRows) =>
                 prevRows.map((row) =>
                     row._id === id ? { ...row, active: !row.active } : row,
                 ),
             );
         },
-        [],
+        [_id, dispatch],
     );
 
-    const duplicateUser = React.useCallback(
-        (id) => () => {
-            setRows((prevRows) => {
-                const rowToDuplicate = prevRows.find((row) => row.id === id);
-                return [...prevRows, { ...rowToDuplicate, id: Date.now() }];
-            });
+    const toggleActiveStatusOfSelected = useCallback(
+        (selectedUsers) => async () => {
+            try {
+                await changeActiveStatusOfSelected({ ids: selectedUsers })
+                redirectSelected(_id, selectedUsers)
+                setRows((prevRows) =>
+                    prevRows.map((row) =>
+                        selectedUsers.includes(row._id) ? { ...row, active: !row.active } : row,
+                    ),
+                );
+            } catch (error) {
+                console.log(error);
+            }
         },
-        [],
+        [_id],
     );
-
-    const columns = React.useMemo(
+    // 
+    const columns = useMemo(
         () => [
-            { field: '_id', headerName: 'ID', type: 'string', width: 220 },
-            { field: 'email', type: 'string', width: 220 },
-            // { field: 'dateCreated', type: 'date', width: 130 },
-            // { field: 'lastLogin', type: 'dateTime', width: 180 },
-            { field: 'role', headerName: 'isAdmin', type: 'boolean', width: 120 },
-            { field: 'active', headerName: 'isActive', type: 'boolean', width: 120 },
+            { field: '_id', headerName: 'ID', type: 'string', flex: 0.2, headerAlign: 'center', },
+            { field: 'email', headerName: 'Email', type: 'string', flex: 0.3, headerAlign: 'center', },
+            {
+                field: 'created_at', headerName: 'Created_at', type: 'dateTime', flex: 0.3, headerAlign: 'center',
+                valueFormatter: (params) => {
+                    const valueFormatted = format(new Date(params.value), "HH:mm:ss'/'yyyy-MM-dd");
+                    return valueFormatted
+                },
+            },
+
+            {
+                field: 'lastLogin', headerName: 'Last_login', type: 'dateTime', flex: 0.3, headerAlign: 'center',
+                valueFormatter: (params) => {
+                    const valueFormatted = format(new Date(params.value), "HH:mm:ss'/'yyyy-MM-dd");
+                    return valueFormatted
+                },
+            },
+            { field: 'role', headerName: 'IsAdmin', type: 'boolean', flex: 0.2, headerAlign: 'center', },
+            { field: 'active', headerName: 'IsActive', type: 'boolean', flex: 0.2, headerAlign: 'center', },
             {
                 field: 'actions',
                 type: 'actions',
-                width: 80,
+                headerName: 'Actions',
+                flex: 0.2,
+                headerAlign: 'center',
                 getActions: (params) => [
                     <GridActionsCellItem
-                        icon={<DeleteIcon />}
+                        icon={
+                            <Tooltip title="Delete user">
+                                <DeleteIcon />
+                            </Tooltip>
+                        }
                         label="Delete"
-                        onClick={deleteUser(params.id)}
+                        onClick={deleteAccount(params.id)}
                     />,
                     <GridActionsCellItem
-                        icon={<SecurityIcon />}
+                        icon={
+                            <Tooltip title="Toggle Admin">
+                                <SecurityIcon />
+                            </Tooltip>
+                        }
                         label="Toggle Admin"
-                        onClick={toggleAdmin(params.id)}
-                        showInMenu
+                        onClick={toggleAdminStatus(params.id, params.row.role)}
                     />,
                     <GridActionsCellItem
-                        icon={<FileCopyIcon />}
-                        label="Ban User"
-                        onClick={toggleActive(params.id)}
-                        showInMenu
+                        icon={
+                            <Tooltip title="Ban/Unban user">
+                                <BlockIcon />
+                            </Tooltip>
+                        }
+                        label="Ban/Unban user"
+                        onClick={toggleActiveStatus(params.id, params.row.active)}
                     />,
                 ],
             },
         ],
-        [deleteUser, toggleAdmin, toggleActive],
+        [deleteAccount, toggleAdminStatus, toggleActiveStatus],
     );
 
     return (
-        // <div style={{ height: 400, width: "100%", marginTop: '3rem' }}>
-        //     <h3>Users list</h3>
-        //     <DataGrid
-        //         rows={rows}
-        //         components={{
-        //             Toolbar: GridToolbar,
-        //         }}
-        //         columns={columns}
-        //         checkboxSelection
-        //         onSelectionModelChange={(ids) => {
-        //             setSelectionModel(ids);
-        //         }}
-        //     />
-        // </div>
-        <div style={{ height: 300, width: '100%', marginTop: '100px', }}>
-            <DataGrid style={{ textAlign: 'center' }} columns={columns} rows={rows} checkboxSelection={true} getRowId={(row) => row._id} />
+        <div style={{ height: 400, width: '100%', marginTop: '100px', }}>
+
+            <StyledDataGrid
+                components={{
+                    Toolbar: EnhancedTableToolbar,
+                }}
+                loading={isLoading}
+                onSelectionModelChange={(ids) => {
+                    setSelected(ids);
+                }}
+                componentsProps={{
+                    toolbar: {
+                        deleteAccounts,
+                        selected,
+                        toggleAdminStatusOfSelected,
+                        toggleActiveStatusOfSelected
+                    },
+                }}
+                hideFooterSelectedRowCount={true}
+                GridColDef={'center'}
+                columns={columns}
+                rows={rows}
+                checkboxSelection={true}
+                getRowId={(row) => row._id}
+            />
         </div>
     );
 

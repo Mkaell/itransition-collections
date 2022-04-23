@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import { Button } from '@mui/material';
+import { Button, Chip } from '@mui/material';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionLogOut } from '../../actionCreators/auth';
@@ -62,11 +62,13 @@ const NavBar = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const location = useLocation();
+
     const handleLogOut = () => {
         dispatch(actionLogOut());
         setUser(null)
         navigate('/login');
     }
+
     useEffect(() => {
         const token = user?.token;
 
@@ -78,6 +80,7 @@ const NavBar = () => {
 
         setUser(JSON.parse(localStorage.getItem('profile')));
     }, [location]);
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -129,9 +132,13 @@ const NavBar = () => {
                     <Box sx={{ alignItems: 'end' }}>
                         {
                             user ?
-                                <Button variant="contained" color="secondary" style={{ padding: '0' }} onClick={handleLogOut}>
-                                    log Out
-                                </Button> :
+                                <>
+                                    <Chip label={user?.result?.email} style={{ color: "white", backgroundColor: "#000", borderRadius: '10px' }} />
+                                    <Button variant="contained" color="secondary" style={{ padding: '0' }} onClick={handleLogOut}>
+                                        log Out
+                                    </Button>
+                                </>
+                                :
                                 <>
                                     <Button variant="contained" color="secondary" style={{ padding: '0' }}>
                                         <Link to='/login' style={{ color: 'white', padding: '8px 15px' }} >
