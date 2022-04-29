@@ -7,7 +7,7 @@ import { signUp } from '../../api';
 import './SignUpPage.css'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { actionSignUp } from '../../actionCreators/auth';
+import { actionSignUp } from '../../store/actionCreators/auth';
 
 const validationSchema = yup.object({
     email: yup
@@ -34,12 +34,6 @@ const SignUpPage = () => {
         validationSchema: validationSchema,
         onSubmit: async (values) => {
             dispatch(actionSignUp(values, navigate));
-            // try {
-            //     await signUp(values)
-            //     navigate("/login");
-            // } catch (error) {
-            //     alert(error.response.data.message)
-            // }
         },
     });
     return (

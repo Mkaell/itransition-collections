@@ -12,3 +12,7 @@ export const changeActiveStatusOfSelected  = (formData) => API.post('/users/togg
 
 export const logIn = (formData) => API.post('/auth/login', formData);
 export const signUp = (formData) => API.post('/auth/signup', formData);
+
+export const createCollection = (formData) => API.post('/collections/create', formData);
+export const fetchCollections = (id) => API.post('/collections/get', id);
+export const deleteCollection = (id) => API.delete(`/collections/delete/${id}`);

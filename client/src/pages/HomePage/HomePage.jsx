@@ -1,5 +1,6 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Divider, Typography } from '@mui/material'
 import React from 'react'
+import CollectionCard from '../../components/Card/CollectionCard';
 
 
 import './HomePage.css'
@@ -31,24 +32,22 @@ const HomePage = () => {
     return (
         <div>
             <div className='home-clouds-tags'>
-                <BasicCard />
+                <CollectionCard />
             </div>
             <Divider sx={{ mt: 5 }} />
             <div className='home-wrapper'>
                 <div className='home-collections'>
-                    <BasicCard />
-                    <BasicCard />
-                    <BasicCard />
-                    <BasicCard />
+                    <CollectionCard />
+                    <CollectionCard />
+                    <CollectionCard />
+                    <CollectionCard />
                 </div>
                 <Divider orientation="vertical" flexItem />
-
                 <div className='home-items'>
-                    <BasicCard />
-                    <BasicCard />
-                    <BasicCard />
-                    <BasicCard />
-
+                    <CollectionCard />
+                    <CollectionCard />
+                    <CollectionCard />
+                    <CollectionCard />
                 </div>
             </div>
         </div>

@@ -4,11 +4,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SecurityIcon from '@mui/icons-material/Security';
 import BlockIcon from '@mui/icons-material/Block';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteUser, getUsers, updateAdminStatus, updateBanStatus } from '../../actionCreators/usersCreator';
+import { deleteUser, getUsers, updateAdminStatus, updateBanStatus } from '../../store/actionCreators/usersCreator';
 import { deleteUsers, changeAdminStatusOfSelected, changeActiveStatusOfSelected } from '../../api';
-import { actionLogOut } from '../../actionCreators/auth';
+import { actionLogOut } from '../../store/actionCreators/auth';
 import { useNavigate } from 'react-router-dom';
-import { Tooltip } from '@mui/material';
+import { Paper, Tooltip } from '@mui/material';
 import { style } from './styled';
 import { EnhancedTableToolbar } from './ToolBar';
 import { format } from 'date-fns'
@@ -194,32 +194,33 @@ const AdminPage = () => {
     );
 
     return (
-        <div style={{ height: 400, width: '100%', marginTop: '100px', }}>
-
-            <StyledDataGrid
-                components={{
-                    Toolbar: EnhancedTableToolbar,
-                }}
-                loading={isLoading}
-                onSelectionModelChange={(ids) => {
-                    setSelected(ids);
-                }}
-                componentsProps={{
-                    toolbar: {
-                        deleteAccounts,
-                        selected,
-                        toggleAdminStatusOfSelected,
-                        toggleActiveStatusOfSelected
-                    },
-                }}
-                hideFooterSelectedRowCount={true}
-                GridColDef={'center'}
-                columns={columns}
-                rows={rows}
-                checkboxSelection={true}
-                getRowId={(row) => row._id}
-            />
-        </div>
+        <Paper>
+            <div style={{ height: 400, width: '100%', marginTop: '100px', }}>
+                <StyledDataGrid
+                    components={{
+                        Toolbar: EnhancedTableToolbar,
+                    }}
+                    loading={isLoading}
+                    onSelectionModelChange={(ids) => {
+                        setSelected(ids);
+                    }}
+                    componentsProps={{
+                        toolbar: {
+                            deleteAccounts,
+                            selected,
+                            toggleAdminStatusOfSelected,
+                            toggleActiveStatusOfSelected
+                        },
+                    }}
+                    hideFooterSelectedRowCount={true}
+                    GridColDef={'center'}
+                    columns={columns}
+                    rows={rows}
+                    checkboxSelection={true}
+                    getRowId={(row) => row._id}
+                />
+            </div>
+        </Paper>
     );
 
 }

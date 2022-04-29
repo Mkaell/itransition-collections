@@ -1,44 +1,68 @@
-import React from 'react'
-import { Button, Card, CardActions, CardContent, Typography } from '@mui/material'
+import React, { useCallback, useEffect, useState } from 'react'
+import { Button } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
 import './ProfilePage.css'
+import Card from '../../components/Card/CollectionCard';
+import Modal from '../../components/Modal/Modal';
+import CollectionCard from '../../components/Card/CollectionCard';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteCollectionDispatch, getcollectionsDispatch } from '../../store/actionCreators/collectionsCreator';
+import CircularProgress from '@mui/material/CircularProgress';
 
-function BasicCard() {
-    return (
-        <Card sx={{ minWidth: 200, mt: 2 }}>
-            <CardContent>
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                    Word of the Day
-                </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    adjective
-                </Typography>
-                <Typography variant="body2">
-                    well meaning and kindly.
-                    <br />
-                    {'"a benevolent smile"'}
-                </Typography>
-            </CardContent>
-            <CardActions>
-                <Button size="small">Learn More</Button>
-            </CardActions>
-        </Card>
-    );
-}
 
 const ProfilePage = () => {
+
+    const dispatch = useDispatch()
+    const { collections, isLoading } = useSelector(state => state.collections)
+    console.log(collections);
+    const userId = useSelector(state => state.auth.authData.result._id)
+    const [open, setOpen] = useState(false);
+
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    useEffect(() => {
+        dispatch(getcollectionsDispatch({ userId }))
+    }, [])
+
+    const handleDeleteCollection = (id) => {
+        dispatch(deleteCollectionDispatch(id))
+    }
+
     return (
         <div className='profile'>
             <div className='profile-button'>
-                <Button variant="contained" startIcon={<AddIcon />}>New Collection</Button>
+                <Button
+                    variant="contained"
+                    startIcon={<AddIcon />}
+                    onClick={() => handleClickOpen()}
+                >New Collection
+                </Button>
             </div>
             <div className='profile-collections_wrapper'>
-                <BasicCard />
-                <BasicCard />
-                <BasicCard />
-                <BasicCard />
+                {
+                    isLoading ? <CircularProgress sx={{ mt: 10 }} /> :
+                        collections &&
+                        collections?.map((collection) =>
+                            <CollectionCard
+                                name={collection.name}
+                                description={collection.description}
+                                theme={collection.theme}
+                                image={collection.image}
+                                id={collection._id}
+                                key={collection._id}
+                                deleteCollection={handleDeleteCollection}
+                            />
+                        )
+                }
             </div>
-
+            <Modal handleClose={handleClose} open={open} />
         </div>
     )
 }

@@ -1,5 +1,5 @@
-import { AUTH, LOGOUT } from '../actions/actionTypes.js';
-import * as api from '../api/index.js';
+import { AUTH, LOGOUT } from '../actions/actionTypes';
+import * as api from '../../api/index.js';
 
 
 export const actionLogIn = (formData, navigate) => async (dispatch) => {

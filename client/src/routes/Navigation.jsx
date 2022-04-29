@@ -30,7 +30,7 @@ const Navigation = () => {
                 path='/profile'
                 element={<ProfilePage />}
             />
-            <Route path="/collection/:idcoll" element={<Collection />} />
+            <Route path="/collection/:idCollection" element={<Collection />} />
 
         </Routes>
     )

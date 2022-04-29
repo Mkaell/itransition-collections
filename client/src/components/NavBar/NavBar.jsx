@@ -10,7 +10,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Button, Chip } from '@mui/material';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { actionLogOut } from '../../actionCreators/auth';
+import { actionLogOut } from '../../store/actionCreators/auth';
 import decode from 'jwt-decode';
 import { useTheme } from '@mui/material/styles';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
