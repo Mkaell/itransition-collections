@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import InputChip from '../InputChip/InputChip'
-
+import { Utils } from '../../utils/utils'
 
 const AdditionalFields = ({ collection, setCollection }) => {
 
@@ -8,17 +8,13 @@ const AdditionalFields = ({ collection, setCollection }) => {
         collection,
     ]);
 
-    const fieldCapitalized = (field) => {
-        return field.charAt(0).toUpperCase() + field.slice(1)
-    }
-
     return (
         <>
             {itemKeys.map((field, index) => (
                 <InputChip
                     key={index}
                     field={field}
-                    name={`${fieldCapitalized(field)} fields`}
+                    name={`${Utils.capitalized(field)} fields`}
                     collection={collection}
                     setCollection={setCollection} />
             ))}

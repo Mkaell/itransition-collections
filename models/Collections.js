@@ -10,7 +10,7 @@ const collectionSchema = new Schema(
       basic: {
         id: { type: String, default: "id" },
         name: { type: String, default: "name" },
-        tag: { type: String, default: "tag" },
+        tags: { type: String, default: "tags" },
       },
       additional: {
         numerical: [{ type: String }],

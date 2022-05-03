@@ -1,10 +1,10 @@
 import { START_LOADING, END_LOADING, FETCH_ALL, CREATE, DELETE, FETCH_ALL_COL, } from '../actions/actionTypes';
 import * as api from '../../api/index.js';
 
-export const deleteCollectionDispatch = (id) => async (dispatch) => {
+export const deleteCollectionDispatch = (id , userId) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
-        await api.deleteCollection(id);
+        await api.deleteCollection(id, userId);
         dispatch({ type: DELETE, payload: id });
         dispatch({ type: END_LOADING });
     } catch (error) {

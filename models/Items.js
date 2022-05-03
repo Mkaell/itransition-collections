@@ -3,17 +3,18 @@ const { Schema, model } = require("mongoose");
 const itemSchema = new Schema(
   {
     collectionId: { type: String, required: true },
-    date: { type: Date, required: true },
+    dateCreate: { type: Date, required: true },
     usersByLikes: [{ type: String }],
-    name: { type: String, required: true },
-    tag: { type: String, required: true },
-    numerical: [{ type: Number }],
-    oneLine: [{ type: String }],
-    textual: [{ type: String }],
-    temporal: [{ type: Date }],
-    boolean: [{ type: Boolean }],
+    // name: { type: String, required: true },
+    // tags: [{ type: String, required: true }],
+    // numerical: [{ type: Number }],
+    // string: [{ type: String }],
+    // text: [{ type: String }],
+    // date: [{ type: Date }],
+    // boolean: [{ type: Boolean }],
   },
-  { versionKey: false }
+  { versionKey: false,
+     strict: false  }
 );
 
 itemSchema.index({ "$**": "text" });

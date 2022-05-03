@@ -25,12 +25,10 @@ const AdminPage = () => {
     const dispatch = useDispatch();
     const [selected, setSelected] = useState([]);
     const [rows, setRows] = useState(users);
-    console.log(isLoading);
 
     useEffect(() => {
         dispatch(getUsers())
             .then(res => setRows(res))
-
     }, [])
 
     function redirectLogin(id, _id) {

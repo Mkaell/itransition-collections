@@ -43,7 +43,7 @@ const InputChip = ({ collection, name, field, setCollection }) => {
         <TextField
           {...params}
           label={name}
-          placeholder="Create title"
+          placeholder="Creating a field name"
         />
       )}
     />

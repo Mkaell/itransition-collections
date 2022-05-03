@@ -11,7 +11,7 @@ const createCollection = async (req, res) => {
       
       const userById = await User.findById(userId).populate("collections");
       const response = await cloudinary.uploader.upload(collectionImage, {folder: 'collection-app'})
-      console.log(userById);
+      
       const newCollection = await Collection.create({
         name,
         description,
@@ -31,6 +31,21 @@ const createCollection = async (req, res) => {
       res.status(500).json({ message: e.message });
     }
 }
+const getCollection = async (req, res) => {
+    try {
+      const collectionId = req.params.idcoll;
+
+      const itemsByCollection = await Collection.findById(
+        collectionId
+      )
+      .populate("items");
+
+      res.status(200).json(itemsByCollection);
+    } catch (e) {
+      res.status(500).json({ message: e.message });
+    }
+}
+
 const getCollections = async (req, res) => {
     try {
       const { userId } = req.body;
@@ -46,11 +61,15 @@ const getCollections = async (req, res) => {
   }
 const deleteCollection = async (req, res) => {
     try {
-      const idCollection = req.params.idcoll;
-
-      await Collection.findByIdAndDelete(idCollection);
-
-      res.json({ message: "Сollection deleted" });
+        const idCollection = req.params.idcoll;
+        const {userId} = req.body
+        await User.updateOne({ _id: userId },
+            { $pull: { collections: idCollection}}
+        );
+     
+        await Collection.findByIdAndDelete(idCollection);
+        
+        res.status(200).json({ message: "Сollection deleted" });
     } catch (e) {
       res.status(500).json({ message: e.message });
     }
@@ -58,5 +77,6 @@ const deleteCollection = async (req, res) => {
 module.exports = { 
     createCollection,
     getCollections,
-    deleteCollection
+    deleteCollection,
+    getCollection
     };

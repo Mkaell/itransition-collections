@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const authRouter = require('./routes/auth.js');
 const usersRouter = require('./routes/users.js');
 const collectionRouter = require('./routes/collections.js');
+const itemsRouter = require('./routes/items.js');
 const cloudinary = require('cloudinary').v2
 require('dotenv').config()
 
@@ -22,6 +23,7 @@ app.use(cors());
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
 app.use('/collections', collectionRouter);
+app.use('/items', itemsRouter);
 
 const PORT = process.env.PORT || 5000;
 

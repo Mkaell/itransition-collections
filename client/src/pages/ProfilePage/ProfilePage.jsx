@@ -14,7 +14,7 @@ const ProfilePage = () => {
 
     const dispatch = useDispatch()
     const { collections, isLoading } = useSelector(state => state.collections)
-    console.log(collections);
+
     const userId = useSelector(state => state.auth.authData.result._id)
     const [open, setOpen] = useState(false);
 
@@ -32,7 +32,7 @@ const ProfilePage = () => {
     }, [])
 
     const handleDeleteCollection = (id) => {
-        dispatch(deleteCollectionDispatch(id))
+        dispatch(deleteCollectionDispatch(id, { userId }))
     }
 
     return (

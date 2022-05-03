@@ -2,6 +2,7 @@ import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Icon
 import React from 'react'
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
+
 const CollectionCard = (props) => {
     const navigate = useNavigate()
     const { image, description, name, theme, id, deleteCollection } = props

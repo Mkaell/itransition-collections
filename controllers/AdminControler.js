@@ -10,8 +10,7 @@ const deleteUser = async (req, res) => {
         res.status(200).json({ message: "User deleted successfully." });
     } catch (error) {
         res.status(500).json({ message: error.message });
-    }
-    
+    } 
 }
 
 const deleteUsers = async (req, res) => {
@@ -33,7 +32,7 @@ const updateAdminStatus = async (req, res) => {
     
         res.status(200).json({ message:"Update admin status successfully." });
     } catch (error) {
-        
+        res.status(500).json({ message: error.message });
     }
 }
 

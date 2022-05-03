@@ -15,4 +15,8 @@ export const signUp = (formData) => API.post('/auth/signup', formData);
 
 export const createCollection = (formData) => API.post('/collections/create', formData);
 export const fetchCollections = (id) => API.post('/collections/get', id);
-export const deleteCollection = (id) => API.delete(`/collections/delete/${id}`);
+export const fetchCollection = (id) => API.post(`/collections/get/${id}`, id);
+export const deleteCollection = (id, formData) => API.delete(`/collections/delete/${id}`, {data: formData} );
+
+export const createItem = (formData) => API.post('/items/create', formData);
+export const deleteItem = (id) => API.delete(`/items/delete/${id}`);
