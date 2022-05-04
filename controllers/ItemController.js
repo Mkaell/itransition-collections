@@ -43,11 +43,11 @@ const ItemController = {
   },
   delete: async (req, res) => {
     try {
-      const itemId = req.params.iditem;
+      const {iditem} = req.params;
+      
+     await Item.findByIdAndDelete(iditem);
 
-      await Item.findByIdAndDelete(itemId);
-
-      res.json({});
+      res.status(200).json({message: "Item deleted successfully"});
     } catch (e) {
       res.status(500).json({ message: e.message });
     }
@@ -55,23 +55,12 @@ const ItemController = {
   edit: {
     fields: async (req, res) => {
       try {
-        const { fieldName, fieldValue } = req.body;
+        const itemFields = req.body;
         const itemId = req.params.iditem;
 
-        if (typeof fieldName === "object") {
-          const itemById = await Item.findById(itemId);
-
-          let updatedField = itemById[fieldName[0]];
-          updatedField[fieldName[1]] = fieldValue;
-
-          await Item.findByIdAndUpdate(itemId, {
-            [fieldName[0]]: updatedField,
-          });
-        } else {
-          await Item.findByIdAndUpdate(itemId, { [fieldName]: fieldValue });
-        }
-
-        res.json({});
+        await Item.findByIdAndUpdate(itemId, itemFields);
+        
+        res.status(200).json({ message: "Item update successfully" });
       } catch (e) {
         res.status(500).json({ message: e.message });
       }
@@ -79,13 +68,15 @@ const ItemController = {
     usersByLikes: async (req, res) => {
       try {
         const usersByLikes = req.body.usersByLikes;
+        console.log(req.body);
         const itemId = req.params.iditem;
 
         await Item.findByIdAndUpdate(itemId, {
           usersByLikes,
-        });
+        }
+        );
 
-        res.json({});
+        res.json({message: "Item like successfully"});
       } catch (e) {
         res.status(500).json({ message: e.message });
       }

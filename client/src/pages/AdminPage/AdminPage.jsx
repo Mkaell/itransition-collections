@@ -9,12 +9,9 @@ import { deleteUsers, changeAdminStatusOfSelected, changeActiveStatusOfSelected 
 import { actionLogOut } from '../../store/actionCreators/auth';
 import { useNavigate } from 'react-router-dom';
 import { Paper, Tooltip } from '@mui/material';
-import { style } from './styled';
+import { StyledDataGrid } from './styled';
 import { EnhancedTableToolbar } from './ToolBar';
 import { format } from 'date-fns'
-
-
-const StyledDataGrid = style
 
 
 const AdminPage = () => {
@@ -211,7 +208,7 @@ const AdminPage = () => {
                         },
                     }}
                     hideFooterSelectedRowCount={true}
-                    GridColDef={'center'}
+                    GridColDef='center'
                     columns={columns}
                     rows={rows}
                     checkboxSelection={true}

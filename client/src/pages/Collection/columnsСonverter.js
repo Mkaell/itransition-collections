@@ -1,12 +1,43 @@
-import { Chip, Tooltip } from "@mui/material"
+import { Badge, Chip, Tooltip } from "@mui/material"
 import { GridActionsCellItem } from "@mui/x-data-grid"
 import { Utils } from "../../utils/utils"
 import DeleteIcon from '@mui/icons-material/Delete';
 import SecurityIcon from '@mui/icons-material/Security';
 import BlockIcon from '@mui/icons-material/Block';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
-export const columnsСonverter = (additionalFieldsEntries, basicFieldsEntries, deleteItem) => {
+const currentUser =JSON.parse(localStorage.getItem('profile'))
+console.log(currentUser);
+export const columnsСonverter = (additionalFieldsEntries, basicFieldsEntries, deleteCurrentItem, likeIthemByCurrentUser) => {
+    let like = 0
     const columnsObj = []
+    columnsObj.push({
+        field: 'actions',
+        type: 'actions',
+        headerName: 'Actions',
+        minWidth: 150,
+        editable: false,
+        headerAlign: 'center',
+        getActions: (params) => [
+            <GridActionsCellItem
+                icon={
+                    <Tooltip title="Delete item">
+                        <DeleteIcon sx={{fontSize: '35px'}}/>
+                    </Tooltip>
+                }
+                label="Delete"
+                onClick={deleteCurrentItem(params.id)}
+            />,
+
+            <GridActionsCellItem
+                icon={
+                    <FavoriteIcon sx={{fontSize: '35px', color: params.row.usersByLikes.includes(currentUser.result._id) ? 'red' : 'white'}}/>
+                }
+                label="Like"
+                onClick={() => likeIthemByCurrentUser(params.id, params.row.usersByLikes)}
+            />,
+        ]
+    })
         basicFieldsEntries.map((fields) => {
             if (fields === 'id') {
                 columnsObj.push({
@@ -35,8 +66,8 @@ export const columnsСonverter = (additionalFieldsEntries, basicFieldsEntries, d
             else {
                 columnsObj.push({
                     'field': fields,
-                    editable: true,
                     minWidth: 150,
+                    editable: true,
                 })
             }
 
@@ -50,8 +81,8 @@ export const columnsСonverter = (additionalFieldsEntries, basicFieldsEntries, d
                         headerName: `${Utils.capitalized(field)}`,
                         type: 'number',
                         headerAlign: 'center',
-                        editable: true,
                         minWidth: 150,
+                        editable: true,
                     })
                 })
             } else if (fields[0] === 'boolean') {
@@ -61,8 +92,8 @@ export const columnsСonverter = (additionalFieldsEntries, basicFieldsEntries, d
                         headerName: `${Utils.capitalized(field)}`,
                         type: 'boolean',
                         headerAlign: 'center',
+                        minWidth: 50,
                         editable: true,
-                        minWidth: 150,
                     })
                 })
             } else if (fields[0] === 'date') {
@@ -72,8 +103,8 @@ export const columnsСonverter = (additionalFieldsEntries, basicFieldsEntries, d
                         headerName: `${Utils.capitalized(field)}`,
                         type: 'date',
                         headerAlign: 'center',
-                        editable: true,
                         minWidth: 150,
+                        editable: true,
                     })
                 })
             } else {
@@ -83,50 +114,13 @@ export const columnsСonverter = (additionalFieldsEntries, basicFieldsEntries, d
                         headerName: `${Utils.capitalized(field)}`,
                         type: 'string',
                         headerAlign: 'center',
-                        editable: true,
                         minWidth: 150,
+                        editable: true,
                     })
                 })
             }
         })
-        columnsObj.push({
-            field: 'actions',
-            type: 'actions',
-            headerName: 'Actions',
-            minWidth: 150,
-            editable: false,
-            headerAlign: 'center',
-            getActions: (params) => [
-                <GridActionsCellItem
-                    icon={
-                        <Tooltip title="Delete user">
-                            <DeleteIcon />
-                        </Tooltip>
-                    }
-                    label="Delete"
-                    onClick={deleteItem(params.id)}
-                />,
-
-                <GridActionsCellItem
-                    icon={
-                        <Tooltip title="Toggle Admin">
-                            <SecurityIcon />
-                        </Tooltip>
-                    }
-                    label="Toggle Admin"
-                // onClick={toggleAdminStatus(params.id, params.row.role)}
-                />,
-                <GridActionsCellItem
-                    icon={
-                        <Tooltip title="Ban/Unban user">
-                            <BlockIcon />
-                        </Tooltip>
-                    }
-                    label="Ban/Unban user"
-                // onClick={toggleActiveStatus(params.id, params.row.active)}
-                />,
-            ]
-        })
+        
         
     return columnsObj
 }

@@ -3,11 +3,10 @@ import React, { useEffect, useState } from 'react'
 import TagIcon from '@mui/icons-material/Tag';
 import { Utils } from '../../utils/utils';
 const InputTags = ({ itemField, items, setItems }) => {
+
     const [receivers, setReceivers] = useState([]);
 
-
     useEffect(() => {
-
         setItems({
             ...items,
             ...items.field, [itemField]: receivers,

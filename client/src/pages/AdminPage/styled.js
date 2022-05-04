@@ -44,7 +44,7 @@ function customCheckbox(theme) {
     };
 }
 
-export const style = styled(DataGrid)(({ theme }) => ({
+export const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
     border: 0,
     textAlign: 'center',
     color:
