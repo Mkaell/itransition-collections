@@ -6,6 +6,8 @@ const authRouter = require('./routes/auth.js');
 const usersRouter = require('./routes/users.js');
 const collectionRouter = require('./routes/collections.js');
 const itemsRouter = require('./routes/items.js');
+const homePageRouter = require('./routes/homePage.js');
+const searchRouter = require('./routes/search.js');
 const cloudinary = require('cloudinary').v2
 require('dotenv').config()
 
@@ -21,6 +23,8 @@ app.use(express.json({ limit: "50mb", extended: true }));
 app.use(express.urlencoded({ limit: '30mb', extended: true }))
 app.use(cors());
 app.use('/auth', authRouter);
+app.use('/', homePageRouter);
+app.use('/search', searchRouter);
 app.use('/users', usersRouter);
 app.use('/collections', collectionRouter);
 app.use('/items', itemsRouter);

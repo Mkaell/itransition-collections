@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import { Button, Chip } from '@mui/material';
+import { Autocomplete, Button, Chip, TextField } from '@mui/material';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionLogOut } from '../../store/actionCreators/auth';
@@ -17,6 +17,8 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 import { ColorModeContext } from '../../App'
+import { searchItem } from '../../api';
+
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -42,7 +44,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
     justifyContent: 'center',
 }));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
+const StyledInputBase = styled(Autocomplete)(({ theme }) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
@@ -60,7 +62,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const NavBar = () => {
-
+    const [foundItems, setFoundItems] = useState([])
+    console.log(foundItems);
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const theme = useTheme();
     const colorMode = React.useContext(ColorModeContext);
@@ -85,6 +88,17 @@ const NavBar = () => {
 
         setUser(JSON.parse(localStorage.getItem('profile')));
     }, [location]);
+
+    const findItems = async (event) => {
+
+        try {
+            const response = await searchItem({ searchedData: event.target.value })
+            setFoundItems(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+
+    };
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -141,15 +155,39 @@ const NavBar = () => {
                         }
                     </Box>
 
-                    <Search>
-                        <SearchIconWrapper>
+                    {/* <Search> */}
+                    {/* <SearchIconWrapper>
                             <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search…"
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search>
+                        </SearchIconWrapper> */}
+
+                    <Autocomplete
+                        sx={{ width: 300 }}
+                        id="free-solo-2-demo"
+                        options={foundItems}
+                        getOptionLabel={(option) =>
+
+                            option.description ?
+                                option.description : option.name
+                        }
+                        renderOption={(props, option) => (
+                            <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                                {option.name} ({option._id})
+                            </Box>
+                        )}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                label="Search input"
+                                onChange={(e) => findItems(e)}
+                                InputProps={{
+                                    ...params.InputProps,
+
+                                }}
+                            />
+                        )}
+                    />
+
+                    {/* </Search> */}
                     <Box sx={{ alignItems: 'end' }}>
                         {
                             user ?

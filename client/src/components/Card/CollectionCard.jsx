@@ -7,34 +7,28 @@ const CollectionCard = (props) => {
     const navigate = useNavigate()
     const { image, description, name, theme, id, deleteCollection } = props
     return (
-        <Card sx={{ width: 200, mt: 2, borderRadius: 2, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        <Card sx={{ width: 200, mt: 2, borderRadius: 2, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '280px' }}>
 
             <CardActionArea onClick={() => navigate(`/collection/${id}`)}>
                 <CardMedia
                     component="img"
-                    height="140"
+                    height="180"
                     image={image}
                     alt={name}
                 />
                 <CardContent sx={{ textAlign: 'center' }}>
-                    <Typography color="text.secondary" gutterBottom>
+                    <Typography color="text.secondary">
                         {name}
-                    </Typography>
-                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                        {theme}
-                    </Typography>
-                    <Typography variant="body2" sx={{ overflow: 'hidden' }}>
-                        {description}
                     </Typography>
                 </CardContent>
             </CardActionArea>
-            <CardActions sx={{ h: '10%' }}>
+            <CardActions >
                 <IconButton aria-label="delete" onClick={() => deleteCollection(id)}>
                     <DeleteIcon />
                 </IconButton>
             </CardActions>
 
-        </Card>
+        </Card >
     );
 
 }

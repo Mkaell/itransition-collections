@@ -1,5 +1,5 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Divider, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import CollectionCard from '../../components/Card/CollectionCard';
 
 
@@ -13,165 +13,96 @@ import {
 } from '@mui/x-data-grid-generator';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import { fetchLargestCollectionsAndLastItems } from '../../api';
 
-const useFakeMutation = () => {
-    return React.useCallback(
-        (user) =>
-            new Promise((resolve, reject) =>
-                setTimeout(() => {
-                    if (user.name?.trim() === '') {
-                        reject(new Error("Error while saving user: name can't be empty."));
-                    } else {
-                        resolve({ ...user, name: user.name?.toUpperCase() });
-                    }
-                }, 200),
-            ),
-        [],
-    );
-};
+import { TagCloud } from 'react-tagcloud'
 
-function CellEditServerSidePersistence() {
-    const mutateRow = useFakeMutation();
-
-    const [snackbar, setSnackbar] = React.useState(null);
-
-    const handleCloseSnackbar = () => setSnackbar(null);
-
-    const processRowUpdate = React.useCallback(
-        async (newRow) => {
-            console.log(newRow);
-            // Make the HTTP request to save in the backend
-            const response = await mutateRow(newRow);
-            setSnackbar({ children: 'User successfully saved', severity: 'success' });
-            return response;
-        },
-        [mutateRow],
-    );
-
-    const handleProcessRowUpdateError = React.useCallback((error) => {
-        setSnackbar({ children: error.message, severity: 'error' });
-    }, []);
-
-    return (
-        <div style={{ height: 400, width: '100%' }}>
-            <DataGrid
-                rows={rows}
-                columns={columns}
-                processRowUpdate={processRowUpdate}
-                onProcessRowUpdateError={handleProcessRowUpdateError}
-                experimentalFeatures={{ newEditingApi: true }}
-            />
-            {!!snackbar && (
-                <Snackbar
-                    open
-                    anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-                    onClose={handleCloseSnackbar}
-                    autoHideDuration={6000}
-                >
-                    <Alert {...snackbar} onClose={handleCloseSnackbar} />
-                </Snackbar>
-            )}
-        </div>
-    );
+const data = [
+    { value: 'JavaScript', count: 38 },
+    { value: 'React', count: 30 },
+    { value: 'Nodejs', count: 28 },
+    { value: 'Express.js', count: 25 },
+    { value: 'HTML5', count: 33 },
+    { value: 'MongoDB', count: 18 },
+    { value: 'CSS3', count: 20 },
+]
+const options = {
+    luminosity: 'light',
+    hue: 'purple',
 }
-
-const columns = [
-    { field: 'name', headerName: 'Name', width: 180, editable: true },
-    { field: 'age', headerName: 'Age', type: 'number', editable: true },
-    {
-        field: 'dateCreated',
-        headerName: 'Date Created',
-        type: 'date',
-        width: 180,
-        editable: true,
-    },
-    {
-        field: 'lastLogin',
-        headerName: 'Last Login',
-        type: 'dateTime',
-        width: 220,
-        editable: true,
-    },
-];
-
-const rows = [
-    {
-        id: 1,
-        name: randomTraderName(),
-        age: 25,
-        dateCreated: randomCreatedDate(),
-        lastLogin: randomUpdatedDate(),
-    },
-    {
-        id: 2,
-        name: randomTraderName(),
-        age: 36,
-        dateCreated: randomCreatedDate(),
-        lastLogin: randomUpdatedDate(),
-    },
-    {
-        id: 3,
-        name: randomTraderName(),
-        age: 19,
-        dateCreated: randomCreatedDate(),
-        lastLogin: randomUpdatedDate(),
-    },
-    {
-        id: 4,
-        name: randomTraderName(),
-        age: 28,
-        dateCreated: randomCreatedDate(),
-        lastLogin: randomUpdatedDate(),
-    },
-    {
-        id: 5,
-        name: randomTraderName(),
-        age: 23,
-        dateCreated: randomCreatedDate(),
-        lastLogin: randomUpdatedDate(),
-    },
-];
-function BasicCard() {
-    return (
-        <Card sx={{ minWidth: 200, mt: 2 }}>
-            <CardContent>
-
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                    Word of the Day
-                </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    adjective
-                </Typography>
-                <Typography variant="body2">
-                    well meaning and kindly.
-                    <br />
-                    {'"a benevolent smile"'}
-                </Typography>
-            </CardContent>
-            <CardActions>
-                <Button size="small">Learn More</Button>
-            </CardActions>
-        </Card>
-    );
-}
+const SimpleCloud = ({ data }) => (
+    <TagCloud
+        minSize={20}
+        maxSize={35}
+        style={{ width: '300px', textAlign: 'center' }}
+        colorOptions={options}
+        className='simple-cloud'
+        tags={data}
+        onClick={tag => alert(`'${tag.value}' was selected!`)}
+    />
+)
 
 const HomePage = () => {
+    const [largestCollections, setLargestCollections] = useState([]);
+    const [lastAddedItems, setLastAddedItems] = useState([]);
+    console.log(lastAddedItems);
+    useEffect(() => {
+        try {
+            (async () => {
+                const { data } = await fetchLargestCollectionsAndLastItems()
+                setLargestCollections(data.bigCollections)
+                setLastAddedItems(data.lastAddedItems)
+            })()
+        } catch (error) {
+            console.log(error);
+        }
+    }, [])
+    function getRandomArbitrary(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
+    let tagsCloud = []
+    let tagsCloudi = []
+    let arr = lastAddedItems.map((item) => tagsCloud.concat(item.tags)).flat()
+    arr.map((tag) =>
+        tagsCloudi.push({
+            'value': `#${tag}`,
+            'count': getRandomArbitrary(15, 35)
+        })
+    )
+    console.log(tagsCloudi);
     return (
         <div>
             <div className='home-clouds-tags'>
-                <CollectionCard />
+
+                <SimpleCloud data={tagsCloudi} />
             </div>
             <Divider sx={{ mt: 5 }} />
             <div className='home-wrapper'>
                 <div className='home-collections'>
-                    <CollectionCard />
-                    <CollectionCard />
-                    <CollectionCard />
-                    <CollectionCard />
+                    {
+                        largestCollections.map((collection) =>
+                            <CollectionCard
+                                key={collection._id}
+                                image={collection.image}
+                                description={collection.description}
+                                name={collection.name}
+                                theme={collection.theme}
+                                id={collection._id} />
+                        )
+                    }
+
                 </div>
                 <Divider orientation="vertical" flexItem />
                 <div className='home-items'>
-                    <CellEditServerSidePersistence />
+                    {
+                        lastAddedItems.map((item) =>
+                            <CollectionCard
+                                name={item.name}
+                                key={item._id}
+                                id={item.collectionId} />
+                        )
+                    }
                 </div>
             </div>
         </div>

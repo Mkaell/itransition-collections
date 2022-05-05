@@ -6,11 +6,28 @@
     display: flex;
     width: 50%;
     flex-wrap: wrap;
+    align-items: flex-start;
     justify-content: space-around;
 }
+
 .home-items{
     display: flex;
     width: 50%;
     flex-wrap: wrap;
     justify-content: space-around;
 }
+
+.home-clouds-tags{
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    height: 200px;
+}
+
+.simple-cloud .tag-cloud-tag {
+    cursor: pointer;
+  }
+
+  .tag-cloud-tag:hover{
+    transform: scale(1.1);
+  }

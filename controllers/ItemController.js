@@ -68,7 +68,7 @@ const ItemController = {
     usersByLikes: async (req, res) => {
       try {
         const usersByLikes = req.body.usersByLikes;
-        console.log(req.body);
+        
         const itemId = req.params.iditem;
 
         await Item.findByIdAndUpdate(itemId, {

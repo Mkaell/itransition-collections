@@ -6,10 +6,9 @@ import SecurityIcon from '@mui/icons-material/Security';
 import BlockIcon from '@mui/icons-material/Block';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-const currentUser =JSON.parse(localStorage.getItem('profile'))
-console.log(currentUser);
-export const columnsСonverter = (additionalFieldsEntries, basicFieldsEntries, deleteCurrentItem, likeIthemByCurrentUser) => {
-    let like = 0
+
+export const columnsСonverter = (additionalFieldsEntries, basicFieldsEntries, deleteCurrentItem, likeIthemByCurrentUser, _id) => {
+   
     const columnsObj = []
     columnsObj.push({
         field: 'actions',
@@ -31,11 +30,18 @@ export const columnsСonverter = (additionalFieldsEntries, basicFieldsEntries, d
 
             <GridActionsCellItem
                 icon={
-                    <FavoriteIcon sx={{fontSize: '35px', color: params.row.usersByLikes.includes(currentUser.result._id) ? 'red' : 'white'}}/>
+                    <FavoriteIcon sx={{fontSize: '35px', color: params.row.usersByLikes.includes(_id) ? 'red' : 'white'}}/>
                 }
                 label="Like"
                 onClick={() => likeIthemByCurrentUser(params.id, params.row.usersByLikes)}
             />,
+            <GridActionsCellItem
+            icon={
+                <FavoriteIcon sx={{fontSize: '35px', }}/>
+            }
+            label="Like"
+            onClick={() =>console.log(params)}
+        />,
         ]
     })
         basicFieldsEntries.map((fields) => {

@@ -94,8 +94,8 @@ function Collection() {
     const [items, setItems] = useState({});
     const [rows, setRows] = useState([])
     const [snackbar, setSnackbar] = useState(null);
-    const [like, setLike] = useState(false)
 
+    console.log(rows);
     useEffect(() => {
         try {
             const getInfoCollection = async () => {
@@ -121,7 +121,7 @@ function Collection() {
     );
 
     useEffect(() => {
-        const columnsObj = columnsСonverter(additionalFieldsEntries, basicFieldsEntries, deleteCurrentItem, likeIthemByCurrentUser)
+        const columnsObj = columnsСonverter(additionalFieldsEntries, basicFieldsEntries, deleteCurrentItem, likeIthemByCurrentUser, _id)
         setColumns(columnsObj);
     }, [additionalFieldsEntries, basicFieldsEntries])
 
@@ -159,7 +159,7 @@ function Collection() {
         async (newRow) => {
             try {
                 const response = await updateItem(newRow._id, newRow)
-                console.log(response);
+
                 setSnackbar({ children: response.data.message, severity: 'success' });
             } catch (error) {
                 setSnackbar({ children: error.message, severity: 'error' });
@@ -176,7 +176,14 @@ function Collection() {
             if (!usersByLikes.includes(_id)) {
                 usersByLikes.push(_id)
                 try {
-                    await likeItem(id, { usersByLikes })
+                    ;
+                    const response = await likeItem(id, { usersByLikes })
+                    console.log(response)
+                    setRows((prevRows) =>
+                        prevRows.map((row) =>
+                            row._id === id ? { ...row, usersByLikes: usersByLikes } : row,
+                        ),
+                    );
                 } catch (error) {
                     setSnackbar({ children: error.message, severity: 'error' });
                 }

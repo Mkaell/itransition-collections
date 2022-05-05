@@ -45,7 +45,7 @@ function App() {
 				<ThemeProvider theme={theme}>
 					<CssBaseline />
 						<NavBar/>
-						<Container maxWidth="lg">
+						<Container maxWidth="xl">
 							<Navigation/>
 						</Container>
 					</ThemeProvider>
