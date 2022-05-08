@@ -1,8 +1,11 @@
 import { Avatar, Button, Grid, Typography, Box } from '@mui/material'
 import React from 'react'
 import AddIcon from '@mui/icons-material/Add';
+import { useSelector } from 'react-redux';
 
 const InfoAboutCollection = ({ handleClickOpen, collection }) => {
+    const currentUser = useSelector(state => state.auth.authData?.result)
+
     return (
         <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column', marginTop: '30px' }}>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -21,13 +24,17 @@ const InfoAboutCollection = ({ handleClickOpen, collection }) => {
                 </Box>
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                <Button
-                    variant="contained"
-                    startIcon={<AddIcon />}
-                    onClick={() => handleClickOpen()}
-                >
-                    Add Item
-                </Button>
+                {
+                    (currentUser?.role || (collection.userId === currentUser?._id)) ?
+                        <Button
+                            variant="contained"
+                            startIcon={<AddIcon />}
+                            onClick={() => handleClickOpen()}
+                        >
+                            Add Item
+                        </Button> :
+                        <Box mt={10}></Box>
+                }
             </Box>
         </div>
     )

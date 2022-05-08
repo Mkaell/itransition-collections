@@ -29,14 +29,14 @@ const ItemController = {
   },
   get: async (req, res) => {
     try {
-      const itemId = req.params.iditem;
+      const idItem = req.params.iditem;
+      console.log(idItem);
+      const itemById = await Item.findById(idItem);
+      // let itemComments = itemById.comments;
 
-      const itemById = await Item.findById(itemId);
-      let itemComments = itemById.comments;
+      // if (!itemComments.length) itemComments = [{ showAdd: true }];
 
-      if (!itemComments.length) itemComments = [{ showAdd: true }];
-
-      res.json(itemComments);
+      res.status(200).json(itemById);
     } catch (e) {
       res.status(500).json({ message: e.message });
     }

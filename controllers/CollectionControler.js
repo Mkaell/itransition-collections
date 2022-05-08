@@ -8,7 +8,6 @@ const createCollection = async (req, res) => {
       const { name, description, theme } = collectionInfo;
       const { numerical, string, text, date, boolean } = itemFields;
       
-      
       const userById = await User.findById(userId).populate("collections");
       const response = await cloudinary.uploader.upload(collectionImage, {folder: 'collection-app'})
       
@@ -20,6 +19,7 @@ const createCollection = async (req, res) => {
         itemFields: {
           additional: { numerical, string, text, date, boolean },
         },
+        userId,
       });
       await newCollection.save();
 

@@ -8,12 +8,14 @@ import CollectionCard from '../../components/Card/CollectionCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteCollectionDispatch, getcollectionsDispatch } from '../../store/actionCreators/collectionsCreator';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useParams } from 'react-router-dom';
 
 
 const ProfilePage = () => {
 
     const dispatch = useDispatch()
     const { collections, isLoading } = useSelector(state => state.collections)
+    let { iduser } = useParams()
 
     const userId = useSelector(state => state.auth.authData.result._id)
     const [open, setOpen] = useState(false);
@@ -28,11 +30,19 @@ const ProfilePage = () => {
     };
 
     useEffect(() => {
-        dispatch(getcollectionsDispatch({ userId }))
+        if (iduser) {
+            dispatch(getcollectionsDispatch({ userId: iduser }))
+        } else {
+            dispatch(getcollectionsDispatch({ userId }))
+        }
     }, [])
 
     const handleDeleteCollection = (id) => {
-        dispatch(deleteCollectionDispatch(id, { userId }))
+        if (iduser) {
+            dispatch(deleteCollectionDispatch(id, { userId: iduser }))
+        } else {
+            dispatch(deleteCollectionDispatch(id, { userId }))
+        }
     }
 
     return (
@@ -62,7 +72,7 @@ const ProfilePage = () => {
                         )
                 }
             </div>
-            <Modal handleClose={handleClose} open={open} />
+            <Modal handleClose={handleClose} open={open} iduser={iduser} />
         </div>
     )
 }

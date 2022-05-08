@@ -17,7 +17,7 @@ const userSchema = new Schema(
       default: new Date()
   },
   },
-  
+  { versionKey: false }
 );
 
 module.exports = model("User", userSchema);

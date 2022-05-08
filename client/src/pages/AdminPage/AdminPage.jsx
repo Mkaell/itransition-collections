@@ -7,12 +7,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteUser, getUsers, updateAdminStatus, updateBanStatus } from '../../store/actionCreators/usersCreator';
 import { deleteUsers, changeAdminStatusOfSelected, changeActiveStatusOfSelected } from '../../api';
 import { actionLogOut } from '../../store/actionCreators/auth';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Paper, Tooltip } from '@mui/material';
 import { StyledDataGrid } from './styled';
 import { EnhancedTableToolbar } from './ToolBar';
 import { format } from 'date-fns'
-
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const AdminPage = () => {
 
@@ -129,7 +129,7 @@ const AdminPage = () => {
     // 
     const columns = useMemo(
         () => [
-            { field: '_id', headerName: 'ID', type: 'string', flex: 0.2, headerAlign: 'center', },
+            { field: '_id', headerName: 'ID', type: 'string', width: 80, headerAlign: 'center', },
             { field: 'email', headerName: 'Email', type: 'string', flex: 0.3, headerAlign: 'center', },
             {
                 field: 'created_at', headerName: 'Created_at', type: 'dateTime', flex: 0.3, headerAlign: 'center',
@@ -146,18 +146,30 @@ const AdminPage = () => {
                     return valueFormatted
                 },
             },
-            { field: 'role', headerName: 'IsAdmin', type: 'boolean', flex: 0.2, headerAlign: 'center', },
-            { field: 'active', headerName: 'IsActive', type: 'boolean', flex: 0.2, headerAlign: 'center', },
+            { field: 'role', headerName: 'IsAdmin', type: 'boolean', width: 80, headerAlign: 'center', },
+            { field: 'active', headerName: 'IsActive', type: 'boolean', width: 80, headerAlign: 'center', },
             {
                 field: 'actions',
                 type: 'actions',
                 headerName: 'Actions',
-                flex: 0.2,
+                minWidth: 150,
                 headerAlign: 'center',
                 getActions: (params) => [
                     <GridActionsCellItem
                         icon={
-                            <Tooltip title="Delete user">
+                            <Tooltip title="Profile user" placement="top">
+                                <Link to={`/${params.row.email}/${params.id}`}>
+                                    <AccountCircleIcon />
+                                </Link>
+
+                            </Tooltip>
+                        }
+                        label="Delete"
+
+                    />,
+                    <GridActionsCellItem
+                        icon={
+                            <Tooltip title="Delete user" placement="top">
                                 <DeleteIcon />
                             </Tooltip>
                         }
@@ -166,7 +178,7 @@ const AdminPage = () => {
                     />,
                     <GridActionsCellItem
                         icon={
-                            <Tooltip title="Toggle Admin">
+                            <Tooltip title="Toggle Admin" placement="top">
                                 <SecurityIcon />
                             </Tooltip>
                         }
@@ -175,7 +187,7 @@ const AdminPage = () => {
                     />,
                     <GridActionsCellItem
                         icon={
-                            <Tooltip title="Ban/Unban user">
+                            <Tooltip title="Ban/Unban user" placement="top">
                                 <BlockIcon />
                             </Tooltip>
                         }

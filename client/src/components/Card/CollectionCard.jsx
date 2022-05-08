@@ -2,12 +2,15 @@ import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Icon
 import React from 'react'
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-const CollectionCard = (props) => {
+const CollectionCard = ({ image, name, id, deleteCollection, userId, location }) => {
+
+    const currentUser = useSelector(state => state.auth.authData?.result);
     const navigate = useNavigate()
-    const { image, description, name, theme, id, deleteCollection } = props
+
     return (
-        <Card sx={{ width: 200, mt: 2, borderRadius: 2, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '280px' }}>
+        <Card sx={{ width: 200, mt: 2, borderRadius: 2, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
 
             <CardActionArea onClick={() => navigate(`/collection/${id}`)}>
                 <CardMedia
@@ -21,13 +24,16 @@ const CollectionCard = (props) => {
                         {name}
                     </Typography>
                 </CardContent>
-            </CardActionArea>
-            <CardActions >
-                <IconButton aria-label="delete" onClick={() => deleteCollection(id)}>
-                    <DeleteIcon />
-                </IconButton>
-            </CardActions>
-
+            </CardActionArea >
+            {
+                !(location?.pathname === '/') &&
+                (currentUser?.role || (userId === currentUser?._id)) &&
+                <CardActions sx={{ justifyContent: 'flex-end', padding: 0 }}>
+                    <IconButton aria-label="delete" onClick={() => deleteCollection(id)}>
+                        <DeleteIcon />
+                    </IconButton>
+                </CardActions>
+            }
         </Card >
     );
 

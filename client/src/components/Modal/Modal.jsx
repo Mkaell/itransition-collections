@@ -8,11 +8,11 @@ import { createCollection } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
 import { createCollectionDispatch } from '../../store/actionCreators/collectionsCreator';
 
-const Modal = ({ open, handleClose }) => {
+const Modal = ({ open, handleClose, iduser }) => {
 
     const userId = useSelector(state => state.auth.authData.result._id)
-
     const dispatch = useDispatch()
+
     const [collection, setCollection] = useState({
         collectionImage: '',
         collectionInfo: { name: "", description: "", theme: "" },
@@ -23,8 +23,9 @@ const Modal = ({ open, handleClose }) => {
             date: [],
             boolean: [],
         },
+        creatorId: '',
     });
-    console.log(collection);
+
     const clearState = () => {
         setCollection({
             collectionImage: '',
@@ -36,14 +37,15 @@ const Modal = ({ open, handleClose }) => {
                 date: [],
                 boolean: [],
             },
+            creatorId: '',
         })
     }
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
-        dispatch(createCollectionDispatch({ ...collection, userId }))
-        clearState()
-        handleClose()
+        e.preventDefault();
+        dispatch(createCollectionDispatch({ ...collection, userId: iduser ? iduser : userId }));
+        clearState();
+        handleClose();
     }
 
     return (
@@ -76,14 +78,13 @@ const Modal = ({ open, handleClose }) => {
                                     <AdditionalFields collection={collection} setCollection={setCollection} />
                                 </Grid>
                             </Grid>
-
                         </form>
                     </FormControl>
                 </DialogContent>
             </Paper>
             <DialogActions>
-                <Button onClick={handleClose}>Disagree</Button>
-                <Button autoFocus type='submit' form='form-collection'>
+                <Button onClick={handleClose} >Disagree</Button>
+                <Button autoFocus type='submit' form='form-collection' disabled={!collection.collectionImage ? true : false}>
                     Agree
                 </Button>
             </DialogActions>

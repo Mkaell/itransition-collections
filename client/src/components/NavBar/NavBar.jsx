@@ -90,7 +90,6 @@ const NavBar = () => {
     }, [location]);
 
     const findItems = async (event) => {
-
         try {
             const response = await searchItem({ searchedData: event.target.value })
             setFoundItems(response.data);
@@ -140,18 +139,25 @@ const NavBar = () => {
                                         </Link>
                                     </Button>
                                 </> :
-                                <>
+                                user ?
+
+                                    <>
+                                        <Button Button variant="contained" color="secondary" style={{ padding: '0' }}>
+                                            <Link to='/' style={{ color: 'white', padding: '8px 15px' }}>
+                                                Home
+                                            </Link>
+                                        </Button>
+                                        <Button variant="contained" color="secondary" style={{ padding: '0' }}>
+                                            <Link to='/profile' style={{ color: 'white', padding: '8px 15px' }}>
+                                                Profile
+                                            </Link>
+                                        </Button>
+                                    </> :
                                     <Button variant="contained" color="secondary" style={{ padding: '0' }}>
                                         <Link to='/' style={{ color: 'white', padding: '8px 15px' }}>
                                             Home
                                         </Link>
                                     </Button>
-                                    <Button variant="contained" color="secondary" style={{ padding: '0' }}>
-                                        <Link to='/profile' style={{ color: 'white', padding: '8px 15px' }}>
-                                            Profile
-                                        </Link>
-                                    </Button>
-                                </>
                         }
                     </Box>
 
@@ -164,13 +170,15 @@ const NavBar = () => {
                         sx={{ width: 300 }}
                         id="free-solo-2-demo"
                         options={foundItems}
+                        selectOnFocus
+                        clearOnBlur
+                        handleHomeEndKeys
+                        filterOptions={(x) => x}
                         getOptionLabel={(option) =>
-
-                            option.description ?
-                                option.description : option.name
+                            option.name
                         }
                         renderOption={(props, option) => (
-                            <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                            <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props} key={option._id}>
                                 {option.name} ({option._id})
                             </Box>
                         )}
@@ -179,10 +187,10 @@ const NavBar = () => {
                                 {...params}
                                 label="Search input"
                                 onChange={(e) => findItems(e)}
-                                InputProps={{
-                                    ...params.InputProps,
+                            // InputProps={{
+                            //     ...params.InputProps,
 
-                                }}
+                            // }}
                             />
                         )}
                     />
@@ -212,9 +220,9 @@ const NavBar = () => {
                                 </>
                         }
                     </Box>
-                </Toolbar>
-            </AppBar>
-        </Box>
+                </Toolbar >
+            </AppBar >
+        </Box >
     )
 }
 

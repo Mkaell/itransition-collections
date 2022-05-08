@@ -15,7 +15,7 @@ const FullTextSearchController = {
           $text: { $search: searchedData, $caseSensitive: false },
         })) || {};
 
-      res.json(Object.assign(items, itemsByCollections));
+      res.status(200).json(Object.assign(items, itemsByCollections));
     } catch (e) {
       res.status(500).json({ message: e.message });
     }

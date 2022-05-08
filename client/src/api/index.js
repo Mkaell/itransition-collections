@@ -23,5 +23,5 @@ export const createItem = (formData) => API.post('/items/create', formData);
 export const deleteItem = (id) => API.delete(`/items/delete/${id}`);
 export const updateItem = (id, itemInfo) => API.post(`/items/edit/fields/${id}`, itemInfo);
 export const likeItem = (id, usersByLikes) => API.patch(`/items/edit/like/${id}`, usersByLikes);
-
+export const getItem = (id) => API.get(`/items/get/${id}`);
 export const searchItem = (formData) => API.post('/search', formData);

@@ -21,6 +21,7 @@ const collectionSchema = new Schema(
       },
     },
     items: [{ type: Schema.Types.ObjectId, ref: "Item" }],
+    userId: String,
   },
   { versionKey: false }
 );

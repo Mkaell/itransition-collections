@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import AdminPage from '../pages/AdminPage/AdminPage';
 import Collection from '../pages/Collection/Collection';
 import HomePage from '../pages/HomePage/HomePage';
+import ItemPage from '../pages/ItemPage/ItemPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import ProfilePage from '../pages/ProfilePage/ProfilePage';
 import SignUpPage from '../pages/SignUpPage/SignUpPage';
@@ -30,7 +31,16 @@ const Navigation = () => {
                 path='/profile'
                 element={<ProfilePage />}
             />
-            <Route path="/collection/:idCollection" element={<Collection />} />
+            <Route
+                path="/:useremail/:iduser"
+                element={<ProfilePage />} />
+            <Route
+                path="/collection/:idCollection"
+                element={<Collection />} />
+            <Route
+                path="/collection/:idCollection/item/:idItem"
+                element={<ItemPage />}
+            />
 
         </Routes>
     )

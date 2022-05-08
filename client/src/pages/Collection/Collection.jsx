@@ -19,7 +19,7 @@ import { useParams } from 'react-router-dom';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Utils } from '../../utils/utils';
 import { format } from 'date-fns'
-import { columnsСonverter } from './columnsСonverter'
+import { columnsСonverter } from './Columns/columnsСonverter'
 import { deleteItem } from '../../api';
 import InfoAboutCollection from './InfoAboutCollection';
 import { useSelector } from 'react-redux';
@@ -86,7 +86,8 @@ const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
 
 
 function Collection() {
-    const { _id } = useSelector(state => state.auth.authData.result)
+
+    const currentUser = useSelector(state => state.auth.authData?.result);
     const [open, setOpen] = useState(false);
     const { idCollection } = useParams()
     const [columns, setColumns] = useState([])
@@ -95,7 +96,6 @@ function Collection() {
     const [rows, setRows] = useState([])
     const [snackbar, setSnackbar] = useState(null);
 
-    console.log(rows);
     useEffect(() => {
         try {
             const getInfoCollection = async () => {
@@ -121,7 +121,13 @@ function Collection() {
     );
 
     useEffect(() => {
-        const columnsObj = columnsСonverter(additionalFieldsEntries, basicFieldsEntries, deleteCurrentItem, likeIthemByCurrentUser, _id)
+        const columnsObj = columnsСonverter(
+            additionalFieldsEntries,
+            basicFieldsEntries,
+            deleteCurrentItem,
+            likeIthemByCurrentUser,
+            currentUser,
+            collection)
         setColumns(columnsObj);
     }, [additionalFieldsEntries, basicFieldsEntries])
 
@@ -159,7 +165,6 @@ function Collection() {
         async (newRow) => {
             try {
                 const response = await updateItem(newRow._id, newRow)
-
                 setSnackbar({ children: response.data.message, severity: 'success' });
             } catch (error) {
                 setSnackbar({ children: error.message, severity: 'error' });
@@ -173,8 +178,8 @@ function Collection() {
     const likeIthemByCurrentUser = useCallback(
         async (id, usersByLikes) => {
 
-            if (!usersByLikes.includes(_id)) {
-                usersByLikes.push(_id)
+            if (!usersByLikes.includes(currentUser?._id)) {
+                usersByLikes.push(currentUser?._id)
                 try {
                     ;
                     const response = await likeItem(id, { usersByLikes })
@@ -188,7 +193,7 @@ function Collection() {
                     setSnackbar({ children: error.message, severity: 'error' });
                 }
             } else {
-                const unlike = usersByLikes.filter(userId => userId !== _id)
+                const unlike = usersByLikes.filter(userId => userId !== currentUser?._id)
 
                 try {
                     await likeItem(id, { usersByLikes: unlike })

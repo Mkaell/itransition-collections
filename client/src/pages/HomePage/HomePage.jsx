@@ -1,7 +1,7 @@
-import { Button, Card, CardActions, CardContent, CardMedia, Divider, Typography } from '@mui/material'
+import { Button, Card, CardActions, CardContent, CardMedia, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import CollectionCard from '../../components/Card/CollectionCard';
-
+import InboxIcon from '@mui/icons-material/Inbox';
 
 import './HomePage.css'
 
@@ -16,16 +16,8 @@ import Alert from '@mui/material/Alert';
 import { fetchLargestCollectionsAndLastItems } from '../../api';
 
 import { TagCloud } from 'react-tagcloud'
+import { Link, useLocation } from 'react-router-dom';
 
-const data = [
-    { value: 'JavaScript', count: 38 },
-    { value: 'React', count: 30 },
-    { value: 'Nodejs', count: 28 },
-    { value: 'Express.js', count: 25 },
-    { value: 'HTML5', count: 33 },
-    { value: 'MongoDB', count: 18 },
-    { value: 'CSS3', count: 20 },
-]
 const options = {
     luminosity: 'light',
     hue: 'purple',
@@ -43,9 +35,11 @@ const SimpleCloud = ({ data }) => (
 )
 
 const HomePage = () => {
+
     const [largestCollections, setLargestCollections] = useState([]);
     const [lastAddedItems, setLastAddedItems] = useState([]);
-    console.log(lastAddedItems);
+    const location = useLocation()
+
     useEffect(() => {
         try {
             (async () => {
@@ -57,6 +51,7 @@ const HomePage = () => {
             console.log(error);
         }
     }, [])
+
     function getRandomArbitrary(min, max) {
         return Math.random() * (max - min) + min;
     }
@@ -74,35 +69,44 @@ const HomePage = () => {
     return (
         <div>
             <div className='home-clouds-tags'>
-
-                <SimpleCloud data={tagsCloudi} />
+                {
+                    largestCollections.map((collection) =>
+                        <CollectionCard
+                            key={collection._id}
+                            location={location}
+                            image={collection.image}
+                            name={collection.name}
+                            id={collection._id}
+                            userId={collection.userId} />
+                    )
+                }
             </div>
-            <Divider sx={{ mt: 5 }} />
+            <Divider sx={{ mt: 4 }} />
             <div className='home-wrapper'>
                 <div className='home-collections'>
-                    {
-                        largestCollections.map((collection) =>
-                            <CollectionCard
-                                key={collection._id}
-                                image={collection.image}
-                                description={collection.description}
-                                name={collection.name}
-                                theme={collection.theme}
-                                id={collection._id} />
-                        )
-                    }
-
+                    <SimpleCloud data={tagsCloudi} />
                 </div>
                 <Divider orientation="vertical" flexItem />
                 <div className='home-items'>
-                    {
-                        lastAddedItems.map((item) =>
-                            <CollectionCard
-                                name={item.name}
-                                key={item._id}
-                                id={item.collectionId} />
-                        )
-                    }
+                    <List subheader={<ListSubheader>Items</ListSubheader>}>
+                        {
+                            lastAddedItems.map((item) =>
+                                <>
+                                    <Link to={`/collection/${item.collectionId}/item/${item._id}`}>
+                                        <ListItem disablePadding >
+                                            <ListItemButton>
+                                                <ListItemIcon>
+                                                    <InboxIcon />
+                                                </ListItemIcon>
+                                                <ListItemText primary={item.name} />
+                                            </ListItemButton>
+                                        </ListItem>
+                                    </Link>
+                                    <Divider />
+                                </>
+                            )
+                        }
+                    </List>
                 </div>
             </div>
         </div>
