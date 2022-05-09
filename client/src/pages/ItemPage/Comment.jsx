@@ -1,7 +1,7 @@
 import { Avatar, Divider, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material'
 import React from 'react'
 
-const Comment = () => {
+const Comment = ({ comment }) => {
     return (
         <>
             <ListItem alignItems="flex-start">
@@ -9,7 +9,7 @@ const Comment = () => {
                     <Avatar alt="Remy Sharp" />
                 </ListItemAvatar>
                 <ListItemText
-                    primary="Brunch this weekend?"
+                    primary={comment.name}
                     secondary={
                         <>
                             <Typography
@@ -18,9 +18,9 @@ const Comment = () => {
                                 variant="body2"
                                 color="text.primary"
                             >
-                                Ali Connors
+                                {comment.date}
                             </Typography>
-                            {" — I'll be in your neighborhood doing errands this…"}
+                            {comment.content}
                         </>
                     }
                 />

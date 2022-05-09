@@ -30,7 +30,7 @@ const ItemController = {
   get: async (req, res) => {
     try {
       const idItem = req.params.iditem;
-      console.log(idItem);
+      
       const itemById = await Item.findById(idItem);
       // let itemComments = itemById.comments;
 

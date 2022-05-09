@@ -11,6 +11,7 @@ const searchRouter = require('./routes/search.js');
 const cloudinary = require('cloudinary').v2
 require('dotenv').config()
 
+const PORT = process.env.PORT || 5000;
 const app = express();
 
 cloudinary.config({ 
@@ -29,7 +30,7 @@ app.use('/users', usersRouter);
 app.use('/collections', collectionRouter);
 app.use('/items', itemsRouter);
 
-const PORT = process.env.PORT || 5000;
+const server = app.listen(PORT, () => console.log(`Server Running on Port: http://localhost:${PORT}`));
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'))
@@ -39,9 +40,11 @@ if (process.env.NODE_ENV === 'production') {
     })
 }
 
-mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => app.listen(PORT, () => console.log(`Server Running on Port: http://localhost:${PORT}`)))
+mongoose.connect(process.env.CONNECTION_URL,{ 
+    useNewUrlParser: true,
+    useUnifiedTopology: true })
+  .then(() => server)
   .catch((error) => console.log(`${error} did not connect`));
 
 
-
+require("./socketIo/")(server);
