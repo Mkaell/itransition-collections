@@ -10,7 +10,7 @@ const ListItems = ({ items }) => {
     return (
         <List sx={{ mt: 5 }}>
             {
-                items.map((item) =>
+                items?.map((item) =>
                     <>
                         <NavLink to={`/collection/${item.collectionId}/item/${item._id}`}>
                             <ListItem disablePadding classes='home-item' divider>
