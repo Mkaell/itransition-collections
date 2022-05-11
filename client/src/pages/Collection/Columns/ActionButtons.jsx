@@ -3,8 +3,10 @@ import { GridActionsCellItem } from '@mui/x-data-grid'
 import React from 'react'
 import DeleteIcon from '@mui/icons-material/Delete';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useIntl } from 'react-intl';
 
-const ActionButtons = ({ params, deleteCurrentItem, likeIthemByCurrentUser, currentUser, collection }) => {
+const ActionButtons = ({ params, deleteCurrentItem, likeIthemByCurrentUser, currentUser, collection, messages }) => {
+
     return (
         <>
             {
@@ -12,7 +14,7 @@ const ActionButtons = ({ params, deleteCurrentItem, likeIthemByCurrentUser, curr
                     <>
                         <GridActionsCellItem
                             icon={
-                                <Tooltip title="Delete item">
+                                <Tooltip title={messages['collection.delete']}>
                                     <DeleteIcon sx={{ fontSize: '35px' }} />
                                 </Tooltip>
                             }

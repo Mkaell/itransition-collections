@@ -31,3 +31,6 @@
   .tag-cloud-tag:hover{
     transform: scale(1.1);
   }
+.home-item:active{
+    background: green
+}

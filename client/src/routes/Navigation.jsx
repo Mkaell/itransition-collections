@@ -6,6 +6,7 @@ import HomePage from '../pages/HomePage/HomePage';
 import ItemPage from '../pages/ItemPage/ItemPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import ProfilePage from '../pages/ProfilePage/ProfilePage';
+import SearchitemsTags from '../pages/SearchitemsTags/SearchitemsTags';
 import SignUpPage from '../pages/SignUpPage/SignUpPage';
 
 const Navigation = () => {
@@ -30,6 +31,10 @@ const Navigation = () => {
             <Route
                 path='/profile'
                 element={<ProfilePage />}
+            />
+            <Route
+                path='/items'
+                element={<SearchitemsTags />}
             />
             <Route
                 path="/:useremail/:iduser"

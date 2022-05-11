@@ -2,8 +2,10 @@ import { Avatar, Button, Grid, Typography, Box } from '@mui/material'
 import React from 'react'
 import AddIcon from '@mui/icons-material/Add';
 import { useSelector } from 'react-redux';
+import { useIntl } from 'react-intl';
 
 const InfoAboutCollection = ({ handleClickOpen, collection }) => {
+    const { messages } = useIntl()
     const currentUser = useSelector(state => state.auth.authData?.result)
 
     return (
@@ -31,7 +33,7 @@ const InfoAboutCollection = ({ handleClickOpen, collection }) => {
                             startIcon={<AddIcon />}
                             onClick={() => handleClickOpen()}
                         >
-                            Add Item
+                            {messages['collection.add-item-button']}
                         </Button> :
                         <Box mt={10}></Box>
                 }

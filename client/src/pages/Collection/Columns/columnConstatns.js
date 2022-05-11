@@ -1,4 +1,3 @@
-
 export const FIELD_ID = 'id';
 export const FIELD_TAGS = 'tags';
 export const FIELD_NUMERICAL = 'numerical';

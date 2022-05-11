@@ -11,13 +11,11 @@ import { v4 as uuidv4 } from 'uuid';
 const ItemPage = () => {
 
     let socket = io('http://localhost:5047')
-    const { email } = useSelector(state => state.auth.authData.result)
+    const email = useSelector(state => state?.auth?.authData?.result?.email)
     const [item, setItem] = useState()
     const [comments, setComments] = useState([])
     const [comment, setComment] = useState('')
     const { idItem } = useParams();
-
-
 
     useEffect(() => {
         try {

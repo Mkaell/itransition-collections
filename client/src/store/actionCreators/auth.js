@@ -10,7 +10,7 @@ export const actionLogIn = (formData, navigate) => async (dispatch) => {
 
    navigate('/');
   } catch (error) {
-    alert(error.response.data.message)
+    alert(error.response?.data?.message)
   }
 };
 

@@ -4,11 +4,10 @@ import InputChip from '../InputChip/InputChip';
 import AdditionalFields from './AdditionalFields';
 import Dropzone from './Dropzone';
 import RequiredField from './RequiredField';
-import { createCollection } from '../../api';
 import { useDispatch, useSelector } from 'react-redux';
-import { createCollectionDispatch } from '../../store/actionCreators/collectionsCreator';
+import { createCollectionDispatch } from '../../../store/actionCreators/collectionsCreator';
 
-const Modal = ({ open, handleClose, iduser }) => {
+const Modal = ({ open, handleClose, iduser, messages }) => {
 
     const userId = useSelector(state => state.auth.authData.result._id)
     const dispatch = useDispatch()
@@ -25,7 +24,7 @@ const Modal = ({ open, handleClose, iduser }) => {
         },
         creatorId: '',
     });
-
+    console.log(collection);
     const clearState = () => {
         setCollection({
             collectionImage: '',
@@ -38,14 +37,14 @@ const Modal = ({ open, handleClose, iduser }) => {
                 boolean: [],
             },
             creatorId: '',
-        })
+        });
+        handleClose();
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         dispatch(createCollectionDispatch({ ...collection, userId: iduser ? iduser : userId }));
         clearState();
-        handleClose();
     }
 
     return (
@@ -59,7 +58,7 @@ const Modal = ({ open, handleClose, iduser }) => {
             aria-describedby="alert-dialog-description"
         >
             <DialogTitle id="alert-dialog-title">
-                {"Create Collection"}
+                {messages['profile.create-collection']}
             </DialogTitle>
             <Paper>
                 <DialogContent>
@@ -67,14 +66,12 @@ const Modal = ({ open, handleClose, iduser }) => {
                         <form autoComplete="off" id='form-collection' onSubmit={handleSubmit}>
                             <Grid container spacing={6}>
                                 <Grid item xs >
-                                    <Typography>Image</Typography>
                                     <Dropzone setCollection={setCollection} collection={collection} />
                                 </Grid>
                                 <Grid item xs>
                                     <RequiredField collection={collection} setCollection={setCollection} />
                                 </Grid>
                                 <Grid item xs={4}>
-                                    <Typography>No Required</Typography>
                                     <AdditionalFields collection={collection} setCollection={setCollection} />
                                 </Grid>
                             </Grid>
@@ -83,9 +80,11 @@ const Modal = ({ open, handleClose, iduser }) => {
                 </DialogContent>
             </Paper>
             <DialogActions>
-                <Button onClick={handleClose} >Disagree</Button>
+                <Button onClick={clearState}>
+                    {messages['profile.clear-button']}
+                </Button>
                 <Button autoFocus type='submit' form='form-collection' disabled={!collection.collectionImage ? true : false}>
-                    Agree
+                    {messages['profile.create-button']}
                 </Button>
             </DialogActions>
         </Dialog>

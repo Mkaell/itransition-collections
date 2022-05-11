@@ -14,11 +14,13 @@ import BasicTextFields from './BasicTextFields';
 import AdditionalFields from './AdditionalFields';
 import { createItem } from '../../api';
 import { useParams } from 'react-router-dom';
+import { useIntl } from 'react-intl';
 
 function ModalItems({ open, handleClose, collection, items, setItems, clearFormItem, collectionId, setRows }) {
 
-    let basiclFieldsKeys = Object.keys(collection.itemFields?.basic || {})
-    let additionalFieldsKeys = Object.keys(collection.itemFields?.additional || {})
+    let basiclFieldsKeys = Object.keys(collection.itemFields?.basic || {});
+    let additionalFieldsKeys = Object.keys(collection.itemFields?.additional || {});
+    const { messages } = useIntl();
 
     const onChangeControl = (event) => {
 
@@ -56,7 +58,7 @@ function ModalItems({ open, handleClose, collection, items, setItems, clearFormI
         >
             <Paper>
                 <DialogTitle id="alert-dialog-title">
-                    Create new Item
+                    {messages['collection.modal-title']}
                 </DialogTitle>
             </Paper>
             <DialogContent sx={{ px: 10 }}>
@@ -82,15 +84,14 @@ function ModalItems({ open, handleClose, collection, items, setItems, clearFormI
                         />
                     </form>
                 </FormControl>
-                <Paper>
-
-                </Paper>
             </DialogContent>
             <Paper >
                 <DialogActions>
-                    <Button onClick={handleClose}>Clear</Button>
+                    <Button onClick={handleClose}>
+                        {messages['profile.clear-button']}
+                    </Button>
                     <Button autoFocus type='submit' form='form-collection'>
-                        Create
+                        {messages['profile.create-button']}
                     </Button>
                 </DialogActions>
             </Paper>

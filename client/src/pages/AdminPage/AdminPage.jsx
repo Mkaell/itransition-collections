@@ -13,6 +13,7 @@ import { StyledDataGrid } from './styled';
 import { EnhancedTableToolbar } from './ToolBar';
 import { format } from 'date-fns'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useIntl } from 'react-intl';
 
 const AdminPage = () => {
 
@@ -22,6 +23,7 @@ const AdminPage = () => {
     const dispatch = useDispatch();
     const [selected, setSelected] = useState([]);
     const [rows, setRows] = useState(users);
+    const { messages } = useIntl()
 
     useEffect(() => {
         dispatch(getUsers())
@@ -157,7 +159,7 @@ const AdminPage = () => {
                 getActions: (params) => [
                     <GridActionsCellItem
                         icon={
-                            <Tooltip title="Profile user" placement="top">
+                            <Tooltip title={messages['admin.profile']} placement="top">
                                 <Link to={`/${params.row.email}/${params.id}`}>
                                     <AccountCircleIcon />
                                 </Link>
@@ -169,7 +171,7 @@ const AdminPage = () => {
                     />,
                     <GridActionsCellItem
                         icon={
-                            <Tooltip title="Delete user" placement="top">
+                            <Tooltip title={messages['admin.delete']} placement="top">
                                 <DeleteIcon />
                             </Tooltip>
                         }
@@ -178,7 +180,7 @@ const AdminPage = () => {
                     />,
                     <GridActionsCellItem
                         icon={
-                            <Tooltip title="Toggle Admin" placement="top">
+                            <Tooltip title={messages['admin.toggle']} placement="top">
                                 <SecurityIcon />
                             </Tooltip>
                         }
@@ -187,7 +189,7 @@ const AdminPage = () => {
                     />,
                     <GridActionsCellItem
                         icon={
-                            <Tooltip title="Ban/Unban user" placement="top">
+                            <Tooltip title={messages['admin.ban-unban']} placement="top">
                                 <BlockIcon />
                             </Tooltip>
                         }
@@ -197,16 +199,14 @@ const AdminPage = () => {
                 ],
             },
         ],
-        [deleteAccount, toggleAdminStatus, toggleActiveStatus],
+        [messages, deleteAccount, toggleAdminStatus, toggleActiveStatus],
     );
 
     return (
         <Paper>
             <div style={{ height: 400, width: '100%', marginTop: '100px', }}>
                 <StyledDataGrid
-                    components={{
-                        Toolbar: EnhancedTableToolbar,
-                    }}
+
                     loading={isLoading}
                     onSelectionModelChange={(ids) => {
                         setSelected(ids);
@@ -216,8 +216,37 @@ const AdminPage = () => {
                             deleteAccounts,
                             selected,
                             toggleAdminStatusOfSelected,
-                            toggleActiveStatusOfSelected
+                            toggleActiveStatusOfSelected,
+                            messages
                         },
+                    }}
+                    localeText={{
+                        toolbarFilters: messages['admin.filter'],
+                        toolbarFiltersTooltipShow: messages['admin.show-filters'],
+                        toolbarFiltersTooltipHide: messages['admin.hide-filters'],
+                        filterPanelDeleteIconLabel: messages['admin.delete-icon'],
+                        filterPanelOperators: messages['admin.operator'],
+                        filterPanelColumns: messages['admin.columns'],
+                        filterPanelInputLabel: messages['admin.value'],
+                        filterPanelInputPlaceholder: messages['admin.filter-value'],
+                        filterOperatorContains: messages['admin.contains'],
+                        filterOperatorEquals: messages['admin.equals'],
+                        filterOperatorStartsWith: messages['admin.starts-with'],
+                        filterOperatorEndsWith: messages['admin.ends-with'],
+                        filterOperatorIsEmpty: messages['admin.is-empty'],
+                        filterOperatorIsNotEmpty: messages['admin.is-not-empty'],
+                        filterOperatorIsAnyOf: messages['admin.is-any-of'],
+                        columnMenuLabel: messages['admin.menu-label'],
+                        columnMenuShowColumns: messages['admin.show-columns'],
+                        columnMenuFilter: messages['admin.filter-label'],
+                        columnMenuHideColumn: messages['admin.hide'],
+                        columnMenuUnsort: messages['admin.unsort'],
+                        columnMenuSortAsc: messages['admin.sort-by-ASC'],
+                        columnMenuSortDesc: messages['admin.sort-by-DESC'],
+                        columnHeaderSortIconLabel: messages['admin.sort-label'],
+                    }}
+                    components={{
+                        Toolbar: EnhancedTableToolbar,
                     }}
                     hideFooterSelectedRowCount={true}
                     GridColDef='center'

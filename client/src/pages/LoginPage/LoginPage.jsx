@@ -2,12 +2,13 @@ import React from 'react'
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import './LoginPage.css'
-import { Button, TextField } from '@mui/material';
+import { Button, TextField, Typography } from '@mui/material';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import { logIn } from '../../api';
 import { useDispatch } from 'react-redux';
 import { actionLogIn } from '../../store/actionCreators/auth';
+import { useIntl } from 'react-intl';
 
 const validationSchema = yup.object({
 	email: yup.string()
@@ -17,8 +18,10 @@ const validationSchema = yup.object({
 });
 
 const LoginPage = () => {
+
 	const dispatch = useDispatch();
-	const navigate = useNavigate()
+	const navigate = useNavigate();
+	const { messages } = useIntl();
 
 	const formik = useFormik({
 		initialValues: {
@@ -35,13 +38,13 @@ const LoginPage = () => {
 	return (
 		<div className='login'>
 			<form onSubmit={formik.handleSubmit} >
-				<h2 className='login-title'>Log in</h2>
+				<Typography variant='h4' mb={3}>{messages['login.login']}</Typography>
 				<TextField
 					style={{ marginBottom: '30px' }}
 					fullWidth
 					id="email"
 					name="email"
-					label="Email"
+					label={messages['form.login-label-email']}
 					value={formik.values.email}
 					onChange={formik.handleChange}
 					error={formik.touched.email && Boolean(formik.errors.email)}
@@ -52,7 +55,7 @@ const LoginPage = () => {
 					style={{ marginBottom: '30px' }}
 					id="password"
 					name="password"
-					label="Password"
+					label={messages['form.login-label-password']}
 					type="password"
 					value={formik.values.password}
 					onChange={formik.handleChange}
@@ -60,7 +63,7 @@ const LoginPage = () => {
 					helperText={formik.touched.password && formik.errors.password}
 				/>
 				<Button size="large" color="primary" variant="contained" fullWidth type="submit">
-					Log in
+					{messages['login.login']}
 				</Button>
 			</form>
 

@@ -3,13 +3,14 @@ import { GridToolbarFilterButton } from "@mui/x-data-grid";
 import DeleteIcon from '@mui/icons-material/Delete';
 import SecurityIcon from '@mui/icons-material/Security';
 import BlockIcon from '@mui/icons-material/Block';
+import { useIntl } from "react-intl";
 
 export const EnhancedTableToolbar = (props) => {
     const {
         selected,
         deleteAccounts,
         toggleAdminStatusOfSelected,
-        toggleActiveStatusOfSelected } = props;
+        toggleActiveStatusOfSelected, messages } = props;
 
     const numSelected = selected.length
 
@@ -26,26 +27,24 @@ export const EnhancedTableToolbar = (props) => {
         >
             {numSelected > 0 ? (
                 <>
-                    <Tooltip title="Delete selected">
+                    <Tooltip title={messages["admin.delete-selected"]}>
                         <IconButton onClick={deleteAccounts(selected)} >
                             <DeleteIcon />
                         </IconButton>
                     </Tooltip>
-                    <Tooltip title="Toggle admins">
+                    <Tooltip title={messages["admin.toggle-admins"]}>
                         <IconButton onClick={toggleAdminStatusOfSelected(selected)}>
                             <SecurityIcon />
                         </IconButton>
                     </Tooltip>
-                    <Tooltip title="Ban/Unban users">
+                    <Tooltip title={messages["admin.ban-unban-users"]}>
                         <IconButton onClick={toggleActiveStatusOfSelected(selected)}>
                             <BlockIcon />
                         </IconButton>
                     </Tooltip>
                 </>
             ) : (
-                <Tooltip title="Filter list">
-                    <GridToolbarFilterButton />
-                </Tooltip>
+                <GridToolbarFilterButton />
             )}
             {numSelected > 0 ? (
                 <Typography
@@ -54,7 +53,7 @@ export const EnhancedTableToolbar = (props) => {
                     variant="subtitle1"
                     component="div"
                 >
-                    {numSelected} selected
+                    {numSelected} {messages['admin.selected']}
                 </Typography>
             ) : (
                 <Typography
@@ -63,7 +62,7 @@ export const EnhancedTableToolbar = (props) => {
                     id="tableTitle"
                     component="div"
                 >
-                    Admin panel
+                    {messages['admin.panel']}
                 </Typography>
             )}
         </Toolbar>

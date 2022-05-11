@@ -1,8 +1,10 @@
 import { MenuItem, TextField, Typography } from '@mui/material'
 import React from 'react'
+import { useIntl } from 'react-intl';
 
 const RequiredField = ({ collection, setCollection }) => {
 
+    const { messages } = useIntl()
 
     const onChangeControl = (event) => {
         const fieldName = event.target.name;
@@ -16,7 +18,7 @@ const RequiredField = ({ collection, setCollection }) => {
 
     return (
         <>
-            <Typography>Required field</Typography>
+            <Typography>{messages['profile.required']}</Typography>
             <TextField
                 onChange={(e) => onChangeControl(e)}
                 required

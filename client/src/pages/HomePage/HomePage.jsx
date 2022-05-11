@@ -5,40 +5,48 @@ import InboxIcon from '@mui/icons-material/Inbox';
 
 import './HomePage.css'
 
-import { DataGrid } from '@mui/x-data-grid';
-import {
-    randomCreatedDate,
-    randomTraderName,
-    randomUpdatedDate,
-} from '@mui/x-data-grid-generator';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
-import { fetchLargestCollectionsAndLastItems } from '../../api';
+import { fetchLargestCollectionsAndLastItems, searchItemTags } from '../../api';
 
 import { TagCloud } from 'react-tagcloud'
-import { Link, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { useIntl } from 'react-intl';
 
 const options = {
     luminosity: 'light',
     hue: 'purple',
 }
-const SimpleCloud = ({ data }) => (
-    <TagCloud
-        minSize={20}
-        maxSize={35}
-        style={{ width: '300px', textAlign: 'center' }}
-        colorOptions={options}
-        className='simple-cloud'
-        tags={data}
-        onClick={tag => alert(`'${tag.value}' was selected!`)}
-    />
-)
+const SimpleCloud = ({ data }) => {
+    const navigate = useNavigate()
+    const findItems = async (tag) => {
+        try {
+            const response = await searchItemTags({ searchedData: tag })
+            navigate('/items')
+        } catch (error) {
+            console.log(error);
+        }
+
+    };
+
+    return (
+        <TagCloud
+            minSize={20}
+            maxSize={35}
+            style={{ width: '300px', textAlign: 'center' }}
+            colorOptions={options}
+            className='simple-cloud'
+            tags={data}
+            onClick={tag => findItems(tag.value)}
+        />
+    )
+
+}
 
 const HomePage = () => {
 
     const [largestCollections, setLargestCollections] = useState([]);
     const [lastAddedItems, setLastAddedItems] = useState([]);
     const location = useLocation()
+
 
     useEffect(() => {
         try {
@@ -56,16 +64,16 @@ const HomePage = () => {
         return Math.random() * (max - min) + min;
     }
 
+
     let tagsCloud = []
     let tagsCloudi = []
     let arr = lastAddedItems.map((item) => tagsCloud.concat(item.tags)).flat()
-    arr.map((tag) =>
+    Array.from(new Set(arr)).map((tag) =>
         tagsCloudi.push({
-            'value': `#${tag}`,
+            'value': `${tag}`,
             'count': getRandomArbitrary(15, 35)
         })
     )
-    console.log(tagsCloudi);
     return (
         <div>
             <div className='home-clouds-tags'>
@@ -92,16 +100,16 @@ const HomePage = () => {
                         {
                             lastAddedItems.map((item) =>
                                 <>
-                                    <Link to={`/collection/${item.collectionId}/item/${item._id}`}>
-                                        <ListItem disablePadding >
-                                            <ListItemButton>
+                                    <NavLink to={`/collection/${item.collectionId}/item/${item._id}`}>
+                                        <ListItem disablePadding classes='home-item'>
+                                            <ListItemButton classes='home-item'>
                                                 <ListItemIcon>
                                                     <InboxIcon />
                                                 </ListItemIcon>
-                                                <ListItemText primary={item.name} />
+                                                <ListItemText primary={item.name} sx={{ color: 'secondary.main' }} />
                                             </ListItemButton>
                                         </ListItem>
-                                    </Link>
+                                    </NavLink>
                                     <Divider />
                                 </>
                             )

@@ -23,6 +23,7 @@ const AdditionalFields = ({ additionalFieldsKeys, collection, onChangeControl, i
                                             itemField={itemField}
                                             items={items}
                                             setItems={setItems}
+                                            key={fieldId}
                                         />
                                     )
                                 )}

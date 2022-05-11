@@ -11,7 +11,7 @@ const comparison = (currentUser, collection, right, incorrect) =>{
     }
     
 }
-export const columnsСonverter = (additionalFieldsEntries, basicFieldsEntries, deleteCurrentItem, likeIthemByCurrentUser, currentUser, collection) => {
+export const columnsСonverter = (additionalFieldsEntries, basicFieldsEntries, deleteCurrentItem, likeIthemByCurrentUser, currentUser, collection, messages) => {
 
     const columnsObj = [];
 
@@ -30,6 +30,7 @@ export const columnsСonverter = (additionalFieldsEntries, basicFieldsEntries, d
                     likeIthemByCurrentUser={likeIthemByCurrentUser} 
                     currentUser={currentUser} 
                     collection={collection}
+                    messages={messages}
                 />
             ]
         })

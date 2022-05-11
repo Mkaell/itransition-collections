@@ -1,0 +1,72 @@
+{
+  "nav.home": "Main",
+  "nav.language-picker":"Language",
+  "nav.admin": "Admin",
+  "nav.login": "Login",
+  "nav.logout": "Logout",
+  "nav.signup": "Sign Up",
+  "nav.profile": "Profile",
+  "nav.search": "Search",
+
+  "login.login": "Log in",
+  "form.login-label-email": "Email",
+  "form.login-label-password": "Password",
+  "signup.signup-button": "Sign Up",
+  "signup.signup-title": "Sign Up",
+
+  "admin.filter": "Filters",
+  "admin.show-filters": "Show Filters",
+  "admin.hide-filters": "Hide Filters",
+
+  "admin.operator": "Operator",
+  "admin.columns": "Columns",
+  "admin.value": "Value",
+  "admin.filter-value": "Filter value",
+  "admin.delete-icon": "Delete",
+  
+  "admin.contains": "contains",
+  "admin.equals": "equals",
+  "admin.starts-with": "starts with",
+  "admin.ends-with": "ends with",
+  "admin.is-empty": "is empty",
+  "admin.is-not-empty": "is not empty",
+  "admin.is-any-of": "is any of",
+
+  "admin.menu-label": "Menu",
+  "admin.show-columns": "Show columns",
+  "admin.filter-label": "Filter",
+  "admin.hide": "Hide",
+  "admin.unsort": "Unsort",
+  "admin.sort-by-ASC": "Sort by ASC",
+  "admin.sort-by-DESC": "Sort by DESC",
+  "admin.sort-label": "Sort",
+
+  "admin.panel": "Admin panel",
+  "admin.selected": "selected",
+  "admin.profile": "Profile user",
+  "admin.delete": "Delete user",
+  "admin.toggle": "Toggle admin status",
+  "admin.ban-unban": "Ban/Unban user",
+  "admin.delete-selected": "Delete selected",
+  "admin.toggle-admins": "Toggle admins",
+  "admin.ban-unban-users": "Ban/Unban users",
+
+  "profile.create-collection": "Create collection",
+  "profile.image": "Image",
+  "profile.required": "Required",
+  "profile.not-required": "Optional",
+  "profile.create-button": "Create",
+  "profile.clear-button": "Clear",
+  "profile.drag-and-drop": "Drag 'n' drop some files here, or click to select files",
+  "profile.drag-and-drop-active": "Drag 'n' drop active",
+  "profile.new-collection": "New collection",
+
+  "collection.export": "Export",
+  "collection.download": "Download as CSV",
+  "collection.print": "Print",
+  "collection.delete": "Delete item",
+  "collection.add-item-button": "Add item",
+  "collection.modal-title": "Create item"
+
+
+}

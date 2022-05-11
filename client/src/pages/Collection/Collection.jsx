@@ -23,6 +23,8 @@ import { columnsСonverter } from './Columns/columnsСonverter'
 import { deleteItem } from '../../api';
 import InfoAboutCollection from './InfoAboutCollection';
 import { useSelector } from 'react-redux';
+import { useIntl } from 'react-intl';
+import CustomToolbar from './CustomToolbar';
 
 const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
     border: 0,
@@ -95,6 +97,7 @@ function Collection() {
     const [items, setItems] = useState({});
     const [rows, setRows] = useState([])
     const [snackbar, setSnackbar] = useState(null);
+    const { messages } = useIntl()
 
     useEffect(() => {
         try {
@@ -127,10 +130,10 @@ function Collection() {
             deleteCurrentItem,
             likeIthemByCurrentUser,
             currentUser,
-            collection)
+            collection,
+            messages)
         setColumns(columnsObj);
-    }, [additionalFieldsEntries, basicFieldsEntries])
-
+    }, [additionalFieldsEntries, basicFieldsEntries, collection, currentUser, messages])
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -210,7 +213,6 @@ function Collection() {
         [],
     );
 
-
     const handleProcessRowUpdateError = useCallback((error) => {
         setSnackbar({ children: error.message, severity: 'error' });
     }, []);
@@ -227,10 +229,37 @@ function Collection() {
                     GridColDef='center'
                     getRowId={(row) => row._id}
                     components={{
-                        Toolbar: GridToolbar
+                        Toolbar: CustomToolbar
+                    }}
+                    localeText={{
+                        toolbarFilters: messages['admin.filter'],
+                        toolbarExport: messages['collection.export'],
+                        toolbarExportCSV: messages['collection.download'],
+                        toolbarExportPrint: messages['collection.print'],
+                        toolbarFiltersTooltipShow: messages['admin.show-filters'],
+                        toolbarFiltersTooltipHide: messages['admin.hide-filters'],
+                        filterPanelDeleteIconLabel: messages['admin.delete-icon'],
+                        filterPanelOperators: messages['admin.operator'],
+                        filterPanelColumns: messages['admin.columns'],
+                        filterPanelInputLabel: messages['admin.value'],
+                        filterPanelInputPlaceholder: messages['admin.filter-value'],
+                        filterOperatorContains: messages['admin.contains'],
+                        filterOperatorEquals: messages['admin.equals'],
+                        filterOperatorStartsWith: messages['admin.starts-with'],
+                        filterOperatorEndsWith: messages['admin.ends-with'],
+                        filterOperatorIsEmpty: messages['admin.is-empty'],
+                        filterOperatorIsNotEmpty: messages['admin.is-not-empty'],
+                        filterOperatorIsAnyOf: messages['admin.is-any-of'],
+                        columnMenuLabel: messages['admin.menu-label'],
+                        columnMenuShowColumns: messages['admin.show-columns'],
+                        columnMenuFilter: messages['admin.filter-label'],
+                        columnMenuHideColumn: messages['admin.hide'],
+                        columnMenuUnsort: messages['admin.unsort'],
+                        columnMenuSortAsc: messages['admin.sort-by-ASC'],
+                        columnMenuSortDesc: messages['admin.sort-by-DESC'],
+                        columnHeaderSortIconLabel: messages['admin.sort-label'],
                     }}
                     experimentalFeatures={{ newEditingApi: true }}
-
                 />
                 {!!snackbar && (
                     <Snackbar

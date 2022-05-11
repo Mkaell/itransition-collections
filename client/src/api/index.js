@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'https://collection-app-itra.herokuapp.com/' });
+const API = axios.create({ baseURL: 'http://localhost:5047/' });
 
 export const logIn = (formData) => API.post('/auth/login', formData);
 export const signUp = (formData) => API.post('/auth/signup', formData);
@@ -25,3 +25,4 @@ export const updateItem = (id, itemInfo) => API.post(`/items/edit/fields/${id}`,
 export const likeItem = (id, usersByLikes) => API.patch(`/items/edit/like/${id}`, usersByLikes);
 export const getItem = (id) => API.get(`/items/get/${id}`);
 export const searchItem = (formData) => API.post('/search', formData);
+export const searchItemTags = (formData) => API.post('/search/tags', formData);
