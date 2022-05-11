@@ -3,6 +3,6 @@ const router = Router();
 const FullTextSearchController = require("../controllers/FullTextSearchController");
 
 router.post("/", FullTextSearchController.find);
-router.post("/tags", FullTextSearchController.findTags);
+router.post("/tag", FullTextSearchController.findTags);
 
 module.exports = router;

@@ -17,12 +17,12 @@ export const createCollection = (formData) => API.post('/collections/create', fo
 export const fetchCollections = (id) => API.post('/collections/get', id);
 export const fetchCollection = (id) => API.post(`/collections/get/${id}`, id);
 export const deleteCollection = (id, formData) => API.delete(`/collections/delete/${id}`, {data: formData} );
-export const fetchLargestCollectionsAndLastItems = () => API.get('/');
+export const fetchCollectionsAndLastItems = () => API.get('/');
 
 export const createItem = (formData) => API.post('/items/create', formData);
 export const deleteItem = (id) => API.delete(`/items/delete/${id}`);
 export const updateItem = (id, itemInfo) => API.post(`/items/edit/fields/${id}`, itemInfo);
 export const likeItem = (id, usersByLikes) => API.patch(`/items/edit/like/${id}`, usersByLikes);
-export const getItem = (id) => API.get(`/items/get/${id}`);
+export const fetchItem = (id) => API.get(`/items/get/${id}`);
 export const searchItem = (formData) => API.post('/search', formData);
-export const searchItemTags = (formData) => API.post('/search/tags', formData);
+export const searchItemsByTag = (data) => API.post('/search/tag', data);

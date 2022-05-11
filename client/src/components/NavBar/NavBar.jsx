@@ -84,7 +84,7 @@ const NavBar = ({ currentLocale, setCurrentLocale }) => {
     const dispatch = useDispatch();
     const location = useLocation();
     const { messages } = useIntl()
-    console.log(foundItems);
+
     const handleLogOut = () => {
         dispatch(actionLogOut());
         setUser(null)

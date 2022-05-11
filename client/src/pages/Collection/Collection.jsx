@@ -1,95 +1,23 @@
-import TagIcon from '@mui/icons-material/Tag';
-import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
-import SecurityIcon from '@mui/icons-material/Security';
-import BlockIcon from '@mui/icons-material/Block';
-import { DataGrid, GridActionsCellItem, GridToolbar, useGridApiContext } from '@mui/x-data-grid';
-import {
-    randomCreatedDate,
-    randomTraderName,
-    randomUpdatedDate,
-} from '@mui/x-data-grid-generator';
-import { Alert, Avatar, Chip, Grid, Modal, Paper, Snackbar, Tooltip, Typography } from '@mui/material';
+import { Alert, Snackbar } from '@mui/material';
 import ModalItems from './ModalItems';
-import styled from '@emotion/styled';
-import { fetchCollection, likeItem, updateItem } from '../../api';
+import { likeItem, updateItem } from '../../api';
 import { useParams } from 'react-router-dom';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Utils } from '../../utils/utils';
-import { format } from 'date-fns'
 import { columnsСonverter } from './Columns/columnsСonverter'
-import { deleteItem } from '../../api';
+import { deleteItem } from '../../store/actionCreators/itemsCreator';
 import InfoAboutCollection from './InfoAboutCollection';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
 import CustomToolbar from './CustomToolbar';
-
-const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
-    border: 0,
-    background: 'linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05))',
-    textAlign: 'center',
-    color:
-        theme.palette.mode === 'light' ? 'rgba(0,0,0,.85)' : 'rgba(255,255,255,0.85)',
-    fontFamily: [
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Segoe UI"',
-        'Roboto',
-        '"Helvetica Neue"',
-        'Arial',
-        'sans-serif',
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
-    ].join(','),
-    WebkitFontSmoothing: 'auto',
-    letterSpacing: 'normal',
-    '& .MuiDataGrid-columnsContainer': {
-        backgroundColor: theme.palette.mode === 'light' ? '#fafafa' : '#1d1d1d',
-    },
-    '$ .MuiDataGrid-main': {
-        borderTop: `1px solid ${theme.palette.mode === 'light' ? '#f0f0f0' : '#303030'
-            }`,
-    },
-    '& .MuiDataGrid-iconSeparator': {
-        display: 'none',
-    },
-    '& .MuiDataGrid-columnHeader, .MuiDataGrid-cell': {
-        borderRight: `1px solid ${theme.palette.mode === 'light' ? '#f0f0f0' : '#303030'
-            }`,
-    },
-    '& .MuiDataGrid-columnsContainer, .MuiDataGrid-cell': {
-        borderBottom: `1px solid ${theme.palette.mode === 'light' ? '#f0f0f0' : '#303030'
-            }`,
-    },
-    '& .MuiDataGrid-cell--textLeft': {
-        justifyContent: 'center'
-    },
-    '& .MuiDataGrid-cell--textRight': {
-        justifyContent: 'center'
-    },
-    '& .MuiDataGrid-cell': {
-        color:
-            theme.palette.mode === 'light' ? 'rgba(0,0,0,.85)' : 'rgba(255,255,255,0.85)',
-    },
-    '& .MuiPaginationItem-root': {
-        borderRadius: 0,
-    },
-    '& .MuiDataGrid-booleanCell[data-value="true"]': {
-        color: 'green',
-    },
-    '& .MuiDataGrid-booleanCell[data-value="false"]': {
-        color: 'red',
-    },
-
-}));
+import { StyledDataGrid } from './style';
+import { getCollection } from '../../store/actionCreators/collectionsCreator';
 
 
 function Collection() {
 
     const currentUser = useSelector(state => state.auth.authData?.result);
+    const dispatch = useDispatch()
     const [open, setOpen] = useState(false);
     const { idCollection } = useParams()
     const [columns, setColumns] = useState([])
@@ -100,17 +28,11 @@ function Collection() {
     const { messages } = useIntl()
 
     useEffect(() => {
-        try {
-            const getInfoCollection = async () => {
-                const coll = await fetchCollection(idCollection)
-                setCollection(coll.data)
-                setRows(coll.data.items)
-            }
-            getInfoCollection()
-        } catch (error) {
-            console.log(error)
-        }
-
+        dispatch(getCollection(idCollection))
+            .then(data => {
+                setCollection(data)
+                setRows(data.items)
+            })
     }, [])
 
     const basicFieldsEntries = useMemo(
@@ -150,15 +72,8 @@ function Collection() {
     const deleteCurrentItem = useCallback(
         (id) => () => {
             setTimeout(() => {
-                try {
-                    (async () => {
-                        await deleteItem(id)
-                    })()
-                    setRows((prevRows) => prevRows.filter((row) => row._id !== id));
-                } catch (error) {
-                    console.log(error);
-                }
-
+                dispatch(deleteItem(id))
+                setRows((prevRows) => prevRows.filter((row) => row._id !== id));
             });
         },
         [],
@@ -180,13 +95,10 @@ function Collection() {
 
     const likeIthemByCurrentUser = useCallback(
         async (id, usersByLikes) => {
-
             if (!usersByLikes.includes(currentUser?._id)) {
                 usersByLikes.push(currentUser?._id)
                 try {
-                    ;
                     const response = await likeItem(id, { usersByLikes })
-                    console.log(response)
                     setRows((prevRows) =>
                         prevRows.map((row) =>
                             row._id === id ? { ...row, usersByLikes: usersByLikes } : row,
@@ -220,7 +132,7 @@ function Collection() {
     return (
         <>
             <InfoAboutCollection collection={collection} handleClickOpen={handleClickOpen} />
-            <div style={{ height: '400px', width: '100%', }}>
+            <Box style={{ height: '400px', width: '100%', }}>
                 <StyledDataGrid
                     rows={rows}
                     columns={columns}
@@ -280,7 +192,7 @@ function Collection() {
                     clearFormItem={clearFormItem}
                     collectionId={idCollection}
                     setRows={setRows} />
-            </div>
+            </Box>
         </>
 
     );

@@ -1,10 +1,10 @@
-import { Avatar, Divider, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material'
+import { Avatar, Divider, ListItemAvatar, ListItemButton, ListItemText, Typography } from '@mui/material'
 import React from 'react'
 
 const Comment = ({ comment }) => {
     return (
         <>
-            <ListItem alignItems="flex-start">
+            <ListItemButton autoFocus={true} alignItems="flex-start" >
                 <ListItemAvatar>
                     <Avatar alt="Remy Sharp" />
                 </ListItemAvatar>
@@ -24,7 +24,7 @@ const Comment = ({ comment }) => {
                         </>
                     }
                 />
-            </ListItem>
+            </ListItemButton>
             <Divider variant="inset" component="li" />
         </>
     )

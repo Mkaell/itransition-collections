@@ -28,12 +28,10 @@ const messages = {
 };
 
 function App() {
-	
-	// console.log(local['ruRU']);
-	// console.log(local['enUS']);
+
 	const [mode, setMode] = useState('dark');
 	const [currentLocale, setCurrentLocale] = useState(localStorage.getItem('app.localization') || locales.EN);
-console.log(currentLocale);
+
 	const colorMode = React.useMemo(
 	  () => ({
 		toggleColorMode: () => {
