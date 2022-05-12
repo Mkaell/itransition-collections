@@ -19,7 +19,7 @@ const ActionButtons = ({ params, deleteCurrentItem, likeIthemByCurrentUser, curr
                                 </Tooltip>
                             }
                             label="Delete"
-                            onClick={deleteCurrentItem(params.id)}
+                            onClick={deleteCurrentItem(params.id, params.row.collectionId)}
                         />
 
                         <GridActionsCellItem

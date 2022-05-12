@@ -7,7 +7,7 @@ const Item = ({ item }) => {
 
     const date = useSelector(state => state?.items?.items?.dateCreate)
 
-    // const dateCreate = format(new Date(date), "HH:mm:ss'/'yyyy-MM-dd")
+
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '50%' }}>
             <Typography variant='h5'>

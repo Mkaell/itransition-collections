@@ -10,7 +10,7 @@ const CollectionCard = ({ image, name, id, deleteCollection, userId, location })
     const navigate = useNavigate()
 
     return (
-        <Card sx={{ width: 200, mt: 2, borderRadius: 2, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
+        <Card sx={{ width: 200, mt: 2, borderRadius: 2, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }} elevation={5}>
 
             <CardActionArea onClick={() => navigate(`/collection/${id}`)}>
                 <CardMedia

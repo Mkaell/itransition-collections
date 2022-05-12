@@ -21,7 +21,7 @@ function ModalItems({ open, handleClose, collection, items, setItems, clearFormI
     let basiclFieldsKeys = Object.keys(collection.itemFields?.basic || {});
     let additionalFieldsKeys = Object.keys(collection.itemFields?.additional || {});
     const { messages } = useIntl();
-
+    console.log(collection);
     const onChangeControl = (event) => {
 
         const fieldName = event.target.name;
@@ -36,7 +36,7 @@ function ModalItems({ open, handleClose, collection, items, setItems, clearFormI
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const response = await createItem({ ...items, collectionId })
+            const response = await createItem({ ...items, collectionId, userId: collection.userId })
             setRows(response.data.items)
         } catch (error) {
             console.log(error);
@@ -87,10 +87,10 @@ function ModalItems({ open, handleClose, collection, items, setItems, clearFormI
             </DialogContent>
             <Paper >
                 <DialogActions>
-                    <Button onClick={handleClose}>
+                    <Button onClick={handleClose} variant="contained">
                         {messages['profile.clear-button']}
                     </Button>
-                    <Button autoFocus type='submit' form='form-collection'>
+                    <Button autoFocus type='submit' form='form-collection' variant="contained">
                         {messages['profile.create-button']}
                     </Button>
                 </DialogActions>

@@ -20,7 +20,7 @@ export const deleteCollection = (id, formData) => API.delete(`/collections/delet
 export const fetchCollectionsAndLastItems = () => API.get('/');
 
 export const createItem = (formData) => API.post('/items/create', formData);
-export const deleteItem = (id) => API.delete(`/items/delete/${id}`);
+export const deleteItem = (id, collectionId) => API.delete(`/items/delete/${id}`, {data: collectionId});
 export const updateItem = (id, itemInfo) => API.post(`/items/edit/fields/${id}`, itemInfo);
 export const likeItem = (id, usersByLikes) => API.patch(`/items/edit/like/${id}`, usersByLikes);
 export const fetchItem = (id) => API.get(`/items/get/${id}`);

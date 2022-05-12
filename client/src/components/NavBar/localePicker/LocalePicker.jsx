@@ -17,18 +17,14 @@ export default function LocalePicker({ currentLocale, onLocaleChanged }) {
     return (
         <Box>
             <FormControl variant="standard">
-                <InputLabel id="demo-simple-select-standard-label">
-                    <FormattedMessage id="nav.language-picker" />
-                </InputLabel>
                 <Select
                     labelId="demo-simple-select-standard-label"
                     value={locale}
                     onChange={onChanged}
-                    label="Age"
                 >
-                    <MenuItem value={locales.EN}>English</MenuItem>
-                    <MenuItem value={locales.RU}>Русский</MenuItem>
-                    <MenuItem value={locales.PL}>Polska</MenuItem>
+                    <MenuItem value={locales.EN}>EN</MenuItem>
+                    <MenuItem value={locales.RU}>RU</MenuItem>
+                    <MenuItem value={locales.PL}>PL</MenuItem>
                 </Select>
             </FormControl>
         </Box>

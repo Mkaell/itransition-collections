@@ -3,10 +3,11 @@ import * as api from '../../api/index.js';
 import { format } from 'date-fns';
 
 
-export const deleteItem = (id) => async (dispatch) => {
+export const deleteItem = (id, collectionId) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
-        await api.deleteItem(id);
+        await api.deleteItem(id, collectionId);
+        console.log(collectionId);
         dispatch({ type: DELETE, payload: id });
         dispatch({ type: END_LOADING });
     } catch (error) {
@@ -29,10 +30,11 @@ export const getItem = (searchData) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
         const {data} = await api.fetchItem(searchData);
-        console.log(data);
-        const date = format(new Date(data.dateCreate), "HH:mm:ss'/'yyyy-MM-dd")
-        dispatch({ type: FETCH_BY_ONE, payload: {...data, dateCreate: date} });
 
+        const date = format(new Date(data.dateCreate), "HH:mm:ss'/'yyyy-MM-dd")
+       
+
+        dispatch({ type: FETCH_BY_ONE, payload: {...data, dateCreate: date} });
         dispatch({ type: END_LOADING });
         return data       
     } catch (error) {

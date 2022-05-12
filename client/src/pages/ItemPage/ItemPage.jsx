@@ -13,6 +13,7 @@ import { useTheme } from '@emotion/react'
 import { getItem } from '../../store/actionCreators/itemsCreator'
 import { Box } from '@mui/system'
 import { format } from 'date-fns'
+import { useIntl } from 'react-intl'
 
 const ItemPage = () => {
 
@@ -24,6 +25,7 @@ const ItemPage = () => {
     const [comments, setComments] = useState([])
     const [comment, setComment] = useState('')
     const { idItem } = useParams();
+    const { messages } = useIntl()
 
     useEffect(() => {
         dispatch(getItem(idItem)).then(
@@ -41,8 +43,8 @@ const ItemPage = () => {
         return () => socket.disconnect();
     }, [idItem, socket])
 
-    const handleOnChange = (event) => {
-        setComment(event.target.value)
+    const handleOnChange = (e) => {
+        setComment(e.target.value)
     }
 
     const addComment = (e) => {
@@ -50,14 +52,14 @@ const ItemPage = () => {
         e.preventDefault();
 
         if (comment === "") return;
-
+        let dateCreate = format(new Date(), "HH:mm:ss'/'yyyy-MM-dd")
         setComments([
             ...comments,
             {
                 id: uuidv4(),
                 name: email,
                 content: comment,
-                date: new Date().toLocaleString(),
+                date: dateCreate,
             }
 
         ]);
@@ -67,7 +69,7 @@ const ItemPage = () => {
             id: uuidv4(),
             name: email,
             content: comment,
-            date: new Date().toLocaleString(),
+            date: dateCreate,
         }]
 
         socket.emit("updateItemComments", {
@@ -76,8 +78,7 @@ const ItemPage = () => {
         });
 
     };
-    // const date = format(new Date(item?.dateCreate), "HH:mm:ss'/'yyyy-MM-dd")
-    // console.log(date);
+
     return (
         <>
             {
@@ -92,10 +93,10 @@ const ItemPage = () => {
                                 <Item item={item} />
                             </StyledGridItem>
                             <StyledGridComments item xs={6} classes='comments'>
-                                <Grid container fullWidth rowSpacing={1} >
+                                <Grid container fullWidth >
                                     <Grid item xs={12}>
                                         <Typography variant='h5' padding={1}>
-                                            Comments
+                                            {messages["item.comments"]}
                                         </Typography>
                                     </Grid>
                                     <Grid item xs={12}>

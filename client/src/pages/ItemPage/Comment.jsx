@@ -1,4 +1,4 @@
-import { Avatar, Divider, ListItemAvatar, ListItemButton, ListItemText, Typography } from '@mui/material'
+import { Avatar, Box, Divider, ListItemAvatar, ListItemButton, ListItemText, Typography } from '@mui/material'
 import React from 'react'
 
 const Comment = ({ comment }) => {
@@ -9,7 +9,21 @@ const Comment = ({ comment }) => {
                     <Avatar alt="Remy Sharp" />
                 </ListItemAvatar>
                 <ListItemText
-                    primary={comment.name}
+                    // primary={comment.name}
+                    primary={
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <Typography
+                                sx={{ display: 'inline' }}
+                                component="span"
+                                variant="body2"
+                                color="text.primary"
+                            >
+                                {comment.name}
+                            </Typography>
+                            {comment.date}
+                        </Box>
+
+                    }
                     secondary={
                         <>
                             <Typography
@@ -18,9 +32,8 @@ const Comment = ({ comment }) => {
                                 variant="body2"
                                 color="text.primary"
                             >
-                                {comment.date}
+                                {comment.content}
                             </Typography>
-                            {comment.content}
                         </>
                     }
                 />

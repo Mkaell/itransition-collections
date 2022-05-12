@@ -6,7 +6,7 @@ const ItemController = {
     try {
       const { collectionId } = req.body;
       const itemFields = req.body
-      console.log(collectionId);
+      
       const collectionById = await Collection.findById(collectionId)
       .populate(
         "items"
@@ -32,9 +32,6 @@ const ItemController = {
       const idItem = req.params.iditem;
       
       const itemById = await Item.findById(idItem);
-      // let itemComments = itemById.comments;
-
-      // if (!itemComments.length) itemComments = [{ showAdd: true }];
 
       res.status(200).json(itemById);
     } catch (e) {
@@ -43,13 +40,17 @@ const ItemController = {
   },
   delete: async (req, res) => {
     try {
-      const {iditem} = req.params;
-      
-     await Item.findByIdAndDelete(iditem);
+		const {iditem} = req.params;
+		const {collectionId} = req.body;
+		
+		await Collection.updateOne({ _id: collectionId },
+			{ $pull: { items: iditem}}
+		);
+		await Item.findByIdAndDelete(iditem);
 
-      res.status(200).json({message: "Item deleted successfully"});
+		res.status(200).json({message: "Item deleted successfully"});
     } catch (e) {
-      res.status(500).json({ message: e.message });
+		res.status(500).json({ message: e.message });
     }
   },
   edit: {

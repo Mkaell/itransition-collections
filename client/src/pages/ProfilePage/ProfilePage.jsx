@@ -13,13 +13,12 @@ import { useIntl } from 'react-intl';
 
 const ProfilePage = () => {
 
+    const { collections, isLoading } = useSelector(state => state.collections);
+    const userId = useSelector(state => state.auth.authData?.result._id);
+    const { iduser } = useParams()
     const dispatch = useDispatch()
-    const { collections, isLoading } = useSelector(state => state.collections)
-    let { iduser } = useParams()
     const { messages } = useIntl()
-    const userId = useSelector(state => state.auth.authData.result._id)
     const [open, setOpen] = useState(false);
-
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -69,6 +68,7 @@ const ProfilePage = () => {
                                 id={collection._id}
                                 key={collection._id}
                                 deleteCollection={handleDeleteCollection}
+                                userId={collection.userId}
                             />
                         )
                 }

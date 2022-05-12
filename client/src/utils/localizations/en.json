@@ -61,6 +61,10 @@
   "profile.drag-and-drop-active": "Drag 'n' drop active",
   "profile.new-collection": "New collection",
 
+  "item.comments": "Comments",
+  "item.send-button": "Send",
+  "item.placeholder": "Comment",
+
   "collection.export": "Export",
   "collection.download": "Download as CSV",
   "collection.print": "Print",

@@ -14,7 +14,7 @@ import ListItems from '../../components/ListItems/ListItems';
 import SimpleCloud from './SimpleCloud';
 import { getHomePageInfo } from '../../store/actionCreators/collectionsCreator';
 import { useDispatch, useSelector } from 'react-redux';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Grid } from '@mui/material';
 import { Box } from '@mui/system';
 
 const HomePage = () => {
@@ -41,30 +41,50 @@ const HomePage = () => {
                         <CircularProgress size={60} />
                     </Box>
                     :
-                    <div>
-                        <div className='home-clouds-tags'>
+                    <Grid
+                        container
+
+                        justifyContent="center"
+                        alignItems="center"
+                    >
+                        <Grid
+                            mt={6}
+                            container
+                            item
+                            spacing={3}
+                            justifyContent="center"
+                            alignItems="center">
                             {
                                 largestCollections?.map((collection) =>
-                                    <CollectionCard
-                                        key={collection._id}
-                                        location={location}
-                                        image={collection.image}
-                                        name={collection.name}
-                                        id={collection._id}
-                                        userId={collection.userId} />
+                                    <Grid item>
+                                        <CollectionCard
+                                            key={collection._id}
+                                            location={location}
+                                            image={collection.image}
+                                            name={collection.name}
+                                            id={collection._id}
+                                            userId={collection.userId} />
+                                    </Grid>
+
                                 )
                             }
-                        </div>
-                        <div className='home-wrapper'>
-                            <div className='home-collections'>
+                        </Grid>
+                        <Grid
+                            container
+                            flexDirection={{ xs: 'column', md: 'row' }}
+                            justifyContent="center"
+                            alignItems="center"
+                            mt={3}
+                        >
+                            <Grid item xs>
                                 <SimpleCloud lastAddedItems={lastAddedItems} />
-                            </div>
+                            </Grid>
 
-                            <div className='home-items'>
+                            <Grid item sx={{ width: '100%' }} xs>
                                 <ListItems items={lastAddedItems} />
-                            </div>
-                        </div>
-                    </div>
+                            </Grid>
+                        </Grid>
+                    </Grid>
 
             }
         </>

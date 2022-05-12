@@ -63,16 +63,27 @@ const Modal = ({ open, handleClose, iduser, messages }) => {
             <Paper>
                 <DialogContent>
                     <FormControl>
-                        <form autoComplete="off" id='form-collection' onSubmit={handleSubmit}>
-                            <Grid container spacing={6}>
+                        <form
+                            autoComplete="off"
+                            id='form-collection'
+                            onSubmit={handleSubmit}>
+                            <Grid
+                                container
+                                spacing={6}>
                                 <Grid item xs >
-                                    <Dropzone setCollection={setCollection} collection={collection} />
+                                    <Dropzone
+                                        setCollection={setCollection}
+                                        collection={collection} />
                                 </Grid>
                                 <Grid item xs>
-                                    <RequiredField collection={collection} setCollection={setCollection} />
+                                    <RequiredField
+                                        collection={collection}
+                                        setCollection={setCollection} />
                                 </Grid>
                                 <Grid item xs={4}>
-                                    <AdditionalFields collection={collection} setCollection={setCollection} />
+                                    <AdditionalFields
+                                        collection={collection}
+                                        setCollection={setCollection} />
                                 </Grid>
                             </Grid>
                         </form>
@@ -80,10 +91,17 @@ const Modal = ({ open, handleClose, iduser, messages }) => {
                 </DialogContent>
             </Paper>
             <DialogActions>
-                <Button onClick={clearState}>
+                <Button
+                    onClick={clearState}
+                    variant="contained">
                     {messages['profile.clear-button']}
                 </Button>
-                <Button autoFocus type='submit' form='form-collection' disabled={!collection.collectionImage ? true : false}>
+                <Button
+                    autoFocus
+                    type='submit'
+                    variant="contained"
+                    form='form-collection'
+                    disabled={!collection.collectionImage ? true : false}>
                     {messages['profile.create-button']}
                 </Button>
             </DialogActions>

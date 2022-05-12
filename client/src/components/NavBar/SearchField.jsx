@@ -2,7 +2,7 @@ import React from 'react'
 import { useIntl } from 'react-intl';
 import { styled, alpha } from '@mui/material/styles';
 import { Box } from '@mui/system';
-import { Autocomplete, TextField } from '@mui/material';
+import { Autocomplete, InputAdornment, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -15,36 +15,11 @@ const Search = styled('div')(({ theme }) => ({
     width: '100%',
     [theme.breakpoints.up('sm')]: {
         marginLeft: theme.spacing(1),
-        width: 'auto',
-    },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-    // padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(Autocomplete)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-
-        transition: theme.transitions.create('width'),
         width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            width: '12ch',
-            '&:focus': {
-                width: '20ch',
-            },
-        },
     },
 }));
+
+
 
 const SearchField = ({ foundItems, findItems }) => {
 
@@ -52,11 +27,8 @@ const SearchField = ({ foundItems, findItems }) => {
 
     return (
         <Search>
-            {/* <SearchIconWrapper>
-                <SearchIcon />
-            </SearchIconWrapper> */}
             <Autocomplete
-                sx={{ minWidth: 250 }}
+                sx={{ minwidth: { xs: '250px', md: '100%' } }}
                 id="free-solo-2-demo"
                 options={foundItems}
                 selectOnFocus
@@ -74,13 +46,21 @@ const SearchField = ({ foundItems, findItems }) => {
                 renderInput={(params) => (
                     <TextField
                         {...params}
+                        variant="standard"
                         label={messages["nav.search"]}
                         onChange={(e) => findItems(e)}
+
                         InputProps={{
                             ...params.InputProps,
-
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <SearchIcon />
+                                </InputAdornment>
+                            ),
                         }}
+
                     />
+
                 )}
             />
 

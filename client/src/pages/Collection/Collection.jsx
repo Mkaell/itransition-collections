@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box';
-import { Alert, Snackbar } from '@mui/material';
+import { Alert, Paper, Snackbar } from '@mui/material';
 import ModalItems from './ModalItems';
 import { likeItem, updateItem } from '../../api';
 import { useParams } from 'react-router-dom';
@@ -10,6 +10,7 @@ import InfoAboutCollection from './InfoAboutCollection';
 import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
 import CustomToolbar from './CustomToolbar';
+import { CustomNoRowsOverlay } from './style';
 import { StyledDataGrid } from './style';
 import { getCollection } from '../../store/actionCreators/collectionsCreator';
 
@@ -17,6 +18,7 @@ import { getCollection } from '../../store/actionCreators/collectionsCreator';
 function Collection() {
 
     const currentUser = useSelector(state => state.auth.authData?.result);
+    const { isLoading } = useSelector(state => state?.collections);
     const dispatch = useDispatch()
     const [open, setOpen] = useState(false);
     const { idCollection } = useParams()
@@ -70,9 +72,10 @@ function Collection() {
     const handleCloseSnackbar = () => setSnackbar(null);
 
     const deleteCurrentItem = useCallback(
-        (id) => () => {
+        (id, collectionId) => () => {
+            console.log(collectionId);
             setTimeout(() => {
-                dispatch(deleteItem(id))
+                dispatch(deleteItem(id, { collectionId: collectionId }))
                 setRows((prevRows) => prevRows.filter((row) => row._id !== id));
             });
         },
@@ -132,67 +135,72 @@ function Collection() {
     return (
         <>
             <InfoAboutCollection collection={collection} handleClickOpen={handleClickOpen} />
-            <Box style={{ height: '400px', width: '100%', }}>
-                <StyledDataGrid
-                    rows={rows}
-                    columns={columns}
-                    processRowUpdate={processRowUpdate}
-                    onProcessRowUpdateError={handleProcessRowUpdateError}
-                    GridColDef='center'
-                    getRowId={(row) => row._id}
-                    components={{
-                        Toolbar: CustomToolbar
-                    }}
-                    localeText={{
-                        toolbarFilters: messages['admin.filter'],
-                        toolbarExport: messages['collection.export'],
-                        toolbarExportCSV: messages['collection.download'],
-                        toolbarExportPrint: messages['collection.print'],
-                        toolbarFiltersTooltipShow: messages['admin.show-filters'],
-                        toolbarFiltersTooltipHide: messages['admin.hide-filters'],
-                        filterPanelDeleteIconLabel: messages['admin.delete-icon'],
-                        filterPanelOperators: messages['admin.operator'],
-                        filterPanelColumns: messages['admin.columns'],
-                        filterPanelInputLabel: messages['admin.value'],
-                        filterPanelInputPlaceholder: messages['admin.filter-value'],
-                        filterOperatorContains: messages['admin.contains'],
-                        filterOperatorEquals: messages['admin.equals'],
-                        filterOperatorStartsWith: messages['admin.starts-with'],
-                        filterOperatorEndsWith: messages['admin.ends-with'],
-                        filterOperatorIsEmpty: messages['admin.is-empty'],
-                        filterOperatorIsNotEmpty: messages['admin.is-not-empty'],
-                        filterOperatorIsAnyOf: messages['admin.is-any-of'],
-                        columnMenuLabel: messages['admin.menu-label'],
-                        columnMenuShowColumns: messages['admin.show-columns'],
-                        columnMenuFilter: messages['admin.filter-label'],
-                        columnMenuHideColumn: messages['admin.hide'],
-                        columnMenuUnsort: messages['admin.unsort'],
-                        columnMenuSortAsc: messages['admin.sort-by-ASC'],
-                        columnMenuSortDesc: messages['admin.sort-by-DESC'],
-                        columnHeaderSortIconLabel: messages['admin.sort-label'],
-                    }}
-                    experimentalFeatures={{ newEditingApi: true }}
-                />
-                {!!snackbar && (
-                    <Snackbar
-                        open
-                        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                        onClose={handleCloseSnackbar}
-                        autoHideDuration={6000}
-                    >
-                        <Alert {...snackbar} onClose={handleCloseSnackbar} />
-                    </Snackbar>
-                )}
-                <ModalItems
-                    handleClose={handleClose}
-                    open={open}
-                    collection={collection}
-                    items={items}
-                    setItems={setItems}
-                    clearFormItem={clearFormItem}
-                    collectionId={idCollection}
-                    setRows={setRows} />
-            </Box>
+            <Paper elevation={5}>
+                <Box style={{ height: '400px', width: '100%', }}>
+                    <StyledDataGrid
+                        rows={rows}
+                        loading={isLoading}
+                        columns={columns}
+                        processRowUpdate={processRowUpdate}
+                        onProcessRowUpdateError={handleProcessRowUpdateError}
+                        GridColDef='center'
+                        getRowId={(row) => row._id}
+                        components={{
+                            Toolbar: CustomToolbar,
+                            NoRowsOverlay: CustomNoRowsOverlay,
+                        }}
+                        localeText={{
+                            toolbarFilters: messages['admin.filter'],
+                            toolbarExport: messages['collection.export'],
+                            toolbarExportCSV: messages['collection.download'],
+                            toolbarExportPrint: messages['collection.print'],
+                            toolbarFiltersTooltipShow: messages['admin.show-filters'],
+                            toolbarFiltersTooltipHide: messages['admin.hide-filters'],
+                            filterPanelDeleteIconLabel: messages['admin.delete-icon'],
+                            filterPanelOperators: messages['admin.operator'],
+                            filterPanelColumns: messages['admin.columns'],
+                            filterPanelInputLabel: messages['admin.value'],
+                            filterPanelInputPlaceholder: messages['admin.filter-value'],
+                            filterOperatorContains: messages['admin.contains'],
+                            filterOperatorEquals: messages['admin.equals'],
+                            filterOperatorStartsWith: messages['admin.starts-with'],
+                            filterOperatorEndsWith: messages['admin.ends-with'],
+                            filterOperatorIsEmpty: messages['admin.is-empty'],
+                            filterOperatorIsNotEmpty: messages['admin.is-not-empty'],
+                            filterOperatorIsAnyOf: messages['admin.is-any-of'],
+                            columnMenuLabel: messages['admin.menu-label'],
+                            columnMenuShowColumns: messages['admin.show-columns'],
+                            columnMenuFilter: messages['admin.filter-label'],
+                            columnMenuHideColumn: messages['admin.hide'],
+                            columnMenuUnsort: messages['admin.unsort'],
+                            columnMenuSortAsc: messages['admin.sort-by-ASC'],
+                            columnMenuSortDesc: messages['admin.sort-by-DESC'],
+                            columnHeaderSortIconLabel: messages['admin.sort-label'],
+                        }}
+                        experimentalFeatures={{ newEditingApi: true }}
+                    />
+                    {!!snackbar && (
+                        <Snackbar
+                            open
+                            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                            onClose={handleCloseSnackbar}
+                            autoHideDuration={6000}
+                        >
+                            <Alert {...snackbar} onClose={handleCloseSnackbar} />
+                        </Snackbar>
+                    )}
+                    <ModalItems
+                        handleClose={handleClose}
+                        open={open}
+                        collection={collection}
+                        items={items}
+                        setItems={setItems}
+                        clearFormItem={clearFormItem}
+                        collectionId={idCollection}
+                        setRows={setRows} />
+                </Box>
+            </Paper>
+
         </>
 
     );

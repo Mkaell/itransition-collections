@@ -17,8 +17,9 @@ import ruMessages from "./utils/localizations/ru.json";
 import plMessages from "./utils/localizations/pl.json";
 import * as local from '@mui/material/locale';
 import localesMui from './utils/localizations/constant/localesMui';
+import ResponsiveAppBar from './components/NavBar/TestNavbar';
 
-const store = createStore(reducers , {}, compose(applyMiddleware(thunk), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
+const store = createStore(reducers , {}, compose(applyMiddleware(thunk)));
 export const ColorModeContext = React.createContext({ toggleColorMode: () => {} })
 
 const messages = {
@@ -58,10 +59,13 @@ function App() {
 					<ColorModeContext.Provider value={colorMode}>
 						<ThemeProvider theme={theme}>
 							<CssBaseline />
-							<NavBar  
+							{/* <NavBar  
 								currentLocale={currentLocale}
 								setCurrentLocale={setCurrentLocale}
-							/>
+							/> */}
+							<ResponsiveAppBar
+								currentLocale={currentLocale}
+								setCurrentLocale={setCurrentLocale}/>
 							<Container maxWidth="lg">
 								<Navigation/>
 							</Container>

@@ -29,7 +29,7 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import PagesButton from './PagesButton';
+import PagesButton from './NavigationButton';
 import SearchField from './SearchField';
 
 const Search = styled('div')(({ theme }) => ({

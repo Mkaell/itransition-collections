@@ -4,7 +4,7 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import { Autocomplete, Button, Chip, TextField } from '@mui/material';
+import { Autocomplete, Button, Chip, MenuItem, TextField } from '@mui/material';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionLogOut } from '../../store/actionCreators/auth';
@@ -17,7 +17,7 @@ import { ColorModeContext } from '../../App'
 import { searchItem } from '../../api';
 import { useIntl } from 'react-intl';
 
-const PagesButton = () => {
+const NavigationButton = ({ handleCloseNavMenu }) => {
     const { messages } = useIntl();
     const user = useSelector(state => state.auth.authData?.result)
     return (
@@ -25,44 +25,44 @@ const PagesButton = () => {
             {
                 user?.role ?
                     <>
-                        <Button variant="text" color="secondary" style={{ padding: '0' }}>
+                        <MenuItem onClick={handleCloseNavMenu} sx={{ justifyContent: 'center' }}>
                             <Link to='/' style={{ color: 'white', padding: '8px 15px' }}>
                                 {messages['nav.home']}
                             </Link>
-                        </Button>
-                        <Button variant="text" color="secondary" style={{ padding: '0' }}>
+                        </MenuItem>
+                        <MenuItem onClick={handleCloseNavMenu} sx={{ justifyContent: 'center' }}>
                             <Link to='/admin' style={{ color: 'white', padding: '8px 15px' }}>
                                 {messages['nav.admin']}
                             </Link>
-                        </Button>
-                        <Button variant="text" color="secondary" style={{ padding: '0' }}>
+                        </MenuItem>
+                        <MenuItem onClick={handleCloseNavMenu} sx={{ justifyContent: 'center' }}>
                             <Link to='/profile' style={{ color: 'white', padding: '8px 15px' }}>
                                 {messages['nav.profile']}
                             </Link>
-                        </Button>
+                        </MenuItem>
                     </> :
                     user ?
 
                         <>
-                            <Button variant="text" color="secondary" style={{ padding: '0' }}>
+                            <MenuItem onClick={handleCloseNavMenu} sx={{ justifyContent: 'center' }}>
                                 <Link to='/' style={{ color: 'white', padding: '8px 15px' }}>
                                     {messages['nav.home']}
                                 </Link>
-                            </Button>
-                            <Button variant="text" color="secondary" style={{ padding: '0' }}>
+                            </MenuItem>
+                            <MenuItem onClick={handleCloseNavMenu} sx={{ justifyContent: 'center' }}>
                                 <Link to='/profile' style={{ color: 'white', padding: '8px 15px' }}>
                                     {messages['nav.profile']}
                                 </Link>
-                            </Button>
+                            </MenuItem>
                         </> :
-                        <Button variant="text" color="secondary" style={{ padding: '0' }}>
+                        <MenuItem onClick={handleCloseNavMenu} sx={{ justifyContent: 'center' }}>
                             <Link to='/' style={{ color: 'white', padding: '8px 15px' }}>
                                 {messages['nav.home']}
                             </Link>
-                        </Button>
+                        </MenuItem>
             }
         </>
     )
 }
 
-export default PagesButton
+export default NavigationButton

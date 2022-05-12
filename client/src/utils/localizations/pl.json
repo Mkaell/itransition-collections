@@ -1,5 +1,5 @@
 {
-  "nav.home": "główna",
+  "nav.home": "Główna",
   "nav.language-picker": "język",
   "nav.admin": "Admin",
   "nav.login": "Zaloguj się",
@@ -60,6 +60,10 @@
   "profile.drag-and-drop": "Przeciągnij i upuść niektóre pliki tutaj lub Kliknij, aby wybrać pliki",
   "profile.drag-and-drop-active": "Przeciągnij i upuść aktywny",
   "profile.new-collection": "Nowa kolekcja",
+
+  "item.comments": "Komentarze",
+  "item.send-button": "Wyślij",
+  "item.placeholder": "Komentarz",
 
   "collection.export": "Eksport",
   "collection.download": "Pobierz jako CSV",

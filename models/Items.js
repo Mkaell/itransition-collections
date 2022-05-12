@@ -8,10 +8,11 @@ const itemSchema = new Schema(
     comments: [
       {
         name: String,
-        date: Date,
+        date: String,
         content: String,
       },
     ],
+    userId: String,
   },
   { versionKey: false,
      strict: false  }

@@ -16,9 +16,9 @@ const collectionsReducer = (state = { isLoading: false, collections: [], error: 
 		case CREATE:
 			return { ...state, collections: [...state.collections, action.payload] };
 		case UPDATE:
-			return { ...state, collections: state.collections.map((collection) => (collection._id === action.payload._id ? action.payload : collection)) };
+			return { ...state, collections: state.collections?.map((collection) => (collection._id === action.payload._id ? action.payload : collection)) };
 		case DELETE:
-			return { ...state, collections: state.collections.filter((collection) => collection._id !== action.payload) };
+			return { ...state, collections: state.collections?.filter((collection) => collection._id !== action.payload) };
 		default:
 			return state;
 	}

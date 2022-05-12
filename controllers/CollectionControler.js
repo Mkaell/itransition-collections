@@ -1,5 +1,6 @@
 const Collection = require("../models/Collections");
 const User = require("../models/Users");
+const Item = require("../models/Items");
 const cloudinary = require('cloudinary').v2
 
 const createCollection = async (req, res) => {
@@ -66,9 +67,9 @@ const deleteCollection = async (req, res) => {
         await User.updateOne({ _id: userId },
             { $pull: { collections: idCollection}}
         );
-     
-        await Collection.findByIdAndDelete(idCollection);
-        
+        await Item.deleteMany({collectionId: idCollection})
+        await Collection.findByIdAndDelete(idCollection).populate('items')
+       
         res.status(200).json({ message: "Сollection deleted" });
     } catch (e) {
       res.status(500).json({ message: e.message });

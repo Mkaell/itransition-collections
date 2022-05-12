@@ -19,11 +19,11 @@ const itemsReducer = (state = { isLoading: false, items: [], errors: {} }, actio
         items: action.payload
       };
     case CREATE:
-      return { ...state, items: [...state.items, action.payload] };
+      return { ...state, items: [...state?.items, action.payload] };
     case UPDATE:
-      return { ...state, items: state.items.map((items) => (items._id === action.payload._id ? action.payload : items)) };
+      return { ...state, items: state.items?.map((items) => (items._id === action.payload._id ? action.payload : items)) };
     case DELETE:
-      return { ...state, items: state.items.filter((items) => items._id !== action.payload) };
+      return { ...state, items: state.items?.filter((items) => items._id !== action.payload) };
     default:
       return state;
   }

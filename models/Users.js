@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
-
+const Collection =require("./Collections");
+const Item =require("./Items");
 
 const userSchema = new Schema(
   {
@@ -19,5 +20,9 @@ const userSchema = new Schema(
   },
   { versionKey: false }
 );
-
+userSchema.pre('remove', function(next) {
+  Collection.remove({userId: this._id}).exec();
+  Item.remove({userId: this._id}).exec();
+  next();
+});
 module.exports = model("User", userSchema);

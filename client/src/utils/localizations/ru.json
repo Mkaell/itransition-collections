@@ -61,6 +61,10 @@
   "profile.drag-and-drop-active": "Перетаскивание активно",
   "profile.new-collection": "Новая коллекция",
 
+  "item.comments": "Комментарии",
+  "item.send-button": "Отправить",
+  "item.placeholder": "Коментарий",
+
   "collection.export": "Экспорт",
   "collection.download": "Скачать как CSV",
   "collection.print": "Печатать",

@@ -6,7 +6,8 @@ const deleteUser = async (req, res) => {
 
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No user with id: ${id}`);
     try {
-        await UserModal.findByIdAndRemove(id);
+        const user = await UserModal.findById(id);
+        user.remove()
         res.status(200).json({ message: "User deleted successfully." });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -69,16 +70,14 @@ const toggleActiveStatus = async (req, res) => {
     }
 }
 
-// описать ошибки
-const getUsers = async (req,res)=> {
-    res.setHeader('Content-Type', 'application/json');
-    let collectionOfUsers
+
+const getUsers = async (req,res)=> {  
     try {
-         collectionOfUsers = await UserModal.find();    
+        const collectionOfUsers = await UserModal.find().populate('collections');
+        res.status(200).json(collectionOfUsers)    
     } catch (error) {
-        console.log(error)
+        res.status(500).json({ message: error.message });
     }
-    return res.json(collectionOfUsers)
 }
 
 module.exports = { 
