@@ -15,7 +15,7 @@ import ruMessages from "./utils/localizations/ru.json";
 import plMessages from "./utils/localizations/pl.json";
 import * as local from '@mui/material/locale';
 import localesMui from './utils/localizations/constant/localesMui';
-import Navbar from './components/NavBar/Navbar';
+import NavBar from './components/NavBar/NavBar';
 
 const store = createStore(reducers , {}, compose(applyMiddleware(thunk), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
 export const ColorModeContext = createContext({ toggleColorMode: () => {} })
@@ -70,7 +70,7 @@ function App() {
 					<ColorModeContext.Provider value={colorMode}>
 						<ThemeProvider theme={theme}>
 							<CssBaseline />
-							<Navbar
+							<NavBar
 								currentLocale={currentLocale}
 								setCurrentLocale={setCurrentLocale}/>
 							<Container maxWidth="lg">
