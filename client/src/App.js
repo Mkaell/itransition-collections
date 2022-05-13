@@ -17,7 +17,7 @@ import * as local from '@mui/material/locale';
 import localesMui from './utils/localizations/constant/localesMui';
 import NavBar from './components/NavBar/NavBar';
 
-const store = createStore(reducers , {}, compose(applyMiddleware(thunk), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
+const store = createStore(reducers , {}, compose(applyMiddleware(thunk)));
 export const ColorModeContext = createContext({ toggleColorMode: () => {} })
 
 const messages = {

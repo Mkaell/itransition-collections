@@ -24,7 +24,7 @@ const ActionButtons = ({ params, deleteCurrentItem, likeIthemByCurrentUser, curr
 
                         <GridActionsCellItem
                             icon={
-                                <FavoriteIcon sx={{ fontSize: '35px', color: params.row.usersByLikes.includes(currentUser?._id) ? 'red' : 'white' }} />
+                                <FavoriteIcon sx={{ fontSize: '35px', color: params.row.usersByLikes.includes(currentUser?._id) ? 'red' : 'palette.action.active' }} />
                             }
                             label="Like"
                             onClick={() => likeIthemByCurrentUser(params.id, params.row.usersByLikes)}
