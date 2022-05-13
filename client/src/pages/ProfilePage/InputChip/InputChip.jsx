@@ -18,7 +18,7 @@ const InputChip = ({ collection, name, field, setCollection }) => {
   return (
     <Autocomplete
       multiple
-      sx={{ mt: 2 }}
+      sx={{ mt: 2, minWidth: '250px' }}
       id="tags-filled"
       options={[]}
       defaultValue={[]}

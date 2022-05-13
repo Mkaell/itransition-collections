@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { TagCloud } from 'react-tagcloud'
-import { getItemsByTag } from '../../store/actionCreators/itemsCreator'
+import { getItemsByTag } from '../../store/actionCreators/searchCreator'
 
 const options = {
     luminosity: 'light',
@@ -14,10 +14,16 @@ const SimpleCloud = ({ lastAddedItems }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const findItems = (tag) => {
-        dispatch(getItemsByTag({ searchedData: tag }));
-        navigate('/items')
-    };
+    const findItems = useCallback(
+        (tag) => {
+            dispatch(getItemsByTag({ searchedData: tag }))
+                .then(
+                    navigate('/items')
+                )
+        },
+        [],
+    )
+
 
     function getRandomArbitrary(min, max) {
         return Math.random() * (max - min) + min;
@@ -25,8 +31,8 @@ const SimpleCloud = ({ lastAddedItems }) => {
 
     let tagsCloud = []
 
-    let arr = lastAddedItems?.map((item) => tagsCloud.concat(item.tags)).flat()
-    Array.from(new Set(arr)).forEach((tag) =>
+    let items = lastAddedItems?.map((item) => tagsCloud.concat(item?.tags)).flat()
+    Array.from(new Set(items)).forEach((tag) =>
         tagsCloud.push({
             'value': `${tag}`,
             'count': getRandomArbitrary(15, 35)
@@ -41,7 +47,7 @@ const SimpleCloud = ({ lastAddedItems }) => {
             colorOptions={options}
             className='simple-cloud'
             tags={tagsCloud}
-            onClick={tag => findItems(tag.value)}
+            onClick={tag => findItems(tag?.value)}
         />
     )
 

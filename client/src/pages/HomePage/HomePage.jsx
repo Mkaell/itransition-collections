@@ -43,7 +43,6 @@ const HomePage = () => {
                     :
                     <Grid
                         container
-
                         justifyContent="center"
                         alignItems="center"
                     >
@@ -79,7 +78,6 @@ const HomePage = () => {
                             <Grid item xs>
                                 <SimpleCloud lastAddedItems={lastAddedItems} />
                             </Grid>
-
                             <Grid item sx={{ width: '100%' }} xs>
                                 <ListItems items={lastAddedItems} />
                             </Grid>

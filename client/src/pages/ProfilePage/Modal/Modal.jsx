@@ -9,7 +9,7 @@ import { createCollectionDispatch } from '../../../store/actionCreators/collecti
 
 const Modal = ({ open, handleClose, iduser, messages }) => {
 
-    const userId = useSelector(state => state.auth.authData.result._id)
+    const userId = useSelector(state => state.auth.authData?.result._id)
     const dispatch = useDispatch()
 
     const [collection, setCollection] = useState({
@@ -60,36 +60,38 @@ const Modal = ({ open, handleClose, iduser, messages }) => {
             <DialogTitle id="alert-dialog-title">
                 {messages['profile.create-collection']}
             </DialogTitle>
-            <Paper>
-                <DialogContent>
-                    <FormControl>
-                        <form
-                            autoComplete="off"
-                            id='form-collection'
-                            onSubmit={handleSubmit}>
-                            <Grid
-                                container
-                                spacing={6}>
-                                <Grid item xs >
-                                    <Dropzone
-                                        setCollection={setCollection}
-                                        collection={collection} />
-                                </Grid>
-                                <Grid item xs>
-                                    <RequiredField
-                                        collection={collection}
-                                        setCollection={setCollection} />
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <AdditionalFields
-                                        collection={collection}
-                                        setCollection={setCollection} />
-                                </Grid>
+
+            <DialogContent >
+                <FormControl fullWidth>
+                    <form
+                        autoComplete="off"
+                        id='form-collection'
+                        onSubmit={handleSubmit}>
+                        <Grid
+                            container
+                            spacing={3}
+                            justifyContent='center'
+                            flexDirection={{ xs: 'column', md: 'row' }}
+                        >
+                            <Grid item xs >
+                                <Dropzone
+                                    setCollection={setCollection}
+                                    collection={collection} />
                             </Grid>
-                        </form>
-                    </FormControl>
-                </DialogContent>
-            </Paper>
+                            <Grid item xs>
+                                <RequiredField
+                                    collection={collection}
+                                    setCollection={setCollection} />
+                            </Grid>
+                            <Grid item xs>
+                                <AdditionalFields
+                                    collection={collection}
+                                    setCollection={setCollection} />
+                            </Grid>
+                        </Grid>
+                    </form>
+                </FormControl>
+            </DialogContent>
             <DialogActions>
                 <Button
                     onClick={clearState}
@@ -105,7 +107,7 @@ const Modal = ({ open, handleClose, iduser, messages }) => {
                     {messages['profile.create-button']}
                 </Button>
             </DialogActions>
-        </Dialog>
+        </Dialog >
     )
 }
 

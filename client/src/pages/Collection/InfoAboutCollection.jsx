@@ -1,16 +1,29 @@
-import { Avatar, Button, Grid, Typography, Box } from '@mui/material'
+import { Avatar, Button, Grid, Typography, Box, TextField } from '@mui/material'
 import React from 'react'
 import AddIcon from '@mui/icons-material/Add';
 import { useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
 
 const InfoAboutCollection = ({ handleClickOpen, collection }) => {
+
     const { messages } = useIntl()
     const currentUser = useSelector(state => state.auth.authData?.result)
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column', marginTop: '30px' }}>
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Box style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            flexDirection: 'column',
+            marginTop: '30px'
+        }}
+        >
+            <Box sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: { xs: 'column', sm: 'row' },
+                textAlign: 'center'
+            }} >
                 <Avatar
                     alt="Remy Sharp"
                     src={collection.image}
@@ -25,10 +38,11 @@ const InfoAboutCollection = ({ handleClickOpen, collection }) => {
                     </Typography>
                 </Box>
             </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
                 {
                     (currentUser?.role || (collection.userId === currentUser?._id)) ?
                         <Button
+                            sx={{ width: { xs: '100%', sm: '150px' } }}
                             variant="contained"
                             startIcon={<AddIcon />}
                             onClick={() => handleClickOpen()}
@@ -38,7 +52,7 @@ const InfoAboutCollection = ({ handleClickOpen, collection }) => {
                         <Box mt={10}></Box>
                 }
             </Box>
-        </div>
+        </Box>
     )
 }
 

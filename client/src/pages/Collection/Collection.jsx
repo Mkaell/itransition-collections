@@ -35,7 +35,7 @@ function Collection() {
                 setCollection(data)
                 setRows(data.items)
             })
-    }, [])
+    }, [dispatch, idCollection])
 
     const basicFieldsEntries = useMemo(
         () => Object.keys(collection.itemFields?.basic || {}),
@@ -136,7 +136,7 @@ function Collection() {
         <>
             <InfoAboutCollection collection={collection} handleClickOpen={handleClickOpen} />
             <Paper elevation={5}>
-                <Box style={{ height: '400px', width: '100%', }}>
+                <Box style={{ height: '400px', width: '100%', marginTop: '10px' }}>
                     <StyledDataGrid
                         rows={rows}
                         loading={isLoading}

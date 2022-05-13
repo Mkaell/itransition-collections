@@ -3,7 +3,7 @@ import { GridToolbarFilterButton } from "@mui/x-data-grid";
 import DeleteIcon from '@mui/icons-material/Delete';
 import SecurityIcon from '@mui/icons-material/Security';
 import BlockIcon from '@mui/icons-material/Block';
-import { useIntl } from "react-intl";
+
 
 export const EnhancedTableToolbar = (props) => {
     const {

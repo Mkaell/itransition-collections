@@ -1,33 +1,49 @@
 import React from 'react'
-import Box from '@mui/material/Box';
 import { Button, Chip, MenuItem } from '@mui/material';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
+import { StyledLink } from './style';
 
 const AuthButton = ({ handleLogOut, handleCloseUserMenu }) => {
+
     const { messages } = useIntl();
     const user = useSelector(state => state.auth.authData?.result);
+
     return (
         <>
             {
                 user ?
                     <MenuItem onClick={handleCloseUserMenu} sx={{ justifyContent: 'center' }}>
-                        <Button variant="text" style={{ color: 'white', padding: '8px 15px' }} onClick={handleLogOut}>
+                        <Button
+                            variant="text"
+                            style={{ padding: '8px 15px' }}
+                            onClick={handleLogOut}
+                        >
                             {messages['nav.logout']}
                         </Button>
                     </MenuItem>
                     :
                     <>
                         <MenuItem onClick={handleCloseUserMenu} sx={{ justifyContent: 'center' }}>
-                            <Link to='/login' style={{ color: 'white', }} >
+                            <StyledLink
+                                to='/login'
+                                component={RouterLink}
+                                style={{ padding: '8px 15px' }}
+                                underline="none"
+                            >
                                 {messages['nav.login']}
-                            </Link>
+                            </StyledLink>
                         </MenuItem>
                         <MenuItem onClick={handleCloseUserMenu} sx={{ justifyContent: 'center' }}>
-                            <Link to='/sign-up' style={{ color: 'white', padding: '8px 15px' }}>
+                            <StyledLink
+                                to='/sign-up'
+                                component={RouterLink}
+                                style={{ padding: '8px 15px' }}
+                                underline="none"
+                            >
                                 {messages['nav.signup']}
-                            </Link>
+                            </StyledLink>
                         </MenuItem>
                     </>
             }

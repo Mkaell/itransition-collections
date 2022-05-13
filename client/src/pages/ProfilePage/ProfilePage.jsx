@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Button } from '@mui/material'
+import { Box, Button, Grid } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
 import './ProfilePage.css'
 import Modal from './Modal/Modal';
@@ -13,7 +13,7 @@ import { useIntl } from 'react-intl';
 
 const ProfilePage = () => {
 
-    const { collections, isLoading } = useSelector(state => state.collections);
+    const { collections, isLoading } = useSelector(state => state?.collections);
     const userId = useSelector(state => state.auth.authData?.result._id);
     const { iduser } = useParams()
     const dispatch = useDispatch()
@@ -46,33 +46,44 @@ const ProfilePage = () => {
 
     return (
         <div className='profile'>
-            <div className='profile-button'>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                 <Button
+                    sx={{ width: { xs: '100%', sm: '200px' } }}
+
                     variant="contained"
                     startIcon={<AddIcon />}
                     onClick={() => handleClickOpen()}
                 >
                     {messages['profile.new-collection']}
                 </Button>
-            </div>
-            <div className='profile-collections_wrapper'>
+            </Box>
+            <Grid
+                mt={6}
+                container
+                item
+                spacing={3}
+                justifyContent="center"
+                alignItems="center">
                 {
                     isLoading ? <CircularProgress sx={{ mt: 10 }} /> :
                         collections &&
                         collections?.map((collection) =>
-                            <CollectionCard
-                                name={collection.name}
-                                description={collection.description}
-                                theme={collection.theme}
-                                image={collection.image}
-                                id={collection._id}
-                                key={collection._id}
-                                deleteCollection={handleDeleteCollection}
-                                userId={collection.userId}
-                            />
+                            <Grid item>
+                                <CollectionCard
+                                    name={collection.name}
+                                    description={collection.description}
+                                    theme={collection.theme}
+                                    image={collection.image}
+                                    id={collection._id}
+                                    key={collection._id}
+                                    deleteCollection={handleDeleteCollection}
+                                    userId={collection.userId}
+                                />
+                            </Grid>
+
                         )
                 }
-            </div>
+            </Grid>
             <Modal handleClose={handleClose} open={open} iduser={iduser} messages={messages} />
         </div>
     )

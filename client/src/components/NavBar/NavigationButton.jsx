@@ -1,64 +1,85 @@
 import React, { useEffect, useState } from 'react'
-import { styled, alpha } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import { Autocomplete, Button, Chip, MenuItem, TextField } from '@mui/material';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+
+import { Autocomplete, Button, Chip, Link, MenuItem, TextField } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { actionLogOut } from '../../store/actionCreators/auth';
-import decode from 'jwt-decode';
-import { useTheme } from '@mui/material/styles';
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
-import LocalPicker from './localePicker/LocalePicker'
-import { ColorModeContext } from '../../App'
-import { searchItem } from '../../api';
+import { Link as RouterLink } from 'react-router-dom';
 import { useIntl } from 'react-intl';
+import { StyledLink } from './style';
 
 const NavigationButton = ({ handleCloseNavMenu }) => {
+
     const { messages } = useIntl();
-    const user = useSelector(state => state.auth.authData?.result)
+    const user = useSelector(state => state.auth.authData?.result);
+
     return (
         <>
             {
                 user?.role ?
                     <>
                         <MenuItem onClick={handleCloseNavMenu} sx={{ justifyContent: 'center' }}>
-                            <Link to='/' style={{ color: 'white', padding: '8px 15px' }}>
+                            <StyledLink
+                                component={RouterLink}
+                                to='/'
+                                style={{ padding: '8px 15px' }}
+                                underline="none"
+                            >
                                 {messages['nav.home']}
-                            </Link>
+                            </StyledLink>
                         </MenuItem>
                         <MenuItem onClick={handleCloseNavMenu} sx={{ justifyContent: 'center' }}>
-                            <Link to='/admin' style={{ color: 'white', padding: '8px 15px' }}>
+                            <StyledLink
+                                component={RouterLink}
+                                to='/admin'
+                                style={{ padding: '8px 15px' }}
+                                underline="none"
+                            >
                                 {messages['nav.admin']}
-                            </Link>
+                            </StyledLink>
                         </MenuItem>
                         <MenuItem onClick={handleCloseNavMenu} sx={{ justifyContent: 'center' }}>
-                            <Link to='/profile' style={{ color: 'white', padding: '8px 15px' }}>
+                            <StyledLink
+                                component={RouterLink}
+                                to='/profile'
+                                style={{ padding: '8px 15px' }}
+                                underline="none"
+                            >
                                 {messages['nav.profile']}
-                            </Link>
+                            </StyledLink>
                         </MenuItem>
                     </> :
                     user ?
 
                         <>
                             <MenuItem onClick={handleCloseNavMenu} sx={{ justifyContent: 'center' }}>
-                                <Link to='/' style={{ color: 'white', padding: '8px 15px' }}>
+                                <StyledLink
+                                    component={RouterLink}
+                                    to='/'
+                                    style={{ padding: '8px 15px' }}
+                                    underline="none"
+                                >
                                     {messages['nav.home']}
-                                </Link>
+                                </StyledLink>
                             </MenuItem>
                             <MenuItem onClick={handleCloseNavMenu} sx={{ justifyContent: 'center' }}>
-                                <Link to='/profile' style={{ color: 'white', padding: '8px 15px' }}>
+                                <StyledLink
+                                    component={RouterLink}
+                                    to='/profile'
+                                    style={{ padding: '8px 15px' }}
+                                    underline="none"
+                                >
                                     {messages['nav.profile']}
-                                </Link>
+                                </StyledLink>
                             </MenuItem>
                         </> :
                         <MenuItem onClick={handleCloseNavMenu} sx={{ justifyContent: 'center' }}>
-                            <Link to='/' style={{ color: 'white', padding: '8px 15px' }}>
+                            <StyledLink
+                                component={RouterLink}
+                                to='/'
+                                sx={{ padding: '8px 15px' }}
+                                underline="none"
+                            >
                                 {messages['nav.home']}
-                            </Link>
+                            </StyledLink>
                         </MenuItem>
             }
         </>

@@ -1,7 +1,7 @@
 const Collection = require("../models/Collections");
 const Item = require("../models/Items");
 
-const UserMainController = {
+const HomePageController = {
     get: async (req, res) => {
     try {
       const lastAddedItems = await Item.find({}).sort({ dateCreate: -1 }).limit(4);
@@ -16,4 +16,4 @@ const UserMainController = {
   },
 };
 
-module.exports = UserMainController;
+module.exports = HomePageController;

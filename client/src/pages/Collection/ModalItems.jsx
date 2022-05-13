@@ -21,7 +21,7 @@ function ModalItems({ open, handleClose, collection, items, setItems, clearFormI
     let basiclFieldsKeys = Object.keys(collection.itemFields?.basic || {});
     let additionalFieldsKeys = Object.keys(collection.itemFields?.additional || {});
     const { messages } = useIntl();
-    console.log(collection);
+
     const onChangeControl = (event) => {
 
         const fieldName = event.target.name;
@@ -61,7 +61,7 @@ function ModalItems({ open, handleClose, collection, items, setItems, clearFormI
                     {messages['collection.modal-title']}
                 </DialogTitle>
             </Paper>
-            <DialogContent sx={{ px: 10 }}>
+            <DialogContent sx={{ xs: { px: 0 }, sm: { px: 10 } }}>
                 <FormControl fullWidth>
                     <form
                         autoComplete="off"

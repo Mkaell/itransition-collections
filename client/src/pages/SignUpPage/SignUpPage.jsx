@@ -1,7 +1,7 @@
 import React from 'react'
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { Button, TextField, Typography } from '@mui/material';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import axios from 'axios'
 import { signUp } from '../../api';
 import './SignUpPage.css'
@@ -39,7 +39,16 @@ const SignUpPage = () => {
         },
     });
     return (
-        <div className='sign-up'>
+        <Box sx={{
+            width: { xs: '75%', sm: '50%', md: '35%' },
+            margin: '0',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)'
+        }}
+        >
             <form onSubmit={formik.handleSubmit} >
                 <Typography variant='h4' mb={3}>{messages['signup.signup-title']}</Typography>
                 <TextField
@@ -70,7 +79,7 @@ const SignUpPage = () => {
                 </Button>
             </form>
 
-        </div>
+        </Box >
     )
 }
 

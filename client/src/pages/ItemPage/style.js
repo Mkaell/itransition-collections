@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { Grid } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+
 
 export const StyledGrid = styled(Grid)(({ theme }) => ({
     border: 0,
@@ -66,7 +66,6 @@ export const StyledGrid = styled(Grid)(({ theme }) => ({
 
 export const StyledGridComments = styled(Grid)(({ theme }) => ({
     borderLeft: `2px solid ${theme.palette.mode === 'light' ? '#f0f0f0' : '#303030'}`,
-    background: 'linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05))',
     textAlign: 'center',
     color:
         theme.palette.mode === 'light' ? 'rgba(0,0,0,.85)' : 'rgba(255,255,255,0.85)',
@@ -93,7 +92,6 @@ export const StyledGridItem = styled(Grid)(({ theme }) => ({
     padding: '20px',
     textAlign: 'center',
     justifyContent: 'center',
-    alignItems: 'center',
     color:
         theme.palette.mode === 'light' ? 'rgba(0,0,0,.85)' : 'rgba(255,255,255,0.85)',
 }));

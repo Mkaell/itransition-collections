@@ -1,8 +1,8 @@
 import React from 'react'
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import './LoginPage.css'
-import { Button, TextField, Typography } from '@mui/material';
+import { StyledTextField } from './style';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import { logIn } from '../../api';
@@ -36,13 +36,21 @@ const LoginPage = () => {
 	});
 
 	return (
-		<div className='login'>
+		<Box sx={{
+			width: { xs: '75%', sm: '50%', md: '35%' },
+			margin: '0',
+			position: 'absolute',
+			top: '50%',
+			left: '50%',
+			marginRight: '-50%',
+			transform: 'translate(-50%, -50%)',
+		}}>
 			<form onSubmit={formik.handleSubmit} >
 				<Typography variant='h4' mb={3}>{messages['login.login']}</Typography>
-				<TextField
+				<StyledTextField
 					style={{ marginBottom: '30px' }}
 					fullWidth
-					id="email"
+					id="email-login"
 					name="email"
 					label={messages['form.login-label-email']}
 					value={formik.values.email}
@@ -50,10 +58,10 @@ const LoginPage = () => {
 					error={formik.touched.email && Boolean(formik.errors.email)}
 					helperText={formik.touched.email && formik.errors.email}
 				/>
-				<TextField
+				<StyledTextField
 					fullWidth
 					style={{ marginBottom: '30px' }}
-					id="password"
+					id="password-login"
 					name="password"
 					label={messages['form.login-label-password']}
 					type="password"
@@ -67,7 +75,7 @@ const LoginPage = () => {
 				</Button>
 			</form>
 
-		</div>
+		</Box>
 	)
 }
 

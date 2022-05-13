@@ -9,17 +9,17 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 export function columnsConverter (messages, deleteAccount, toggleAdminStatus, toggleActiveStatus){   
     return [
-    { field: '_id', headerName: 'ID', type: 'string', width: 80, headerAlign: 'center', },
-    { field: 'email', headerName: 'Email', type: 'string', flex: 0.3, headerAlign: 'center', },
+    { field: '_id', headerName: 'ID', type: 'string', width: 100, headerAlign: 'center', },
+    { field: 'email', headerName: 'Email', type: 'string', width: 250, headerAlign: 'center', },
     {
-        field: 'created_at', headerName: 'Created_at', type: 'dateTime', flex: 0.3, headerAlign: 'center',
+        field: 'created_at', headerName: 'Created_at', type: 'dateTime', width: 150, headerAlign: 'center',
         valueFormatter: (params) => {
             const valueFormatted = format(new Date(params.value), "HH:mm:ss'/'yyyy-MM-dd");
             return valueFormatted
         },
     },
     {
-        field: 'lastLogin', headerName: 'Last_login', type: 'dateTime', flex: 0.3, headerAlign: 'center',
+        field: 'lastLogin', headerName: 'Last_login', type: 'dateTime', width: 150, headerAlign: 'center',
         valueFormatter: (params) => {
             const valueFormatted = format(new Date(params.value), "HH:mm:ss'/'yyyy-MM-dd");
             return valueFormatted

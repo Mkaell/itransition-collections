@@ -32,9 +32,10 @@ const Dropzone = ({ setCollection, collection }) => {
 			<Box
 				justifyContent="center"
 				{...getRootProps()}
-				sx={!images.length > 0 ?
-					{ p: 4, border: '1px dashed grey', textAlign: 'center', mt: 2 } :
-					{ display: 'flex', justifyContent: 'center', mt: 2 }}
+				sx={
+					!images.length > 0 ?
+						{ p: 4, border: '1px dashed grey', textAlign: 'center', mt: 2, minWidth: '200px' } :
+						{ display: 'flex', justifyContent: 'center', mt: 2, minWidth: '200px' }}
 			>
 				<input {...getInputProps()} />
 				{images.length > 0 ?
@@ -43,7 +44,7 @@ const Dropzone = ({ setCollection, collection }) => {
 							alt="img"
 							key={i}
 							src={image}
-							sx={{ width: 200, height: 200 }}
+							sx={{ minWidth: 200, height: 200 }}
 						/>)}
 					</Box> :
 					<>

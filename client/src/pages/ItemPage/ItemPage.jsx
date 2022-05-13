@@ -1,7 +1,7 @@
-import { CircularProgress, Divider, Grid, List, Paper, Typography } from '@mui/material'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { CircularProgress, Grid, Paper, Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
-import { fetchItem } from '../../api'
+import { URL } from '../../api'
 import Comments from './Comments'
 import InputComments from './InputComments'
 import Item from './Item'
@@ -9,7 +9,6 @@ import { io } from "socket.io-client";
 import { useDispatch, useSelector } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid';
 import { StyledGrid, StyledGridComments, StyledGridItem } from './style'
-import { useTheme } from '@emotion/react'
 import { getItem } from '../../store/actionCreators/itemsCreator'
 import { Box } from '@mui/system'
 import { format } from 'date-fns'
@@ -17,8 +16,8 @@ import { useIntl } from 'react-intl'
 
 const ItemPage = () => {
 
-    let socket = io('http://localhost:5047')
-    const email = useSelector(state => state?.auth?.authData?.result?.email)
+    let socket = io(URL)
+    const email = useSelector(state => state?.auth?.authData?.result?.email);
     const { isLoading } = useSelector(state => state?.items)
     const dispatch = useDispatch()
     const [item, setItem] = useState()
@@ -33,7 +32,7 @@ const ItemPage = () => {
                 setItem(data)
                 setComments(data.comments)
             })
-    }, [])
+    }, [dispatch, idItem])
 
     useEffect(() => {
         socket.emit("joinToRoom", idItem);
@@ -87,23 +86,34 @@ const ItemPage = () => {
                         <CircularProgress size={60} />
                     </Box>
                     :
-                    <Paper elevation={5}>
-                        <StyledGrid container mt={5}>
-                            <StyledGridItem item xs={6}>
+                    <Paper elevation={8} sx={{ mt: 10 }}>
+                        <StyledGrid
+                            container
+                            mt={5}
+                            flexDirection={{ sm: 'column', md: 'row' }}
+                        >
+                            <StyledGridItem item xs={12} md={6}>
                                 <Item item={item} />
                             </StyledGridItem>
-                            <StyledGridComments item xs={6} classes='comments'>
+                            <StyledGridComments item xs={12} md={6} classes='comments' mt={{ xs: 2, sm: 0 }}>
                                 <Grid container fullWidth >
                                     <Grid item xs={12}>
-                                        <Typography variant='h5' padding={1}>
-                                            {messages["item.comments"]}
-                                        </Typography>
+                                        <Paper>
+                                            <Typography variant='h5' padding={1}>
+                                                {messages["item.comments"]}
+                                            </Typography>
+                                        </Paper>
+
                                     </Grid>
                                     <Grid item xs={12}>
                                         <Comments comments={comments} />
                                     </Grid>
                                     <Grid item xs={12} >
-                                        <InputComments addComment={addComment} comment={comment} comments={comments} setComment={setComment} handleOnChange={handleOnChange} />
+                                        <InputComments
+                                            addComment={addComment}
+                                            comment={comment}
+                                            handleOnChange={handleOnChange}
+                                        />
                                     </Grid>
                                 </Grid>
                             </StyledGridComments>

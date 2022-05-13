@@ -2,24 +2,10 @@ import React from 'react'
 import { useIntl } from 'react-intl';
 import { styled, alpha } from '@mui/material/styles';
 import { Box } from '@mui/system';
-import { Autocomplete, InputAdornment, TextField } from '@mui/material';
+import { Autocomplete, Avatar, InputAdornment, Link, List, ListItemAvatar, ListItemButton, ListItemText, Paper, TextField, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(1),
-        width: '100%',
-    },
-}));
-
-
+import { Link as RouterLink } from 'react-router-dom';
+import { Search } from './style';
 
 const SearchField = ({ foundItems, findItems }) => {
 
@@ -39,8 +25,47 @@ const SearchField = ({ foundItems, findItems }) => {
                     option.name
                 }
                 renderOption={(props, option) => (
-                    <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props} key={option._id}>
-                        {option.name} ({option._id})
+                    <Box
+                        component='li'
+                        sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
+                        {...props}
+                        key={option._id}
+                    >
+                        {
+
+                            <Link
+                                component={RouterLink}
+                                to={
+                                    option.description ?
+                                        `/collection/${option._id}` :
+                                        `/collection/${option.collectionId}/item/${option._id}`
+                                }
+                                style={{ padding: '8px 15px' }}
+                                underline="none"
+                                sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                <Avatar alt="Remy Sharp" sx={{ width: 30, height: 30 }} />
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <Typography
+                                        sx={{ display: 'inline' }}
+                                        component="span"
+                                        variant="body2"
+                                        color="text.primary"
+                                    >
+                                        {option?.name}
+                                    </Typography>
+                                </Box>
+
+
+                                <Typography
+                                    sx={{ display: 'inline' }}
+                                    component="span"
+                                    variant="body2"
+                                    color="text.primary"
+                                >
+                                    {option?._id}
+                                </Typography>
+                            </Link>
+                        }
                     </Box>
                 )}
                 renderInput={(params) => (

@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
-import { Container, CssBaseline, Paper, ScopedCssBaseline } from '@mui/material';
+import React, { createContext, useMemo, useState } from 'react';
+import { Container, CssBaseline,} from '@mui/material';
 import { useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import './App.css';
 import {IntlProvider} from "react-intl";
-import NavBar from './components/NavBar/NavBar';
 import Navigation from './routes/Navigation';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Provider } from 'react-redux';
@@ -17,10 +15,10 @@ import ruMessages from "./utils/localizations/ru.json";
 import plMessages from "./utils/localizations/pl.json";
 import * as local from '@mui/material/locale';
 import localesMui from './utils/localizations/constant/localesMui';
-import ResponsiveAppBar from './components/NavBar/TestNavbar';
+import Navbar from './components/NavBar/Navbar';
 
-const store = createStore(reducers , {}, compose(applyMiddleware(thunk)));
-export const ColorModeContext = React.createContext({ toggleColorMode: () => {} })
+const store = createStore(reducers , {}, compose(applyMiddleware(thunk), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
+export const ColorModeContext = createContext({ toggleColorMode: () => {} })
 
 const messages = {
 	[locales.EN]: enMessages,
@@ -30,21 +28,34 @@ const messages = {
 
 function App() {
 
-	const [mode, setMode] = useState('dark');
+	const [mode, setMode] = useState(localStorage.getItem('theme') || 'light');
 	const [currentLocale, setCurrentLocale] = useState(localStorage.getItem('app.localization') || locales.EN);
 
-	const colorMode = React.useMemo(
+	useEffect(() => {
+		localStorage.setItem('theme', mode);
+	}, [mode])
+	
+	const colorMode = useMemo(
 	  () => ({
-		toggleColorMode: () => {
-		  setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+		toggleColorMode: () => {	
+		  	setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
 		},
 	  }),
 	  [],
 	);
-	console.log(local[localesMui.RU]);
-	const theme = React.useMemo(
+	
+	const theme = useMemo(
 	  () => createTheme({
 		  palette: {
+			primary: {
+				main: '#ff9800',
+			  },
+			  secondary: {
+				main: '#f50057',
+			  },
+			  info: {
+				main: '#ff9800',
+			  },
 			mode,
 		  },
 		}, local[localesMui[currentLocale]] ),
@@ -59,11 +70,7 @@ function App() {
 					<ColorModeContext.Provider value={colorMode}>
 						<ThemeProvider theme={theme}>
 							<CssBaseline />
-							{/* <NavBar  
-								currentLocale={currentLocale}
-								setCurrentLocale={setCurrentLocale}
-							/> */}
-							<ResponsiveAppBar
+							<Navbar
 								currentLocale={currentLocale}
 								setCurrentLocale={setCurrentLocale}/>
 							<Container maxWidth="lg">

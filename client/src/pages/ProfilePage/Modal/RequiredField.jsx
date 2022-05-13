@@ -23,14 +23,22 @@ const RequiredField = ({ collection, setCollection }) => {
                 onChange={(e) => onChangeControl(e)}
                 required
                 id='name'
-                name="name" variant="outlined" label="Name" fullWidth sx={{ mt: 2 }}
+                name="name"
+                variant="outlined"
+                label="Name"
+                fullWidth
+                sx={{ mt: 2, minWidth: '250px' }}
             />
             <TextField
                 onChange={(e) => onChangeControl(e)}
                 name="description"
                 id='description'
                 required
-                variant="outlined" label="Description" fullWidth multiline sx={{ mt: 2 }}
+                variant="outlined"
+                label="Description"
+                fullWidth
+                multiline
+                sx={{ mt: 2, minWidth: '250px' }}
             />
             <TextField
                 defaultValue=""
@@ -40,7 +48,7 @@ const RequiredField = ({ collection, setCollection }) => {
                 label="Theme"
                 variant="outlined"
                 fullWidth
-                sx={{ mt: 2 }}
+                sx={{ mt: 2, minWidth: '250px' }}
                 select
             >
                 <MenuItem value="alcohol">Alcohol</MenuItem>

@@ -1,4 +1,4 @@
-import { START_LOADING, END_LOADING, CREATE, DELETE, FETCH_ALL_ITEM_TAG, ERROR, FETCH_BY_ONE } from '../actions/actionTypes';
+import { START_LOADING, END_LOADING,  DELETE,  FETCH_BY_ONE } from '../actions/actionTypes';
 import * as api from '../../api/index.js';
 import { format } from 'date-fns';
 
@@ -14,17 +14,6 @@ export const deleteItem = (id, collectionId) => async (dispatch) => {
         console.log(error);
     }
 };
-
-export const getItemsByTag = (searchData) => async (dispatch) => {
-    try {
-        dispatch({ type: START_LOADING });
-        const {data} = await api.searchItemsByTag(searchData);
-        dispatch({ type: FETCH_ALL_ITEM_TAG, payload: data });
-        dispatch({ type: END_LOADING });
-    } catch (error) {
-        alert(error)
-    }
-}
 
 export const getItem = (searchData) => async (dispatch) => {
     try {

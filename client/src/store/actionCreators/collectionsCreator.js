@@ -54,8 +54,5 @@ export const getHomePageInfo = () => async (dispatch) => {
         return data
     } catch (error) {
         console.log(error);
-        ///
-        dispatch({type: ERROR, payload: error});
-        dispatch({ type: END_LOADING });
     }
 };
