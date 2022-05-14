@@ -55,10 +55,9 @@ const ProfilePage = () => {
                     {useremail ? useremail : email}
                 </Typography>
             </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }} mt={4}>
                 <Button
                     sx={{ minWidth: { xs: '100%', sm: '200px' } }}
-
                     variant="contained"
                     startIcon={<AddIcon />}
                     onClick={() => handleClickOpen()}
@@ -67,7 +66,8 @@ const ProfilePage = () => {
                 </Button>
             </Box>
             <Grid
-                mt={6}
+                mt={{ xs: 0, sm: 4 }}
+                paddingBottom={1}
                 container
                 item
                 spacing={3}

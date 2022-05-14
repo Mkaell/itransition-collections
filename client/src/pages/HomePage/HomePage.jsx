@@ -14,7 +14,7 @@ import ListItems from '../../components/ListItems/ListItems';
 import SimpleCloud from './SimpleCloud';
 import { getHomePageInfo } from '../../store/actionCreators/collectionsCreator';
 import { useDispatch, useSelector } from 'react-redux';
-import { CircularProgress, Grid } from '@mui/material';
+import { CircularProgress, Grid, Paper } from '@mui/material';
 import { Box } from '@mui/system';
 
 const HomePage = () => {
@@ -79,7 +79,9 @@ const HomePage = () => {
                                 <SimpleCloud lastAddedItems={lastAddedItems} />
                             </Grid>
                             <Grid item sx={{ width: '100%' }} xs>
-                                <ListItems items={lastAddedItems} />
+                                <Paper variant="outlined" sx={{ mt: 5 }}>
+                                    <ListItems items={lastAddedItems} />
+                                </Paper>
                             </Grid>
                         </Grid>
                     </Grid>

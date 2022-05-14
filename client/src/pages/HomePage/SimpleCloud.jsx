@@ -4,10 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { TagCloud } from 'react-tagcloud'
 import { getItemsByTag } from '../../store/actionCreators/searchCreator'
 
-const options = {
-    luminosity: 'light',
-    hue: 'purple',
-}
+const options = { hue: 'pink', count: 18 }
 
 const SimpleCloud = ({ lastAddedItems }) => {
 
@@ -35,14 +32,14 @@ const SimpleCloud = ({ lastAddedItems }) => {
     Array.from(new Set(items)).forEach((tag) =>
         tagsCloud.push({
             'value': `${tag}`,
-            'count': getRandomArbitrary(15, 35)
+            'count': getRandomArbitrary(15, 50)
         })
     )
 
     return (
         <TagCloud
             minSize={15}
-            maxSize={35}
+            maxSize={50}
             style={{ width: '300px', textAlign: 'center' }}
             colorOptions={options}
             className='simple-cloud'

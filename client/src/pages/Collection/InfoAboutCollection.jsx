@@ -1,4 +1,4 @@
-import { Avatar, Button, Typography, Box, TextField, IconButton, ButtonGroup } from '@mui/material'
+import { Avatar, Button, Typography, Box, TextField, IconButton, ButtonGroup, Paper } from '@mui/material'
 import React, { useState } from 'react'
 import AddIcon from '@mui/icons-material/Add';
 import { useSelector } from 'react-redux';
@@ -43,7 +43,7 @@ const InfoAboutCollection = ({ handleClickOpen, collection, setCollection }) => 
                 <Avatar
                     alt="Remy Sharp"
                     src={collection.image}
-                    sx={{ width: 150, height: 150, mr: 2 }}
+                    sx={{ width: 150, height: 150, mr: { xs: 0, sm: 2 } }}
                 />
                 <Box xs={4}>
                     {open &&

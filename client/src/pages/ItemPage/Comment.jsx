@@ -3,7 +3,7 @@ import React from 'react'
 
 const Comment = ({ comment }) => {
     return (
-        <Paper sx={{ alignItems: 'center' }}>
+        <Paper sx={{ alignItems: 'center' }} variant="outlined">
             <ListItemButton autoFocus={true} alignItems="flex-start" >
                 <ListItemAvatar >
                     <Avatar alt="Remy Sharp" sx={{ width: 30, height: 30 }} />

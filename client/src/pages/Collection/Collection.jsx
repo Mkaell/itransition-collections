@@ -146,7 +146,7 @@ function Collection() {
         <>
             <InfoAboutCollection collection={collection} handleClickOpen={handleClickOpen} setCollection={setCollection} />
             <Paper elevation={5}>
-                <Box style={{ height: '400px', width: '100%', marginTop: '10px' }}>
+                <Box style={{ height: '410px', width: '100%', marginTop: '10px' }}>
                     <StyledDataGrid
                         rows={rows}
                         loading={isLoading}

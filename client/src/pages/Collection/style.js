@@ -22,9 +22,6 @@ export const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
     ].join(','),
     WebkitFontSmoothing: 'auto',
     letterSpacing: 'normal',
-    // '& .MuiDataGrid-columnsContainer': {
-    //     backgroundColor: theme.palette.mode === 'light' ? '#fafafa' : '#1d1d1d',
-    // },
     '$ .MuiDataGrid-main': {
         borderTop: `1px solid ${theme.palette.mode === 'light' ? '#f0f0f0' : '#303030'
             }`,

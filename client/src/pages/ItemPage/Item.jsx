@@ -8,7 +8,14 @@ const Item = ({ item }) => {
     const date = useSelector(state => state?.items?.items?.dateCreate)
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '50%' }}>
+        <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            height: '50%'
+        }}
+            key={item?._id}
+        >
             <Typography variant='h5' mt={1}>
                 {item?.name}
             </Typography>

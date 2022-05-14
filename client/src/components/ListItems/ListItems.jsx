@@ -10,7 +10,7 @@ const ListItems = ({ items }) => {
 
     return (
         <>
-            <List sx={{ mt: 5 }}>
+            <List >
                 {
                     items?.map((item) =>
 

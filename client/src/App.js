@@ -51,13 +51,15 @@ function App() {
 				main: '#ff9800',
 			  },
 			  secondary: {
-				main: '#f50057',
+				main: '#ff3f03',
 			  },
 			  info: {
 				main: '#ff9800',
 			  },
+
 			mode,
 		  },
+		  
 		}, local[localesMui[currentLocale]] ),
 	  [currentLocale, mode],
 	);

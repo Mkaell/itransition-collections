@@ -1,25 +1,19 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { DataGrid, GridActionsCellItem, GridToolbar, GridToolbarFilterButton } from '@mui/x-data-grid';
-import DeleteIcon from '@mui/icons-material/Delete';
-import SecurityIcon from '@mui/icons-material/Security';
-import BlockIcon from '@mui/icons-material/Block';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteUser, getUsers, updateAdminStatus, updateBanStatus } from '../../store/actionCreators/usersCreator';
 import { deleteUsers, changeAdminStatusOfSelected, changeActiveStatusOfSelected } from '../../api';
 import { actionLogOut } from '../../store/actionCreators/auth';
-import { Link, useNavigate } from 'react-router-dom';
-import { Paper, Tooltip } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { Paper, } from '@mui/material';
 import { StyledDataGrid } from './style';
 import { EnhancedTableToolbar } from './ToolBar';
-import { format } from 'date-fns'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useIntl } from 'react-intl';
 import { columnsConverter } from './Columns/columns';
 
 const AdminPage = () => {
 
-    const { isLoading, users } = useSelector(state => state.users)
-    const { _id } = useSelector(state => state.auth.authData.result)
+    const { isLoading, users } = useSelector(state => state?.users)
+    const { _id } = useSelector(state => state.auth.authData?.result)
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const [selected, setSelected] = useState([]);

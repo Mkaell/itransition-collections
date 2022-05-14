@@ -103,7 +103,6 @@ const ItemPage = () => {
                                                 {messages["item.comments"]}
                                             </Typography>
                                         </Paper>
-
                                     </Grid>
                                     <Grid item xs={12}>
                                         <Comments comments={comments} />

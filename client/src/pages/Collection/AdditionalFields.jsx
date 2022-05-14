@@ -13,7 +13,7 @@ const AdditionalFields = ({ additionalFieldsKeys, collection, onChangeControl, i
 
                         fieldName === 'date' ?
                             <>
-                                <Typography textAlign={'center'} mt={2}>
+                                <Typography textAlign={'center'} mt={2} key={index}>
                                     {Utils.capitalized(fieldName)}
                                 </Typography>
                                 {collection?.itemFields.additional[fieldName].map(

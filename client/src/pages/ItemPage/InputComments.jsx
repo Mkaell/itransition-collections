@@ -1,4 +1,4 @@
-import { Button, Grid, TextField } from '@mui/material'
+import { Box, Button, Grid, TextField } from '@mui/material'
 import React from 'react'
 import SendIcon from '@mui/icons-material/Send';
 import { useIntl } from 'react-intl';
@@ -23,7 +23,7 @@ const InputComments = ({ addComment, comment, handleOnChange }) => {
                         onChange={(e) => handleOnChange(e)}
                         placeholder={messages["item.placeholder"]} />
                 </Grid>
-                <Grid item sx={{ height: '56px' }} xs={3} >
+                <Box item sx={{ height: '56px' }} xs={3}>
                     <Button
                         disabled={!user ? true : false}
                         variant="contained"
@@ -32,7 +32,7 @@ const InputComments = ({ addComment, comment, handleOnChange }) => {
                         endIcon={<SendIcon />} >
                         {messages["item.send-button"]}
                     </Button>
-                </Grid>
+                </Box>
             </form>
 
         </Grid>

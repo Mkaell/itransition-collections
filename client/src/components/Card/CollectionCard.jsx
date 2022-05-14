@@ -31,7 +31,7 @@ const CollectionCard = ({ image, name, id, deleteCollection, userId, location, k
                     alt={name}
                 />
                 <CardContent sx={{ textAlign: 'center' }}>
-                    <Typography color="text.secondary">
+                    <Typography color="text.secondary" variant='h5'>
                         {name}
                     </Typography>
                 </CardContent>
