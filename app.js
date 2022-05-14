@@ -14,9 +14,9 @@ require('dotenv').config()
 const app = express();
 
 cloudinary.config({ 
-    cloud_name: 'de3v3rkv6', 
-    api_key: '982239126755269', 
-    api_secret: 'ndowqBMhlouTbkHM2E3bfjLRebg' 
+    cloud_name: process.env.CLOUD_NAME, 
+    api_key: process.env.API_KEY, 
+    api_secret: process.env.API_SECRET 
 });
 
 app.use(express.json({ limit: "50mb", extended: true }));

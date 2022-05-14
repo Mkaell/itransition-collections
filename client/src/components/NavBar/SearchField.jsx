@@ -27,12 +27,10 @@ const SearchField = ({ foundItems, findItems }) => {
                 renderOption={(props, option) => (
                     <Box
                         component='li'
-                        sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
                         {...props}
                         key={option._id}
                     >
                         {
-
                             <Link
                                 component={RouterLink}
                                 to={
@@ -40,11 +38,14 @@ const SearchField = ({ foundItems, findItems }) => {
                                         `/collection/${option._id}` :
                                         `/collection/${option.collectionId}/item/${option._id}`
                                 }
-                                style={{ padding: '8px 15px' }}
+                                style={{ padding: '8px 8px' }}
                                 underline="none"
                                 sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                <Avatar alt="Remy Sharp" sx={{ width: 30, height: 30 }} />
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <Avatar
+                                    alt="Remy Sharp"
+                                    sx={{ width: 30, height: 30, mr: 1 }}
+                                    src={option.image ? option.image : null} />
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>
                                     <Typography
                                         sx={{ display: 'inline' }}
                                         component="span"
@@ -53,17 +54,15 @@ const SearchField = ({ foundItems, findItems }) => {
                                     >
                                         {option?.name}
                                     </Typography>
+                                    <Typography
+                                        sx={{ display: 'inline' }}
+                                        component="span"
+                                        variant="body2"
+                                        color="text.primary"
+                                    >
+                                        {option?.description ? option?.description : option?._id}
+                                    </Typography>
                                 </Box>
-
-
-                                <Typography
-                                    sx={{ display: 'inline' }}
-                                    component="span"
-                                    variant="body2"
-                                    color="text.primary"
-                                >
-                                    {option?._id}
-                                </Typography>
                             </Link>
                         }
                     </Box>

@@ -47,11 +47,11 @@ const ProfilePage = () => {
 
     return (
         <div className='profile'>
-            <Box>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <Avatar
                     sx={{ width: 150, height: 150 }}
                     src='https://res.cloudinary.com/de3v3rkv6/image/upload/v1652511819/collection-app/myxrejtexam3hhdbxotw.png' />
-                <Typography textAlign={{ xs: 'center', sm: 'start' }} ml={{ xs: '0', sm: '21px' }}>
+                <Typography >
                     {useremail ? useremail : email}
                 </Typography>
             </Box>

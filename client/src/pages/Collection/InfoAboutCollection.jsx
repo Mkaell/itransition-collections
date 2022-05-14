@@ -1,5 +1,5 @@
-import { Avatar, Button, Grid, Typography, Box, TextField, IconButton, Paper, ButtonGroup } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import { Avatar, Button, Typography, Box, TextField, IconButton, ButtonGroup } from '@mui/material'
+import React, { useState } from 'react'
 import AddIcon from '@mui/icons-material/Add';
 import { useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
@@ -25,7 +25,6 @@ const InfoAboutCollection = ({ handleClickOpen, collection, setCollection }) => 
         setOpen(prevState => !prevState)
     }
 
-
     return (
         <Box style={{
             display: 'flex',
@@ -48,7 +47,10 @@ const InfoAboutCollection = ({ handleClickOpen, collection, setCollection }) => 
                 />
                 <Box xs={4}>
                     {open &&
-                        <form style={{ display: 'flex', flexDirection: 'column' }} onSubmit={(e) => collectionHandler(e)}>
+                        <form
+                            style={{ display: 'flex', flexDirection: 'column' }}
+                            onSubmit={(e) => collectionHandler(e)}
+                        >
                             <TextField
                                 name='name'
                                 placeholder={messages['profile.name']}
@@ -113,14 +115,13 @@ const InfoAboutCollection = ({ handleClickOpen, collection, setCollection }) => 
                                 </Typography>
                             </Box>
                     }
-
                 </Box>
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
                 {
                     (currentUser?.role || (collection.userId === currentUser?._id)) ?
                         <Button
-                            sx={{ minwidth: { xs: '100%', sm: '150px' } }}
+                            sx={{ minWidth: { xs: '100%', sm: '150px' } }}
                             variant="contained"
                             startIcon={<AddIcon />}
                             onClick={() => handleClickOpen()}

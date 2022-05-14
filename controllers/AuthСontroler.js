@@ -1,8 +1,8 @@
 const bcrypt = require("bcryptjs") ;
 const jwt = require("jsonwebtoken") ;
 const UserModal = require('../models/Users.js') ;
+require('dotenv').config()
 
-const secret = 'test';
 
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -14,11 +14,10 @@ const login = async (req, res) => {
     const isPasswordCorrect = await bcrypt.compare(password, oldUser.password);
 
     if (!oldUser.active) return res.status(400).json({ message: "User is blocked" });
-
     if (!isPasswordCorrect) return res.status(400).json({ message: "Invalid credentials" });
     
     
-    const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, { expiresIn: "1h" });
+    const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, process.env.SECRET, { expiresIn: "1h" });
 
     res.status(200).json({ result: oldUser, token });
   } catch (err) {
@@ -37,7 +36,7 @@ const signup = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 12);
     const result = await UserModal.create({ email, password: hashedPassword });
-    const token = jwt.sign( { email: result.email, id: result._id }, secret, { expiresIn: "1h" } );
+    const token = jwt.sign( { email: result.email, id: result._id }, process.env.SECRET, { expiresIn: "1h" } );
 
     res.status(201).json({ result, token });
   } catch (error) {
