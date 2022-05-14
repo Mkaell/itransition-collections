@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import { Alert, Paper, Snackbar } from '@mui/material';
 import ModalItems from './ModalItems';
-import { likeItem, updateItem } from '../../api';
+import { likeItem, updateCollection, updateItem } from '../../api';
 import { useParams } from 'react-router-dom';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { columnsСonverter } from './Columns/columnsСonverter'
@@ -36,6 +36,16 @@ function Collection() {
                 setRows(data.items)
             })
     }, [dispatch, idCollection])
+
+    useEffect(() => {
+        (async () => {
+            try {
+                await updateCollection(collection._id, collection)
+            } catch (error) {
+                console.log(error);
+            }
+        })()
+    }, [collection])
 
     const basicFieldsEntries = useMemo(
         () => Object.keys(collection.itemFields?.basic || {}),
@@ -134,13 +144,14 @@ function Collection() {
 
     return (
         <>
-            <InfoAboutCollection collection={collection} handleClickOpen={handleClickOpen} />
+            <InfoAboutCollection collection={collection} handleClickOpen={handleClickOpen} setCollection={setCollection} />
             <Paper elevation={5}>
                 <Box style={{ height: '400px', width: '100%', marginTop: '10px' }}>
                     <StyledDataGrid
                         rows={rows}
                         loading={isLoading}
                         columns={columns}
+                        autoPageSize
                         processRowUpdate={processRowUpdate}
                         onProcessRowUpdateError={handleProcessRowUpdateError}
                         GridColDef='center'

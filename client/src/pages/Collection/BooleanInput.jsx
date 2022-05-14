@@ -2,9 +2,9 @@ import { Checkbox, FormControlLabel } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { Utils } from '../../utils/utils';
 
-const BooleanInput = ({ itemField, items, setItems, open, fieldId }) => {
+const BooleanInput = ({ itemField, items, setItems, fieldId }) => {
     const [checked, setChecked] = useState(false)
-    console.log(items);
+
     useEffect(() => {
         setItems({
             ...items,

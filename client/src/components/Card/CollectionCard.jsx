@@ -4,13 +4,24 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-const CollectionCard = ({ image, name, id, deleteCollection, userId, location }) => {
+const CollectionCard = ({ image, name, id, deleteCollection, userId, location, key }) => {
 
     const currentUser = useSelector(state => state.auth.authData?.result);
     const navigate = useNavigate()
 
     return (
-        <Card sx={{ width: 200, mt: 2, borderRadius: 2, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }} elevation={5}>
+        <Card
+            key={id}
+            sx={{
+                width: 200,
+                mt: 2,
+                borderRadius: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+            }}
+            elevation={5}
+        >
 
             <CardActionArea onClick={() => navigate(`/collection/${id}`)}>
                 <CardMedia

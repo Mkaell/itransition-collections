@@ -4,11 +4,13 @@ const {
     deleteCollection,
     createCollection,
     getCollections,
-    getCollection
+    getCollection,
+    updateCollection
         } = require('../controllers/CollectionControler');
 
 router.post("/create", createCollection);
 router.post("/get", getCollections);
+router.patch("/update/:idcoll", updateCollection);
 router.post("/get/:idcoll", getCollection);
 router.delete("/delete/:idcoll", deleteCollection);
 

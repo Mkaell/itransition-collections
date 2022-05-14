@@ -49,14 +49,15 @@ export const columnsСonverter = (additionalFieldsEntries, basicFieldsEntries, d
             case FIELD_TAGS:
                 columnsObj.push({
                     'field': field,
-                    editable: comparison(currentUser, collection,EDIT_TABLE_TRUE, EDIT_TABLE_FALSE),
+                    editable: EDIT_TABLE_FALSE,
                     minWidth: 200,
                     renderCell: (params) => (
                         params.formattedValue ?
+                        params.formattedValue.map(tag => 
                             <Chip
                                 sx={{ p: 0 }}
-                                label={params.formattedValue}
-                            />
+                                label={tag}
+                            />)
                             : null
                     ),
                 })

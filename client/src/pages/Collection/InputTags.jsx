@@ -43,7 +43,6 @@ const InputTags = ({ itemField, items, setItems }) => {
                 renderInput={(params) => (
                     <TextField
                         {...params}
-
                         label={Utils.capitalized(itemField)}
                         placeholder="Create title"
                     />

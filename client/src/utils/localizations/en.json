@@ -52,6 +52,10 @@
   "admin.ban-unban-users": "Ban/Unban users",
 
   "profile.create-collection": "Create collection",
+  "profile.name": "Name",
+  "profile.description": "Description",
+  "profile.save-button": "Save",
+  "profile.close-button": "Close",
   "profile.image": "Image",
   "profile.required": "Required",
   "profile.not-required": "Optional",

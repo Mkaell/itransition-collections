@@ -19,7 +19,7 @@ const Dropzone = ({ setCollection, collection }) => {
 			}
 			reader.readAsDataURL(file)
 		});
-	}, [])
+	}, [collection, setCollection])
 
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
 		onDrop,

@@ -1,13 +1,30 @@
-import { Avatar, Button, Grid, Typography, Box, TextField } from '@mui/material'
-import React from 'react'
+import { Avatar, Button, Grid, Typography, Box, TextField, IconButton, Paper, ButtonGroup } from '@mui/material'
+import React, { useEffect, useState } from 'react'
 import AddIcon from '@mui/icons-material/Add';
 import { useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
+import SaveIcon from '@mui/icons-material/Save';
+import EditIcon from '@mui/icons-material/Edit';
+import CloseIcon from '@mui/icons-material/Close';
 
-const InfoAboutCollection = ({ handleClickOpen, collection }) => {
+const InfoAboutCollection = ({ handleClickOpen, collection, setCollection }) => {
 
+    const [name, setName] = useState('');
+    const [open, setOpen] = useState(false)
+    const [description, setDescription] = useState('');
     const { messages } = useIntl()
     const currentUser = useSelector(state => state.auth.authData?.result)
+
+    const collectionHandler = (e) => {
+        e.preventDefault()
+        setCollection({
+            ...collection,
+            name,
+            description,
+        });
+        setOpen(prevState => !prevState)
+    }
+
 
     return (
         <Box style={{
@@ -30,19 +47,80 @@ const InfoAboutCollection = ({ handleClickOpen, collection }) => {
                     sx={{ width: 150, height: 150, mr: 2 }}
                 />
                 <Box xs={4}>
-                    <Typography variant='h3'>
-                        {collection.name}
-                    </Typography>
-                    <Typography>
-                        {collection.description}
-                    </Typography>
+                    {open &&
+                        <form style={{ display: 'flex', flexDirection: 'column' }} onSubmit={(e) => collectionHandler(e)}>
+                            <TextField
+                                name='name'
+                                placeholder={messages['profile.name']}
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                            />
+                            <TextField
+                                name='description'
+                                placeholder={messages['profile.description']}
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
+                            />
+                            <ButtonGroup sx={{ display: 'flex' }}>
+                                <Button
+                                    sx={{ width: { xs: '100%' } }}
+                                    variant="contained"
+                                    startIcon={<CloseIcon />}
+                                    onClick={() => setOpen(prevState => !prevState)}
+                                >
+                                    {messages['profile.close-button']}
+                                </Button>
+                                <Button
+                                    sx={{ width: { xs: '100%' } }}
+                                    variant="contained"
+                                    startIcon={<SaveIcon />}
+                                    type='submit'
+                                >
+                                    {messages['profile.save-button']}
+                                </Button>
+                            </ButtonGroup>
+
+                        </form>
+                    }
+                    {
+                        (currentUser?.role || (collection.userId === currentUser?._id)) ?
+                            !open &&
+                            <>
+                                <IconButton
+                                    aria-label="edit"
+                                    onClick={() => setOpen(prevState => !prevState)}
+                                    sx={{ justifyContent: 'flex-end', }}
+                                >
+                                    <EditIcon />
+                                </IconButton>
+                                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+
+                                    <Typography variant='h3'>
+                                        {collection.name}
+                                    </Typography>
+                                    <Typography>
+                                        {collection.description}
+                                    </Typography>
+                                </Box>
+                            </> :
+                            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+
+                                <Typography variant='h3'>
+                                    {collection.name}
+                                </Typography>
+                                <Typography>
+                                    {collection.description}
+                                </Typography>
+                            </Box>
+                    }
+
                 </Box>
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
                 {
                     (currentUser?.role || (collection.userId === currentUser?._id)) ?
                         <Button
-                            sx={{ width: { xs: '100%', sm: '150px' } }}
+                            sx={{ minwidth: { xs: '100%', sm: '150px' } }}
                             variant="contained"
                             startIcon={<AddIcon />}
                             onClick={() => handleClickOpen()}

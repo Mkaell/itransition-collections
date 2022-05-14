@@ -75,7 +75,7 @@ const ItemPage = () => {
             itemId: idItem,
             comments: commentsArr,
         });
-
+        setComment('');
     };
 
     return (

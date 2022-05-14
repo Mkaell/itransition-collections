@@ -138,7 +138,7 @@ const AdminPage = () => {
         <Paper elevation={5}>
             <div style={{ height: 400, width: '100%', marginTop: '100px', }}>
                 <StyledDataGrid
-
+                    autoPageSize
                     loading={isLoading}
                     onSelectionModelChange={(ids) => {
                         setSelected(ids);

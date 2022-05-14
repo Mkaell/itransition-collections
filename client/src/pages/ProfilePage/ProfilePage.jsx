@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Box, Button, Grid } from '@mui/material'
+import { Avatar, Box, Button, Grid, Typography } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
 import './ProfilePage.css'
 import Modal from './Modal/Modal';
@@ -14,8 +14,9 @@ import { useIntl } from 'react-intl';
 const ProfilePage = () => {
 
     const { collections, isLoading } = useSelector(state => state?.collections);
-    const userId = useSelector(state => state.auth.authData?.result._id);
-    const { iduser } = useParams()
+    const userId = useSelector(state => state.auth?.authData?.result._id);
+    const email = useSelector(state => state.auth?.authData?.result.email);
+    const { iduser, useremail } = useParams()
     const dispatch = useDispatch()
     const { messages } = useIntl()
     const [open, setOpen] = useState(false);
@@ -46,9 +47,17 @@ const ProfilePage = () => {
 
     return (
         <div className='profile'>
+            <Box>
+                <Avatar
+                    sx={{ width: 150, height: 150 }}
+                    src='https://res.cloudinary.com/de3v3rkv6/image/upload/v1652511819/collection-app/myxrejtexam3hhdbxotw.png' />
+                <Typography textAlign={{ xs: 'center', sm: 'start' }} ml={{ xs: '0', sm: '21px' }}>
+                    {useremail ? useremail : email}
+                </Typography>
+            </Box>
             <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                 <Button
-                    sx={{ width: { xs: '100%', sm: '200px' } }}
+                    sx={{ minWidth: { xs: '100%', sm: '200px' } }}
 
                     variant="contained"
                     startIcon={<AddIcon />}

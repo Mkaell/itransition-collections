@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const URL = 'https://itra-collection-app.herokuapp.com/';
+export const URL = 'http://localhost:5047/';
 
 const API = axios.create({ baseURL: URL });
 
@@ -20,6 +20,7 @@ export const fetchCollections = (id) => API.post('/collections/get', id);
 export const fetchCollection = (id) => API.post(`/collections/get/${id}`, id);
 export const deleteCollection = (id, formData) => API.delete(`/collections/delete/${id}`, {data: formData} );
 export const fetchCollectionsAndLastItems = () => API.get('/');
+export const updateCollection = (id, formData) => API.patch(`/collections/update/${id}`, formData);
 
 export const createItem = (formData) => API.post('/items/create', formData);
 export const deleteItem = (id, collectionId) => API.delete(`/items/delete/${id}`, {data: collectionId});
