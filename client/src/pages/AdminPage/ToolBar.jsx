@@ -57,9 +57,8 @@ export const EnhancedTableToolbar = (props) => {
                 </Typography>
             ) : (
                 <Typography
-                    sx={{ flex: '1 1 100%' }}
-                    variant="h6"
-                    id="tableTitle"
+                    sx={{ flex: '1 1 100%', fontSize: '1rem' }}
+
                     component="div"
                 >
                     {messages['admin.panel']}

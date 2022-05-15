@@ -40,7 +40,7 @@ const SimpleCloud = ({ lastAddedItems }) => {
         <TagCloud
             minSize={15}
             maxSize={50}
-            style={{ width: '300px', textAlign: 'center' }}
+            style={{ width: '300px', textAlign: 'center', cursor: 'pointer' }}
             colorOptions={options}
             className='simple-cloud'
             tags={tagsCloud}

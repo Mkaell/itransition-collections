@@ -17,7 +17,7 @@ const Comments = ({ comments }) => {
             {
                 comments.length > 0 ?
                     comments.map((comment, index) => (
-                        <Comment comment={comment} key={comment.id} />
+                        <Comment comment={comment} key={comment._id} />
                     )) :
                     <ListItem sx={{ marginTop: '140px', textAlign: 'center' }}>
                         <ListItemText >

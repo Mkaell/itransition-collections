@@ -8,16 +8,20 @@ const createCollection = async (req, res) => {
 		const { collectionImage, collectionInfo, itemFields, userId } = req.body;
 		const { name, description, theme } = collectionInfo;
 		const { numerical, string, text, date, boolean } = itemFields;
+		const img ='';
 		
 		const userById = await User.findById(userId).populate("collections");
-		const response = await cloudinary.uploader.upload(collectionImage, {folder: 'collection-app'})
 
+		if(collectionImage){
+			img = await cloudinary.uploader.upload(collectionImage, {folder: 'collection-app'})
+		}
+		
 		const newCollection = await Collection.create({
 			name,
 			description,
 			theme,
-			image: response.secure_url,
-			public_id: response.public_id,
+			image: img ? response.secure_url : '',
+			public_id:  img ? response.public_id : '' ,
 			itemFields: {
 				additional: { numerical, string, text, date, boolean },
 			},
@@ -59,9 +63,12 @@ const getCollections = async (req, res) => {
 const deleteCollection = async (req, res) => {
 	try {
 		const idCollection = req.params.idcoll;
-		const {userId, public_id} = req.body
-		await cloudinary.uploader.destroy(public_id, {folder: 'collection-app'})
+		const {userId, public_id} = req.body;
 
+		if(public_id){
+			await cloudinary.uploader.destroy(public_id, {folder: 'collection-app'})
+		}
+		
 		await User.updateOne({ _id: userId },
 			{ $pull: { collections: idCollection}}
 		);

@@ -95,8 +95,8 @@ const ItemPage = () => {
                             <StyledGridItem item xs={12} md={6}>
                                 <Item item={item} />
                             </StyledGridItem>
-                            <StyledGridComments item xs={12} md={6} classes='comments' mt={{ xs: 2, sm: 0 }}>
-                                <Grid container fullWidth >
+                            <StyledGridComments item xs={12} md={6} mt={{ xs: 2, sm: 0 }}>
+                                <Grid container >
                                     <Grid item xs={12}>
                                         <Paper>
                                             <Typography variant='h5' padding={1}>

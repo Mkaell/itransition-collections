@@ -2,6 +2,7 @@ import { Avatar, Box, Divider, ListItemAvatar, ListItemButton, ListItemText, Pap
 import React from 'react'
 
 const Comment = ({ comment }) => {
+
     return (
         <Paper
             sx={{ alignItems: 'center' }}

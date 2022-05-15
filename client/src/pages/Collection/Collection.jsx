@@ -1,11 +1,10 @@
 import Box from '@mui/material/Box';
 import { Alert, Paper, Snackbar } from '@mui/material';
 import ModalItems from './ModalItems';
-import { likeItem, updateCollection, updateItem } from '../../api';
+import { deleteItem, likeItem, updateCollection, updateItem } from '../../api';
 import { useParams } from 'react-router-dom';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { columnsСonverter } from './Columns/columnsСonverter'
-import { deleteItem } from '../../store/actionCreators/itemsCreator';
 import InfoAboutCollection from './InfoAboutCollection';
 import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
@@ -82,10 +81,13 @@ function Collection() {
 
     const deleteCurrentItem = useCallback(
         (id, collectionId) => () => {
-            console.log(collectionId);
-            setTimeout(() => {
-                dispatch(deleteItem(id, { collectionId: collectionId }))
-                setRows((prevRows) => prevRows.filter((row) => row._id !== id));
+            setTimeout(async () => {
+                try {
+                    await deleteItem(id, collectionId);
+                    setRows((prevRows) => prevRows.filter((row) => row._id !== id));
+                } catch (error) {
+                    alert(error)
+                }
             });
         },
         [],
@@ -110,7 +112,7 @@ function Collection() {
             if (!usersByLikes.includes(currentUser?._id)) {
                 usersByLikes.push(currentUser?._id)
                 try {
-                    const response = await likeItem(id, { usersByLikes })
+                    await likeItem(id, { usersByLikes })
                     setRows((prevRows) =>
                         prevRows.map((row) =>
                             row._id === id ? { ...row, usersByLikes: usersByLikes } : row,

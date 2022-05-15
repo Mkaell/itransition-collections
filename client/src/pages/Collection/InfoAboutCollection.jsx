@@ -6,6 +6,7 @@ import { useIntl } from 'react-intl';
 import SaveIcon from '@mui/icons-material/Save';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
+import { IMAGE } from '../../utils/constants';
 
 const InfoAboutCollection = ({ handleClickOpen, collection, setCollection }) => {
 
@@ -42,7 +43,7 @@ const InfoAboutCollection = ({ handleClickOpen, collection, setCollection }) => 
             }} >
                 <Avatar
                     alt="Remy Sharp"
-                    src={collection.image}
+                    src={collection.image ? collection.image : IMAGE.COLLECTION}
                     sx={{ width: 150, height: 150, mr: { xs: 0, sm: 2 } }}
                 />
                 <Box xs={4}>

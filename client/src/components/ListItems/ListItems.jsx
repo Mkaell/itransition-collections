@@ -14,8 +14,8 @@ const ListItems = ({ items }) => {
                 {
                     items?.map((item) =>
 
-                        <Link to={`/collection/${item?.collectionId}/item/${item?._id}`}>
-                            <ListItem disablePadding divider key={item._id}>
+                        <Link to={`/collection/${item?.collectionId}/item/${item?._id}`} key={item._id}>
+                            <ListItem disablePadding divider >
                                 <ListItemButton >
                                     <ListItemIcon>
                                         <InboxIcon />
@@ -31,15 +31,17 @@ const ListItems = ({ items }) => {
                                         textAlign: 'center',
                                         minWidth: '100px'
                                     }}
-                                        primary={
-                                            item?.tags.map((tag) => (
+
+                                    >
+                                        {
+                                            item?.tags.map((tag, index) => (
                                                 <Chip
+                                                    key={index}
                                                     sx={{ mr: 1 }}
                                                     label={tag} />
                                             ))
-
                                         }
-                                    />
+                                    </ListItemText>
                                     <Badge badgeContent={item?.usersByLikes.length} color="primary" sx={{ mr: 1 }}>
                                         <FavoriteIcon color="action" />
                                     </Badge>

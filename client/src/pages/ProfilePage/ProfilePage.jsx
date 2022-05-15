@@ -8,6 +8,7 @@ import { deleteCollectionDispatch, getcollectionsDispatch } from '../../store/ac
 import CircularProgress from '@mui/material/CircularProgress';
 import { useParams } from 'react-router-dom';
 import { useIntl } from 'react-intl';
+import { IMAGE } from '../../utils/constants';
 
 
 const ProfilePage = () => {
@@ -52,11 +53,12 @@ const ProfilePage = () => {
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'center'
+                alignItems: 'center',
+                mt: 4
             }}>
                 <Avatar
                     sx={{ width: 150, height: 150 }}
-                    src='https://res.cloudinary.com/de3v3rkv6/image/upload/v1652511819/collection-app/myxrejtexam3hhdbxotw.png' />
+                    src={IMAGE.PROFILE} />
                 <Typography >
                     {useremail ? useremail : email}
                 </Typography>

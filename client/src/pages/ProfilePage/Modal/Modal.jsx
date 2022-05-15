@@ -102,7 +102,7 @@ const Modal = ({ open, handleClose, iduser, messages }) => {
                     type='submit'
                     variant="contained"
                     form='form-collection'
-                    disabled={!collection.collectionImage ? true : false}>
+                >
                     {messages['profile.create-button']}
                 </Button>
             </DialogActions>

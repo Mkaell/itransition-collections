@@ -47,16 +47,14 @@ const HomePage = () => {
                             alignItems="center">
                             {
                                 largestCollections?.map((collection) =>
-                                    <Grid item>
+                                    <Grid item key={collection._id}>
                                         <CollectionCard
-                                            key={collection._id}
                                             location={location}
                                             image={collection.image}
                                             name={collection.name}
                                             id={collection._id}
                                             userId={collection.userId} />
                                     </Grid>
-
                                 )
                             }
                         </Grid>

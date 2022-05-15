@@ -5,3 +5,8 @@ export const LOCAL_STORAGE ={
     LOCALE: 'localization',
     PROFILE: 'profile',
 }
+
+export const IMAGE ={
+    COLLECTION: 'https://res.cloudinary.com/de3v3rkv6/image/upload/v1652639893/collection-app/collection_gzievx.png',
+    PROFILE: 'https://res.cloudinary.com/de3v3rkv6/image/upload/v1652511475/collection-app/mbjyeazs8kzoadfdwzxb.png',
+}

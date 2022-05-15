@@ -3,6 +3,7 @@ import React from 'react'
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { IMAGE } from '../../utils/constants';
 
 const CollectionCard = ({ image, name, id, deleteCollection, userId, location, public_id }) => {
 
@@ -27,7 +28,7 @@ const CollectionCard = ({ image, name, id, deleteCollection, userId, location, p
                 <CardMedia
                     component="img"
                     height="180"
-                    image={image}
+                    image={image ? image : IMAGE.COLLECTION}
                     alt={name}
                 />
                 <CardContent sx={{ textAlign: 'center' }}>
