@@ -16,6 +16,7 @@ import plMessages from "./utils/localizations/pl.json";
 import * as local from '@mui/material/locale';
 import localesMui from './utils/localizations/constant/localesMui';
 import NavBar from './components/NavBar/NavBar';
+import { LOCAL_STORAGE } from './utils/constants';
 
 const store = createStore(reducers , {}, compose(applyMiddleware(thunk)));
 export const ColorModeContext = createContext({ toggleColorMode: () => {} })
@@ -28,17 +29,19 @@ const messages = {
 
 function App() {
 
-	const [mode, setMode] = useState(localStorage.getItem('theme') || 'light');
-	const [currentLocale, setCurrentLocale] = useState(localStorage.getItem('app.localization') || locales.EN);
+	const [mode, setMode] = useState(localStorage.getItem(LOCAL_STORAGE.THEME) || LOCAL_STORAGE.THEME_LIGHT);
+	const [currentLocale, setCurrentLocale] = useState(localStorage.getItem(LOCAL_STORAGE.LOCALE) || locales.EN);
 
 	useEffect(() => {
-		localStorage.setItem('theme', mode);
+		localStorage.setItem(LOCAL_STORAGE.THEME, mode);
 	}, [mode])
 	
 	const colorMode = useMemo(
 	  () => ({
 		toggleColorMode: () => {	
-		  	setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+		  	setMode((prevMode) => (
+				  prevMode === LOCAL_STORAGE.THEME_LIGHT ? 
+				  LOCAL_STORAGE.THEME_DARK : LOCAL_STORAGE.THEME_LIGHT));
 		},
 	  }),
 	  [],

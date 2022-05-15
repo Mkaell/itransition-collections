@@ -2,9 +2,6 @@ import React from 'react'
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Box, Button, TextField, Typography } from '@mui/material';
-import axios from 'axios'
-import { signUp } from '../../api';
-import './SignUpPage.css'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { actionSignUp } from '../../store/actionCreators/auth';
@@ -74,7 +71,12 @@ const SignUpPage = () => {
                     error={formik.touched.password && Boolean(formik.errors.password)}
                     helperText={formik.touched.password && formik.errors.password}
                 />
-                <Button size="large" color="primary" variant="contained" fullWidth type="submit">
+                <Button
+                    size="large"
+                    color="primary"
+                    variant="contained"
+                    fullWidth
+                    type="submit">
                     {messages['signup.signup-button']}
                 </Button>
             </form>

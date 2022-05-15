@@ -66,7 +66,7 @@
   "profile.new-collection": "Новая коллекция",
 
   "item.comments": "Комментарии",
-  "item.no-comments": "Нету комментариев",
+  "item.no-comments": "Нет комментариев",
   "item.send-button": "Отправить",
   "item.placeholder": "Коментарий",
 
@@ -75,5 +75,8 @@
   "collection.print": "Печатать",
   "collection.delete": "Удалить элемент",
   "collection.add-item-button": "Добавить элемент",
-  "collection.modal-title": "Создать элемент"
+  "collection.modal-title": "Создать элемент",
+  "collection.no-items": "Нет Элементов",
+
+  "search.items-title": "Элементы"
 }

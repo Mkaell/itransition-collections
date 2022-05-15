@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import { useIntl } from "react-intl";
 
 export const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
     border: 0,
@@ -84,6 +85,7 @@ const StyledGridOverlay = styled('div')(({ theme }) => ({
   }));
   
 export const CustomNoRowsOverlay = () => {
+  const {messages} = useIntl()
     return (
       <StyledGridOverlay>
         <svg
@@ -125,7 +127,9 @@ export const CustomNoRowsOverlay = () => {
             </g>
           </g>
         </svg>
-        <Box sx={{ mt: 1 }}>No Items</Box>
+        <Box sx={{ mt: 1 }}>
+          {messages['collection.no-items']}
+          </Box>
       </StyledGridOverlay>
     );
 }

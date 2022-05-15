@@ -14,7 +14,6 @@ import { CustomNoRowsOverlay } from './style';
 import { StyledDataGrid } from './style';
 import { getCollection } from '../../store/actionCreators/collectionsCreator';
 
-
 function Collection() {
 
     const currentUser = useSelector(state => state.auth.authData?.result);

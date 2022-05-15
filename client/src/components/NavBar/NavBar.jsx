@@ -21,12 +21,13 @@ import LocalePicker from './localePicker/LocalePicker';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
+import { ROUTES } from '../../routes/constants';
+import { LOCAL_STORAGE } from '../../utils/constants';
 
 const Navbar = ({ currentLocale, setCurrentLocale }) => {
 
     const [foundItems, setFoundItems] = useState([])
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem(LOCAL_STORAGE.PROFILE)));
     const theme = useTheme();
     const colorMode = useContext(ColorModeContext);
     const navigate = useNavigate()
@@ -42,8 +43,8 @@ const Navbar = ({ currentLocale, setCurrentLocale }) => {
             const decodedToken = decode(token);
             if (decodedToken.exp * 1000 < new Date().getTime()) handleLogOut();
         }
+        setUser(JSON.parse(localStorage.getItem(LOCAL_STORAGE.PROFILE)));
 
-        setUser(JSON.parse(localStorage.getItem('profile')));
     }, [location]);
 
     const findItems = async (event) => {
@@ -55,11 +56,11 @@ const Navbar = ({ currentLocale, setCurrentLocale }) => {
         }
 
     };
-    
+
     const handleLogOut = () => {
         dispatch(actionLogOut());
         setUser(null)
-        navigate('/login');
+        navigate(ROUTES.LOGIN);
     }
 
     const handleOpenNavMenu = (event) => {

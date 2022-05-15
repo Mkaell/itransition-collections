@@ -9,6 +9,7 @@ import { StyledDataGrid } from './style';
 import { EnhancedTableToolbar } from './ToolBar';
 import { useIntl } from 'react-intl';
 import { columnsConverter } from './Columns/columns';
+import { ROUTES } from '../../routes/constants';
 
 const AdminPage = () => {
 
@@ -28,14 +29,14 @@ const AdminPage = () => {
     function redirectLogin(id, _id) {
         if (id === _id) {
             dispatch(actionLogOut());
-            navigate('/login')
+            navigate(ROUTES.LOGIN)
         }
     }
 
     function redirectSelected(_id, selectedUsers) {
         if (selectedUsers.includes(_id)) {
             dispatch(actionLogOut());
-            navigate('/login')
+            navigate(ROUTES.LOGIN)
         }
     }
 

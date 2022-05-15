@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Chip, MenuItem } from '@mui/material';
+import { Button, MenuItem } from '@mui/material';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';

@@ -8,45 +8,45 @@ import LoginPage from '../pages/LoginPage/LoginPage';
 import ProfilePage from '../pages/ProfilePage/ProfilePage';
 import SearchitemsTags from '../pages/SearchitemsTags/SearchitemsTags';
 import SignUpPage from '../pages/SignUpPage/SignUpPage';
+import { ROUTES } from './constants'
 
 const Navigation = () => {
     return (
         <Routes>
             <Route
-                path='/'
+                path={ROUTES.HOME}
                 element={<HomePage />}
             />
             <Route
-                path='/login'
+                path={ROUTES.LOGIN}
                 element={<LoginPage />}
             />
             <Route
-                path='/sign-up'
+                path={ROUTES.SIGNUP}
                 element={<SignUpPage />}
             />
             <Route
-                path='/admin'
+                path={ROUTES.ADMIN}
                 element={<AdminPage />}
             />
             <Route
-                path='/profile'
+                path={ROUTES.PROFILE}
                 element={<ProfilePage />}
             />
             <Route
-                path='/items'
+                path={ROUTES.SEARCH_ITEMS}
                 element={<SearchitemsTags />}
             />
             <Route
-                path="/:useremail/:iduser"
+                path={ROUTES.PROFILE_BY_ADMIN}
                 element={<ProfilePage />} />
             <Route
-                path="/collection/:idCollection"
+                path={ROUTES.COLLECTION}
                 element={<Collection />} />
             <Route
-                path="/collection/:idCollection/item/:idItem"
+                path={ROUTES.ITEM}
                 element={<ItemPage />}
             />
-
         </Routes>
     )
 }

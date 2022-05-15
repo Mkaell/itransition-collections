@@ -25,12 +25,13 @@ const Item = ({ item }) => {
                 </Badge>
                 <Divider />
             </Box>
-
             <Box mt={1}>
                 {
-                    item?.tags.map((tag) => (
+                    item?.tags.map((tag, index) => (
                         <Chip
-                            label={tag} />
+                            label={tag}
+                            key={index}
+                        />
                     ))
                 }
                 <Divider />

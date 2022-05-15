@@ -7,16 +7,16 @@ const HomePageController = {
 		const lastAddedItems = await Item.find({}).sort({ dateCreate: -1 }).limit(4);
 		const bigCollections = await Collection.aggregate([
 			{
-			$addFields: {
-				items_length: {
-				$size: "$items"
+				$addFields: {
+					items_length: {
+					$size: "$items"
+					}
 				}
-			}
 			},
 			{
-			$sort: {
-				items_length: -1
-			}
+				$sort: {
+					items_length: -1
+				}
 			}
 		]).limit(4);
 

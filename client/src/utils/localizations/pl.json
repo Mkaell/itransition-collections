@@ -75,5 +75,8 @@
   "collection.print": "Drukuj",
   "collection.delete": "Usuń element",
   "collection.add-item-button": "Dodaj przedmiot",
-  "collection.modal-title": "Utwórz element"
+  "collection.modal-title": "Utwórz element",
+  "collection.no-items": "Brak Przedmiotów",
+
+  "search.items-title": "Przedmioty"
 }

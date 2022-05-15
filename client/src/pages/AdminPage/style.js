@@ -1,4 +1,3 @@
-import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { DataGrid } from '@mui/x-data-grid';
 
@@ -78,10 +77,7 @@ export const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
         borderBottom: `1px solid ${theme.palette.mode === 'light' ? '#9d9d9d' : '#828181'
             }`,
     },
-    // '& .MuiToolbar-root': {
-    //     borderBottom: `1px solid ${theme.palette.mode === 'light' ? '#9d9d9d' : '#828181'
-    //         }`,
-    // },
+
     '& .MuiDataGrid-cell': {
         color:
             theme.palette.mode === 'light' ? 'rgba(0,0,0,.85)' : 'rgba(255,255,255,0.85)',

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Badge, Chip, List, ListItem, ListItemButton, ListItemIcon, ListItemText, ListSubheader, CircularProgress } from '@mui/material'
+import { Badge, Chip, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 import { Link } from 'react-router-dom'
 import InboxIcon from '@mui/icons-material/Inbox';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -40,8 +40,6 @@ const ListItems = ({ items }) => {
 
                                         }
                                     />
-
-
                                     <Badge badgeContent={item?.usersByLikes.length} color="primary" sx={{ mr: 1 }}>
                                         <FavoriteIcon color="action" />
                                     </Badge>

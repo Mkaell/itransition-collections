@@ -22,9 +22,8 @@ const Modal = ({ open, handleClose, iduser, messages }) => {
             date: [],
             boolean: [],
         },
-        creatorId: '',
     });
-    console.log(collection);
+
     const clearState = () => {
         setCollection({
             collectionImage: '',
@@ -36,7 +35,7 @@ const Modal = ({ open, handleClose, iduser, messages }) => {
                 date: [],
                 boolean: [],
             },
-            creatorId: '',
+
         });
         handleClose();
     }

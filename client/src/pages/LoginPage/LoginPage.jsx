@@ -2,10 +2,8 @@ import React from 'react'
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { StyledTextField } from './style';
-import { Box, Button, TextField, Typography } from '@mui/material';
-import axios from 'axios'
+import { Box, Button, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { logIn } from '../../api';
 import { useDispatch } from 'react-redux';
 import { actionLogIn } from '../../store/actionCreators/auth';
 import { useIntl } from 'react-intl';

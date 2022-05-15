@@ -1,10 +1,11 @@
-import { Grid, TextField, Typography } from '@mui/material'
+import { Box, Grid, TextField, Typography } from '@mui/material'
 import React from 'react'
 import BooleanInput from './BooleanInput'
 import DataPickerInput from './DataPicker'
 import { Utils } from '../../utils/utils'
 
 const AdditionalFields = ({ additionalFieldsKeys, collection, onChangeControl, items, setItems }) => {
+
     return (
         <>
             {additionalFieldsKeys?.map(
@@ -12,8 +13,8 @@ const AdditionalFields = ({ additionalFieldsKeys, collection, onChangeControl, i
                     collection?.itemFields.additional[fieldName].length > 0 && (
 
                         fieldName === 'date' ?
-                            <>
-                                <Typography textAlign={'center'} mt={2} key={index}>
+                            <Box key={index}>
+                                <Typography textAlign={'center'} mt={2}>
                                     {Utils.capitalized(fieldName)}
                                 </Typography>
                                 {collection?.itemFields.additional[fieldName].map(
@@ -27,8 +28,8 @@ const AdditionalFields = ({ additionalFieldsKeys, collection, onChangeControl, i
                                         />
                                     )
                                 )}
-                            </> :
-                            <>
+                            </Box> :
+                            <Box key={index}>
                                 <Typography textAlign='center' mt={2}>
                                     {Utils.capitalized(fieldName)}
                                 </Typography>
@@ -44,7 +45,9 @@ const AdditionalFields = ({ additionalFieldsKeys, collection, onChangeControl, i
                                                 <BooleanInput
                                                     itemField={itemField}
                                                     fieldId={fieldId}
-                                                    items={items} setItems={setItems} />
+                                                    items={items}
+                                                    key={fieldId}
+                                                    setItems={setItems} />
                                                 :
                                                 <TextField
                                                     sx={{ mt: 2 }}
@@ -59,7 +62,7 @@ const AdditionalFields = ({ additionalFieldsKeys, collection, onChangeControl, i
                                         )
                                     )}
                                 </Grid>
-                            </>
+                            </Box>
                     )
             )}
         </>

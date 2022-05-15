@@ -1,6 +1,6 @@
-import {  FETCH_ALL_ITEM_TAG, CREATE, UPDATE, DELETE, END_LOADING, START_LOADING, ERROR, FETCH_BY_ONE } from '../actions/actionTypes';
+import {  FETCH_ALL_ITEM_TAG,  END_LOADING, START_LOADING,} from '../actions/actionTypes';
 
-const itemsReducer = (state = { isLoading: false, items: [], errors: {} }, action) => {
+const itemsReducer = (state = { isLoading: false, items: [],}, action) => {
   switch (action.type) {
     case START_LOADING:
       return { ...state, isLoading: true };

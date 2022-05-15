@@ -11,23 +11,24 @@ const createCollection = async (req, res) => {
 		
 		const userById = await User.findById(userId).populate("collections");
 		const response = await cloudinary.uploader.upload(collectionImage, {folder: 'collection-app'})
-		
+
 		const newCollection = await Collection.create({
 			name,
 			description,
 			theme,
 			image: response.secure_url,
+			public_id: response.public_id,
 			itemFields: {
-			additional: { numerical, string, text, date, boolean },
+				additional: { numerical, string, text, date, boolean },
 			},
-			userId,
+			userId,	
 		});
 		await newCollection.save();
 
 		userById.collections.push(newCollection);
 		await userById.save();
 
-	res.status(200).json(newCollection);
+		res.status(200).json(newCollection);
 	} catch (e) {
 		res.status(500).json({ message: e.message });
 	}
@@ -36,10 +37,7 @@ const getCollection = async (req, res) => {
 	try {
 		const collectionId = req.params.idcoll;
 
-		const itemsByCollection = await Collection.findById(
-			collectionId
-		)
-		.populate("items");
+		const itemsByCollection = await Collection.findById(collectionId).populate("items");
 
 		res.status(200).json(itemsByCollection);
 	} catch (e) {
@@ -51,19 +49,19 @@ const getCollections = async (req, res) => {
 	try {
 		const { userId } = req.body;
 
-		const collectionsByUser = await User.findById(userId).populate(
-			"collections"
-		);
+		const collectionsByUser = await User.findById(userId).populate("collections");
 
 		res.status(200).json(collectionsByUser.collections);
 	} catch (e) {
-	res.status(500).json({ message: e.message });
+		res.status(500).json({ message: e.message });
 	}
 }
 const deleteCollection = async (req, res) => {
 	try {
 		const idCollection = req.params.idcoll;
-		const {userId} = req.body
+		const {userId, public_id} = req.body
+		await cloudinary.uploader.destroy(public_id, {folder: 'collection-app'})
+
 		await User.updateOne({ _id: userId },
 			{ $pull: { collections: idCollection}}
 		);
@@ -72,7 +70,7 @@ const deleteCollection = async (req, res) => {
 	
 		res.status(200).json({ message: "Сollection deleted" });
 	} catch (e) {
-	res.status(500).json({ message: e.message });
+		res.status(500).json({ message: e.message });
 	}
 }
 

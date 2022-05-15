@@ -1,10 +1,10 @@
-import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, IconButton, Typography } from '@mui/material';
+import { Card, CardActionArea, CardActions, CardContent, CardMedia, IconButton, Typography } from '@mui/material';
 import React from 'react'
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-const CollectionCard = ({ image, name, id, deleteCollection, userId, location, key }) => {
+const CollectionCard = ({ image, name, id, deleteCollection, userId, location, public_id }) => {
 
     const currentUser = useSelector(state => state.auth.authData?.result);
     const navigate = useNavigate()
@@ -40,7 +40,7 @@ const CollectionCard = ({ image, name, id, deleteCollection, userId, location, k
                 !(location?.pathname === '/') &&
                 (currentUser?.role || (userId === currentUser?._id)) &&
                 <CardActions sx={{ justifyContent: 'flex-end', padding: 0 }}>
-                    <IconButton aria-label="delete" onClick={() => deleteCollection(id)}>
+                    <IconButton aria-label="delete" onClick={() => deleteCollection(id, public_id)}>
                         <DeleteIcon />
                     </IconButton>
                 </CardActions>

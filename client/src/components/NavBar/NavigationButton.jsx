@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
-
-import { Autocomplete, Button, Chip, Link, MenuItem, TextField } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react'
+import { MenuItem } from '@mui/material';
+import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import { StyledLink } from './style';

@@ -6,6 +6,7 @@ const collectionSchema = new Schema(
     description: { type: String, required: true },
     theme: { type: String, required: true },
     image: String,
+    public_id: String,
     itemFields: {
       basic: {
         id: { type: String, default: "id" },

@@ -3,15 +3,14 @@ import { Utils } from "../../../utils/utils"
 import ActionButtons from "./ActionButtons";
 import { EDIT_TABLE_FALSE, EDIT_TABLE_TRUE, FIELD_BOOLEAN, FIELD_DATE, FIELD_ID, FIELD_NUMERICAL, FIELD_TAGS } from "./columnConstatns";
 
-const comparison = (currentUser, collection, right, incorrect) =>{
-    if(currentUser?.role || (collection.userId === currentUser?._id)){
-        return right
-    } else {
-        return incorrect
-    }
-    
-}
-export const columnsСonverter = (additionalFieldsEntries, basicFieldsEntries, deleteCurrentItem, likeIthemByCurrentUser, currentUser, collection, messages) => {
+export const columnsСonverter = (
+    additionalFieldsEntries, 
+    basicFieldsEntries, 
+    deleteCurrentItem, 
+    likeIthemByCurrentUser, 
+    currentUser,
+    collection, 
+    messages) => {
 
     const columnsObj = [];
 
@@ -67,7 +66,7 @@ export const columnsСonverter = (additionalFieldsEntries, basicFieldsEntries, d
                 columnsObj.push({
                     'field': field,
                     minWidth: 150,
-                    editable: comparison(currentUser, collection,EDIT_TABLE_TRUE, EDIT_TABLE_FALSE),
+                    editable: Utils.comparison(currentUser, collection,EDIT_TABLE_TRUE, EDIT_TABLE_FALSE),
                 })
                 break;
         }
@@ -83,7 +82,7 @@ export const columnsСonverter = (additionalFieldsEntries, basicFieldsEntries, d
                         type: 'number',
                         headerAlign: 'center',
                         minWidth: 150,
-                        editable: comparison(currentUser, collection,EDIT_TABLE_TRUE, EDIT_TABLE_FALSE),
+                        editable: Utils.comparison(currentUser, collection,EDIT_TABLE_TRUE, EDIT_TABLE_FALSE),
                     })
                 })
                 break;
@@ -95,7 +94,7 @@ export const columnsСonverter = (additionalFieldsEntries, basicFieldsEntries, d
                         type: 'boolean',
                         headerAlign: 'center',
                         minWidth: 50,
-                        editable: comparison(currentUser, collection,EDIT_TABLE_TRUE, EDIT_TABLE_FALSE),
+                        editable: Utils.comparison(currentUser, collection,EDIT_TABLE_TRUE, EDIT_TABLE_FALSE),
                     })
                 })
                 break;
@@ -107,7 +106,7 @@ export const columnsСonverter = (additionalFieldsEntries, basicFieldsEntries, d
                         type: 'date',
                         headerAlign: 'center',
                         minWidth: 150,
-                        editable: comparison(currentUser, collection,EDIT_TABLE_TRUE, EDIT_TABLE_FALSE),
+                        editable: Utils.comparison(currentUser, collection,EDIT_TABLE_TRUE, EDIT_TABLE_FALSE),
                     })
                 })
                 break;
@@ -119,7 +118,7 @@ export const columnsСonverter = (additionalFieldsEntries, basicFieldsEntries, d
                         type: 'string',
                         headerAlign: 'center',
                         minWidth: 150,
-                        editable: comparison(currentUser, collection,EDIT_TABLE_TRUE, EDIT_TABLE_FALSE),
+                        editable: Utils.comparison(currentUser, collection,EDIT_TABLE_TRUE, EDIT_TABLE_FALSE),
                     })
                 })
                 break;

@@ -1,8 +1,7 @@
 import React from 'react'
 import { useIntl } from 'react-intl';
-import { styled, alpha } from '@mui/material/styles';
 import { Box } from '@mui/system';
-import { Autocomplete, Avatar, InputAdornment, Link, List, ListItemAvatar, ListItemButton, ListItemText, Paper, TextField, Typography } from '@mui/material';
+import { Autocomplete, Avatar, InputAdornment, Link, TextField, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { Link as RouterLink } from 'react-router-dom';
 import { Search } from './style';

@@ -3,7 +3,7 @@ import { GridActionsCellItem } from '@mui/x-data-grid'
 import React from 'react'
 import DeleteIcon from '@mui/icons-material/Delete';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { useIntl } from 'react-intl';
+
 
 const ActionButtons = ({ params, deleteCurrentItem, likeIthemByCurrentUser, currentUser, collection, messages }) => {
 
@@ -24,7 +24,12 @@ const ActionButtons = ({ params, deleteCurrentItem, likeIthemByCurrentUser, curr
 
                         <GridActionsCellItem
                             icon={
-                                <FavoriteIcon sx={{ fontSize: '35px', color: params.row.usersByLikes.includes(currentUser?._id) ? 'red' : 'palette.action.active' }} />
+                                <FavoriteIcon
+                                    sx={{
+                                        fontSize: '35px',
+                                        color: params.row.usersByLikes.includes(currentUser?._id) ? 'red' : 'palette.action.active'
+                                    }}
+                                />
                             }
                             label="Like"
                             onClick={() => likeIthemByCurrentUser(params.id, params.row.usersByLikes)}
@@ -34,7 +39,12 @@ const ActionButtons = ({ params, deleteCurrentItem, likeIthemByCurrentUser, curr
                     :
                     <GridActionsCellItem
                         icon={
-                            <FavoriteIcon sx={{ fontSize: '35px', color: params.row.usersByLikes.includes(currentUser?._id) ? 'red' : 'white' }} />
+                            <FavoriteIcon
+                                sx={{
+                                    fontSize: '35px',
+                                    color: params.row.usersByLikes.includes(currentUser?._id) ? 'red' : 'white'
+                                }}
+                            />
                         }
                         label="Like"
                         onClick={() => likeIthemByCurrentUser(params.id, params.row.usersByLikes)}

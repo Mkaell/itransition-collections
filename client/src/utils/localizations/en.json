@@ -75,7 +75,8 @@
   "collection.print": "Print",
   "collection.delete": "Delete item",
   "collection.add-item-button": "Add item",
-  "collection.modal-title": "Create item"
+  "collection.modal-title": "Create item",
+  "collection.no-items": "No Items",
 
-
+  "search.items-title": "Items"
 }

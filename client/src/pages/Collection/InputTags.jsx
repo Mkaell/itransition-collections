@@ -2,6 +2,7 @@ import { Autocomplete, Chip, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import TagIcon from '@mui/icons-material/Tag';
 import { Utils } from '../../utils/utils';
+
 const InputTags = ({ itemField, items, setItems }) => {
 
     const [receivers, setReceivers] = useState([]);

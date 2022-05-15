@@ -3,14 +3,24 @@ import React from 'react'
 
 const Comment = ({ comment }) => {
     return (
-        <Paper sx={{ alignItems: 'center' }} variant="outlined">
-            <ListItemButton autoFocus={true} alignItems="flex-start" >
+        <Paper
+            sx={{ alignItems: 'center' }}
+            variant="outlined">
+            <ListItemButton
+                autoFocus={true}
+                alignItems="flex-start" >
                 <ListItemAvatar >
-                    <Avatar alt="Remy Sharp" sx={{ width: 30, height: 30 }} />
+                    <Avatar
+                        alt="Comment"
+                        sx={{ width: 30, height: 30 }} />
                 </ListItemAvatar>
                 <ListItemText
                     primary={
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <Box sx={{
+                            display: 'flex',
+                            justifyContent: 'space-between'
+                        }}
+                        >
                             <Typography
                                 sx={{ display: 'inline' }}
                                 component="span"

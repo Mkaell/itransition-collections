@@ -9,11 +9,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import { FormControl, Paper } from '@mui/material';
-import { useEffect, useState } from 'react';
 import BasicTextFields from './BasicTextFields';
 import AdditionalFields from './AdditionalFields';
 import { createItem } from '../../api';
-import { useParams } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 
 function ModalItems({ open, handleClose, collection, items, setItems, clearFormItem, collectionId, setRows }) {

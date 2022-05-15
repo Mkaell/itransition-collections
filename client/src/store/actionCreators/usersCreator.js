@@ -9,10 +9,9 @@ export const deleteUser = (id) => async (dispatch) => {
         dispatch({ type: DELETE, payload: id });
         dispatch({ type: END_LOADING });
     } catch (error) {
-        console.log(error);
+        alert(error);
     }
 };
-
 
 export const updateAdminStatus = (id, role) => async (dispatch) => {
     try {

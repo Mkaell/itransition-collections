@@ -1,15 +1,7 @@
 
 import React, { useEffect, useState } from 'react'
 import CollectionCard from '../../components/Card/CollectionCard';
-
-
-import './HomePage.css'
-
-import { fetchCollectionsAndLastItems } from '../../api';
-
-
 import { useLocation } from 'react-router-dom';
-
 import ListItems from '../../components/ListItems/ListItems';
 import SimpleCloud from './SimpleCloud';
 import { getHomePageInfo } from '../../store/actionCreators/collectionsCreator';
@@ -79,9 +71,9 @@ const HomePage = () => {
                                 <SimpleCloud lastAddedItems={lastAddedItems} />
                             </Grid>
                             <Grid item sx={{ width: '100%' }} xs>
-                                <Paper variant="outlined" sx={{ mt: 5 }}>
+                                <Box sx={{ mt: 5 }}>
                                     <ListItems items={lastAddedItems} />
-                                </Paper>
+                                </Box>
                             </Grid>
                         </Grid>
                     </Grid>

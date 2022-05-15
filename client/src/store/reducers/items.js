@@ -1,13 +1,11 @@
-import {  CREATE, UPDATE, DELETE, END_LOADING, START_LOADING, ERROR, FETCH_BY_ONE } from '../actions/actionTypes';
+import {  CREATE, UPDATE, DELETE, END_LOADING, START_LOADING, FETCH_BY_ONE } from '../actions/actionTypes';
 
-const itemsReducer = (state = { isLoading: false, items: [], errors: {} }, action) => {
+const itemsReducer = (state = { isLoading: false, items: []}, action) => {
   switch (action.type) {
     case START_LOADING:
       return { ...state, isLoading: true };
     case END_LOADING:
       return { ...state, isLoading: false };
-    case ERROR:
-      return { ...state, errors: action.payload};
     case FETCH_BY_ONE:
       return {
         ...state,

@@ -3,44 +3,44 @@ const jwt = require("jsonwebtoken") ;
 const UserModal = require('../models/Users.js') ;
 require('dotenv').config()
 
-
 const login = async (req, res) => {
-  const { email, password } = req.body;
+	const { email, password } = req.body;
 
-  try {
-    const oldUser = await UserModal.findOneAndUpdate({email: email}, {lastLogin:  Date.now()})
+	try {
+		const oldUser = await UserModal.findOneAndUpdate({email: email}, {lastLogin:  Date.now()})
 
-    if (!oldUser) return res.status(404).json({ message: "User doesn't exist" });
-    const isPasswordCorrect = await bcrypt.compare(password, oldUser.password);
+		if (!oldUser) return res.status(404).json({ message: "User doesn't exist" });
+		const isPasswordCorrect = await bcrypt.compare(password, oldUser.password);
 
-    if (!oldUser.active) return res.status(400).json({ message: "User is blocked" });
-    if (!isPasswordCorrect) return res.status(400).json({ message: "Invalid credentials" });
-    
-    
-    const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, process.env.SECRET, { expiresIn: "1h" });
+		if (!oldUser.active) return res.status(400).json({ message: "User is blocked" });
+		if (!isPasswordCorrect) return res.status(400).json({ message: "Invalid credentials" });
+		
+		const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, process.env.SECRET, { expiresIn: "1h" });
 
-    res.status(200).json({ result: oldUser, token });
-  } catch (err) {
-    res.status(500).json({ message: "Something went wrong" });
-  }
+		res.status(200).json({ result: oldUser, token });
+	} catch (err) {
+		res.status(500).json({ message: "Something went wrong" });
+	}
 };
 
 const signup = async (req, res) => {
-  
-  const { email, password } = req.body;
 
-  try {
-    const oldUser = await UserModal.findOne({ email });
+	const { email, password } = req.body;
 
-    if (oldUser) return res.status(400).json({ message: "User already exists" });
+	try {
+		const oldUser = await UserModal.findOne({ email });
 
-    const hashedPassword = await bcrypt.hash(password, 12);
-    const result = await UserModal.create({ email, password: hashedPassword });
-    const token = jwt.sign( { email: result.email, id: result._id }, process.env.SECRET, { expiresIn: "1h" } );
+		if (oldUser) return res.status(400).json({ message: "User already exists" });
 
-    res.status(201).json({ result, token });
-  } catch (error) {
-    res.status(500).json({ message: "Something went wrong" });
-  }
-};module.exports = { login, signup };
+		const hashedPassword = await bcrypt.hash(password, 12);
+		const result = await UserModal.create({ email, password: hashedPassword });
+		const token = jwt.sign( { email: result.email, id: result._id }, process.env.SECRET, { expiresIn: "1h" } );
+
+		res.status(201).json({ result, token });
+	} catch (error) {
+		res.status(500).json({ message: "Something went wrong" });
+	}
+};
+
+module.exports = { login, signup };
 

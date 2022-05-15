@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { FormattedMessage } from "react-intl";
+import { Box, FormControl, MenuItem, Select } from "@mui/material";
 import locales from "../../../utils/localizations/constant/locales"
+import { LOCAL_STORAGE } from "../../../utils/constants";
 
 
 export default function LocalePicker({ currentLocale, onLocaleChanged }) {
@@ -10,7 +10,7 @@ export default function LocalePicker({ currentLocale, onLocaleChanged }) {
     const onChanged = (e) => {
         const { value } = e.target;
         setLocale(value);
-        localStorage.setItem('app.localization', value);
+        localStorage.setItem(LOCAL_STORAGE.LOCALE, value);
         onLocaleChanged(value);
     }
 

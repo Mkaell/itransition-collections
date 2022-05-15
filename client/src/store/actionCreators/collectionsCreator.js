@@ -1,4 +1,4 @@
-import { START_LOADING, END_LOADING, CREATE, DELETE, FETCH_ALL_COL, ERROR, } from '../actions/actionTypes';
+import { START_LOADING, END_LOADING, CREATE, DELETE, FETCH_ALL_COL, } from '../actions/actionTypes';
 import * as api from '../../api/index.js';
 
 export const deleteCollectionDispatch = (id , userId) => async (dispatch) => {
@@ -8,18 +8,18 @@ export const deleteCollectionDispatch = (id , userId) => async (dispatch) => {
         dispatch({ type: DELETE, payload: id });
         dispatch({ type: END_LOADING });
     } catch (error) {
-        console.log(error);
+       alert(error);
     }
 };
 
 export const createCollectionDispatch = (formData) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
-       const {data} =  await api.createCollection(formData);
+        const {data} =  await api.createCollection(formData);
         dispatch({ type: CREATE, payload: data });
         dispatch({ type: END_LOADING });
     } catch (error) {
-        console.log(error);
+        alert(error);
     }
 };
 
@@ -48,10 +48,10 @@ export const getCollection = (id) => async (dispatch) => {
 export const getHomePageInfo = () => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
-       const {data} =  await api.fetchCollectionsAndLastItems();
+        const {data} =  await api.fetchCollectionsAndLastItems();
         dispatch({ type: END_LOADING });
         return data
     } catch (error) {
-        console.log(error);
+        alert(error);
     }
 };

@@ -7,11 +7,10 @@ export const deleteItem = (id, collectionId) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
         await api.deleteItem(id, collectionId);
-        console.log(collectionId);
         dispatch({ type: DELETE, payload: id });
         dispatch({ type: END_LOADING });
     } catch (error) {
-        console.log(error);
+       alert(error);
     }
 };
 
@@ -19,10 +18,9 @@ export const getItem = (searchData) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
         const {data} = await api.fetchItem(searchData);
-
+        
         const date = format(new Date(data.dateCreate), "HH:mm:ss'/'yyyy-MM-dd")
        
-
         dispatch({ type: FETCH_BY_ONE, payload: {...data, dateCreate: date} });
         dispatch({ type: END_LOADING });
         return data       

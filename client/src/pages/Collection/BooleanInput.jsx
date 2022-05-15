@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Utils } from '../../utils/utils';
 
 const BooleanInput = ({ itemField, items, setItems, fieldId }) => {
+
     const [checked, setChecked] = useState(false)
 
     useEffect(() => {
@@ -11,7 +12,7 @@ const BooleanInput = ({ itemField, items, setItems, fieldId }) => {
             ...items.field, [itemField]: checked,
         });
 
-    }, [checked])
+    }, [checked, itemField, items, setItems])
 
     return (
         <FormControlLabel
