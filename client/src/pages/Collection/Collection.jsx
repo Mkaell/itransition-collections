@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box';
-import { Alert, Paper, Snackbar } from '@mui/material';
+import { Alert, CircularProgress, Paper, Snackbar } from '@mui/material';
 import ModalItems from './ModalItems';
 import { createItem, deleteItem, likeItem, updateCollection, updateItem } from '../../api';
 import { useParams } from 'react-router-dom';
@@ -157,13 +157,20 @@ function Collection() {
 
     return (
         <>
-            <InfoAboutCollection
-                collection={collection}
-                handleClickOpen={handleClickOpen}
-                setCollection={setCollection}
-                nameCollection={collection.name}
-                descriptionCollection={collection.descriptionCollection}
-            />
+            {
+                isLoading ?
+                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 10 }}>
+                        <CircularProgress size={60} />
+                    </Box>
+                    :
+                    <InfoAboutCollection
+                        collection={collection}
+                        handleClickOpen={handleClickOpen}
+                        setCollection={setCollection}
+                        nameCollection={collection.name}
+                        descriptionCollection={collection.descriptionCollection}
+                    />
+            }
             <Paper elevation={5}>
                 <Box style={{ height: '430px', width: '100%', marginTop: '10px' }}>
                     <StyledDataGrid
