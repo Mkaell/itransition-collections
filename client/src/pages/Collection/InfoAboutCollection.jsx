@@ -8,11 +8,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import { IMAGE } from '../../utils/constants';
 
-const InfoAboutCollection = ({ handleClickOpen, collection, setCollection }) => {
+const InfoAboutCollection = ({ handleClickOpen, collection, setCollection, nameCollection, descriptionCollection }) => {
 
-    const [name, setName] = useState('');
+    const [name, setName] = useState(nameCollection);
+    const [description, setDescription] = useState(descriptionCollection);
     const [open, setOpen] = useState(false)
-    const [description, setDescription] = useState('');
     const { messages } = useIntl()
     const currentUser = useSelector(state => state.auth.authData?.result)
 

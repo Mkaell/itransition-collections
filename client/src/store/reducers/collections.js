@@ -1,4 +1,4 @@
-import {  FETCH_ALL_COLL, CREATE_COLL, UPDATE, DELETE_COLL, END_LOADING, START_LOADING } from '../actions/actionTypes';
+import {  FETCH_ALL_COLL, CREATE_COLL, UPDATE_COLL, DELETE_COLL, END_LOADING, START_LOADING } from '../actions/actionTypes';
 
 const collectionsReducer = (state = { isLoading: false, collections: []}, action) => {
 	switch (action.type) {
@@ -13,10 +13,10 @@ const collectionsReducer = (state = { isLoading: false, collections: []}, action
 			};
 		case CREATE_COLL:
 			return { ...state, collections: [...state?.collections, action.payload] };
-		case UPDATE:
-			return { ...state, collections: state.collections?.map((collection) => (collection._id === action.payload._id ? action.payload : collection)) };
+		case UPDATE_COLL:
+			return { ...state, collections: state?.collections?.map((collection) => (collection._id === action.payload._id ? action.payload : collection)) };
 		case DELETE_COLL:
-			return { ...state, collections: state.collections?.filter((collection) => collection._id !== action.payload) };
+			return { ...state, collections: state?.collections?.filter((collection) => collection._id !== action.payload) };
 		default:
 			return state;
 	}

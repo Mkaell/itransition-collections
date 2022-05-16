@@ -8,25 +8,27 @@ const createCollection = async (req, res) => {
 		const { collectionImage, collectionInfo, itemFields, userId } = req.body;
 		const { name, description, theme } = collectionInfo;
 		const { numerical, string, text, date, boolean } = itemFields;
-		const img ='';
-		
+		let img ='';
+
 		const userById = await User.findById(userId).populate("collections");
 
 		if(collectionImage){
 			img = await cloudinary.uploader.upload(collectionImage, {folder: 'collection-app'})
+
 		}
 		
 		const newCollection = await Collection.create({
 			name,
 			description,
 			theme,
-			image: img ? response.secure_url : '',
-			public_id:  img ? response.public_id : '' ,
+			image: img ? img.secure_url : '',
+			public_id:  img ? img.public_id : '' ,
 			itemFields: {
 				additional: { numerical, string, text, date, boolean },
 			},
 			userId,	
 		});
+		
 		await newCollection.save();
 
 		userById.collections.push(newCollection);

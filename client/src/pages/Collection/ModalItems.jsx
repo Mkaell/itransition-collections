@@ -14,7 +14,7 @@ import AdditionalFields from './AdditionalFields';
 import { createItem } from '../../api';
 import { useIntl } from 'react-intl';
 
-function ModalItems({ open, handleClose, collection, items, setItems, clearFormItem, collectionId, setRows }) {
+function ModalItems({ open, handleClose, collection, items, setItems, clearFormItem, collectionId, setRows, handleSubmit }) {
 
     let basiclFieldsKeys = Object.keys(collection.itemFields?.basic || {});
     let additionalFieldsKeys = Object.keys(collection.itemFields?.additional || {});
@@ -30,18 +30,8 @@ function ModalItems({ open, handleClose, collection, items, setItems, clearFormI
             ...items.field, [fieldName]: fieldValue,
         });
     };
+    console.log(items);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        try {
-            const response = await createItem({ ...items, collectionId, userId: collection.userId })
-            setRows(response.data.items)
-        } catch (error) {
-            console.log(error);
-        }
-        clearFormItem()
-        handleClose()
-    }
 
     return (
 
@@ -64,7 +54,7 @@ function ModalItems({ open, handleClose, collection, items, setItems, clearFormI
                     <form
                         autoComplete="off"
                         id='form-collection'
-                        onSubmit={handleSubmit}
+                        onSubmit={(e) => handleSubmit(e)}
                         style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
                     >
                         <BasicTextFields

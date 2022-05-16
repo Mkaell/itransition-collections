@@ -5,6 +5,7 @@ import { Autocomplete, Avatar, InputAdornment, Link, TextField, Typography } fro
 import SearchIcon from '@mui/icons-material/Search';
 import { Link as RouterLink } from 'react-router-dom';
 import { Search } from './style';
+import { IMAGE } from '../../utils/constants';
 
 const SearchField = ({ foundItems, findItems }) => {
 
@@ -43,7 +44,7 @@ const SearchField = ({ foundItems, findItems }) => {
                                 <Avatar
                                     alt="Remy Sharp"
                                     sx={{ width: 30, height: 30, mr: 1 }}
-                                    src={option.image ? option.image : null} />
+                                    src={option.image ? option.image : IMAGE.ITEM} />
                                 <Box sx={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>
                                     <Typography
                                         sx={{ display: 'inline' }}

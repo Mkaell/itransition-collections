@@ -1,4 +1,4 @@
-import { START_LOADING, END_LOADING,  DELETE,  FETCH_BY_ONE } from '../actions/actionTypes';
+import { START_LOADING, END_LOADING,  DELETE_ITEM,  FETCH_BY_ONE } from '../actions/actionTypes';
 import * as api from '../../api/index.js';
 import { format } from 'date-fns';
 
@@ -7,7 +7,7 @@ export const deleteItem = (id, collectionId) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
         await api.deleteItem(id, collectionId);
-        dispatch({ type: DELETE, payload: id });
+        dispatch({ type: DELETE_ITEM, payload: id });
         dispatch({ type: END_LOADING });
     } catch (error) {
        alert(error);

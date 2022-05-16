@@ -12,7 +12,7 @@ const BooleanInput = ({ itemField, items, setItems, fieldId }) => {
             ...items.field, [itemField]: checked,
         });
 
-    }, [checked, itemField, items, setItems])
+    }, [])
 
     return (
         <FormControlLabel

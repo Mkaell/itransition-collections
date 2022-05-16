@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import { Alert, Paper, Snackbar } from '@mui/material';
 import ModalItems from './ModalItems';
-import { deleteItem, likeItem, updateCollection, updateItem } from '../../api';
+import { createItem, deleteItem, likeItem, updateCollection, updateItem } from '../../api';
 import { useParams } from 'react-router-dom';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { columnsСonverter } from './Columns/columnsСonverter'
@@ -75,6 +75,7 @@ function Collection() {
     }
     const handleClose = () => {
         setOpen(false);
+        clearFormItem()
     };
 
     const handleCloseSnackbar = () => setSnackbar(null);
@@ -138,6 +139,17 @@ function Collection() {
         },
         [],
     );
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        try {
+            const response = await createItem({ ...items, collectionId: idCollection, userId: collection.userId })
+            setRows(response.data.items)
+        } catch (error) {
+            console.log(error);
+        }
+        clearFormItem()
+        handleClose()
+    }
 
     const handleProcessRowUpdateError = useCallback((error) => {
         setSnackbar({ children: error.message, severity: 'error' });
@@ -145,9 +157,15 @@ function Collection() {
 
     return (
         <>
-            <InfoAboutCollection collection={collection} handleClickOpen={handleClickOpen} setCollection={setCollection} />
+            <InfoAboutCollection
+                collection={collection}
+                handleClickOpen={handleClickOpen}
+                setCollection={setCollection}
+                nameCollection={collection.name}
+                descriptionCollection={collection.descriptionCollection}
+            />
             <Paper elevation={5}>
-                <Box style={{ height: '410px', width: '100%', marginTop: '10px' }}>
+                <Box style={{ height: '430px', width: '100%', marginTop: '10px' }}>
                     <StyledDataGrid
                         rows={rows}
                         loading={isLoading}
@@ -202,7 +220,9 @@ function Collection() {
                         </Snackbar>
                     )}
                     <ModalItems
+                        handleSubmit={handleSubmit}
                         handleClose={handleClose}
+                        setOpen={setOpen}
                         open={open}
                         collection={collection}
                         items={items}

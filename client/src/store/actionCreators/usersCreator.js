@@ -20,7 +20,7 @@ export const updateAdminStatus = (id, role) => async (dispatch) => {
         dispatch({ type: UPDATE, payload: data });
         dispatch({ type: END_LOADING });
     } catch (error) {
-        alert(error);
+        console.log(error)
     }
 };
 

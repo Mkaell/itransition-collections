@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-// export const URL = 'http://localhost:5047/';
+
 export const URL = 'https://itra-collection-app.herokuapp.com/';
 
 const API = axios.create({ baseURL: URL });
